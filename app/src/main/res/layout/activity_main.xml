@@ -1,18 +1,174 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/tabhost"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            >
+        </TabWidget>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <!-- 타이머 알람 탭 레이아웃 -->
+            <LinearLayout
+                android:id="@+id/tab_timer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_margin="30dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="종료 시각 : 오후 00:00"
+                        android:fontFamily="@font/nanumbarun_gothic_ultra_light"
+                        android:layout_marginTop="30dp"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        ></TextView>
+
+                    <TimePicker
+                        android:id="@+id/timePicker"
+                        android:timePickerMode="spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ></TimePicker>
+                </LinearLayout>
+                <!-- 버튼 영역 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        >
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+1 hour"
+                            android:textSize="20dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+30 min"
+                            android:layout_margin="5dp"
+                            android:textSize="20dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+10 min"
+                            android:layout_margin="5dp"
+                            android:textSize="20dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+5 min"
+                            android:layout_margin="5dp"
+                            android:textSize="20dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        >
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="타이머 시작"
+                            android:textSize="20dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="초기화"
+                            android:textSize="20dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/normal_text"
+                            android:fontFamily="@font/nanumgoding"
+                            android:textColor="@color/white"
+                            ></Button>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+
+
+            </LinearLayout>
+
+            <!-- 시간 알람 탭 레이아웃 -->
+            <LinearLayout
+                android:id="@+id/tab_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</TabHost>
