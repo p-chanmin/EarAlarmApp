@@ -19,6 +19,7 @@ class MainActivity : TabActivity() {
     lateinit var add10min : Button
     lateinit var add5min : Button
     lateinit var resetbtn : Button
+    lateinit var startTimerbtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class MainActivity : TabActivity() {
         add10min = findViewById<Button>(R.id.add10min)
         add5min = findViewById<Button>(R.id.add5min)
         resetbtn = findViewById<Button>(R.id.reset)
+        startTimerbtn = findViewById<Button>(R.id.startTimer)
 
         // 탭 설정
         var tabHost = this.tabHost
@@ -79,6 +81,15 @@ class MainActivity : TabActivity() {
             }
             endtimeText.text = "종료 시각 : " + ampm + " " + String.format("%02d", hourTmp) + ":" +
                     String.format("%02d", minTmp)
+
+            // 타이머가 0시간 0분 일 경우 타이머 시작 버튼 비활성화
+            if (tPicker.getCurrentHour() == 0 && tPicker.getCurrentMinute() == 0) {
+                startTimerbtn.setClickable(false)
+            }
+            else{
+                startTimerbtn.setClickable(true)
+            }
+
         }
 
         // 타임픽커 기본 설정
