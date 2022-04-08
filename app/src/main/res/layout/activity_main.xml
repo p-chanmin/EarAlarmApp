@@ -1,4 +1,5 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
@@ -42,6 +43,7 @@
                     android:layout_gravity="center"
                     >
                     <TextView
+                        android:id="@+id/endtimetext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -75,18 +77,20 @@
                         android:orientation="horizontal"
                         android:layout_margin="10dp"
                         >
+
                         <Button
+                            android:id="@+id/add1hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+1 hour"
-                            android:textSize="20dp"
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/normal_text"
                             android:fontFamily="@font/nanumgoding"
+                            android:text="+1 hour"
                             android:textColor="@color/white"
-                            ></Button>
+                            android:textSize="20dp"></Button>
                         <Button
+                            android:id="@+id/add30min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+30 min"
@@ -98,6 +102,7 @@
                             android:textColor="@color/white"
                             ></Button>
                         <Button
+                            android:id="@+id/add10min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+10 min"
@@ -109,6 +114,7 @@
                             android:textColor="@color/white"
                             ></Button>
                         <Button
+                            android:id="@+id/add5min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+5 min"
@@ -138,6 +144,7 @@
                             android:textColor="@color/white"
                             ></Button>
                         <Button
+                            android:id="@+id/reset"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="초기화"
