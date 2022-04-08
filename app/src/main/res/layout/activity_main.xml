@@ -66,6 +66,7 @@
                     android:background="@color/background"
                     android:orientation="vertical"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_weight="1"
                     >
                     <LinearLayout
