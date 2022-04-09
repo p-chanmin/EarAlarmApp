@@ -38,13 +38,13 @@ class MainActivity : TabActivity() {
         // 탭 설정
         var tabHost = this.tabHost
 
-        var tabSpecSong = tabHost.newTabSpec("TIMER").setIndicator("Timer")
-        tabSpecSong.setContent(R.id.tab_timer)
-        tabHost.addTab(tabSpecSong)
+        var tabSpectimer = tabHost.newTabSpec("TIMER").setIndicator("Timer")
+        tabSpectimer.setContent(R.id.tab_timer)
+        tabHost.addTab(tabSpectimer)
 
-        var tabSpecArtist = tabHost.newTabSpec("ALARM").setIndicator("Alarm")
-        tabSpecArtist.setContent(R.id.tab_alarm)
-        tabHost.addTab(tabSpecArtist)
+        var tabSpecAlarm = tabHost.newTabSpec("ALARM").setIndicator("Alarm")
+        tabSpecAlarm.setContent(R.id.tab_alarm)
+        tabHost.addTab(tabSpecAlarm)
 
         tabHost.currentTab = 0
 
