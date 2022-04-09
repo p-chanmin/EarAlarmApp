@@ -19,6 +19,7 @@ class MainActivity : TabActivity() {
 
     lateinit var tPicker : TimePicker
     lateinit var endtimeText : TextView
+    lateinit var endtimerText : TextView
     lateinit var add1hour : Button
     lateinit var add30min : Button
     lateinit var add10min : Button
@@ -34,6 +35,7 @@ class MainActivity : TabActivity() {
         //연결
         tPicker = findViewById<TimePicker>(R.id.timePicker)
         endtimeText = findViewById<TextView>(R.id.endtimetext)
+        endtimerText = findViewById<TextView>(R.id.timertext)
         add1hour = findViewById<Button>(R.id.add1hour)
         add30min = findViewById<Button>(R.id.add30min)
         add10min = findViewById<Button>(R.id.add10min)
@@ -88,6 +90,8 @@ class MainActivity : TabActivity() {
             endtimeText.text = "종료 시각 : " + ampm + " " + String.format("%02d", hourTmp) + ":" +
                     String.format("%02d", minTmp)
 
+            endtimerText.text = Integer.toString(tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute())+"분 후에 알람이 울립니다"
+
             // 타이머가 0시간 0분 일 경우 타이머 시작 버튼 비활성화
             if (tPicker.getCurrentHour() == 0 && tPicker.getCurrentMinute() == 0) {
                 startTimerbtn.setClickable(false)
@@ -134,7 +138,7 @@ class MainActivity : TabActivity() {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
-        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 른 뒤에 전달하기 때문에 PendingIntent로 만든다흐.
+        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 른 뒤에 전달하기 때문에 PendingIntent로 만든다.
         val pendingIntent = PendingIntent.getBroadcast(
             this, AlarmReceiver.NOTIFICATION_ID, intent,
             PendingIntent.FLAG_MUTABLE)
