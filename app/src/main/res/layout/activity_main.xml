@@ -24,6 +24,104 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
+            <!-- 시간 알람 탭 레이아웃 -->
+            <LinearLayout
+                android:id="@+id/tab_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:ignore="SpeakableTextPresentCheck">
+                    <LinearLayout
+                        android:id="@+id/scrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <!-- 알람 예시
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@color/background_E">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="오후"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/normal_text"
+                                    android:gravity="bottom">
+                                </TextView>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="00:00"
+                                    android:textSize="35dp"
+                                    android:textColor="@color/normal_text"
+                                    android:gravity="bottom">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center|right"
+                                >
+                                <Switch
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    >
+                                </Switch>
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                        -->
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center"
+                            android:text="+ 알람 추가"
+                            android:textSize="20dp"
+                            android:textColor="@color/normal_text"
+                            android:backgroundTint="@color/background">
+                        </Button>
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="알람 설정"
+                        android:textSize="20dp"
+                        android:textColor="@color/normal_text"
+                        android:gravity="left|center"
+                        android:backgroundTint="@color/background_A">
+
+                    </Button>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
             <!-- 타이머 알람 탭 레이아웃 -->
             <LinearLayout
                 android:id="@+id/tab_timer"
@@ -168,14 +266,7 @@
 
             </LinearLayout>
 
-            <!-- 시간 알람 탭 레이아웃 -->
-            <LinearLayout
-                android:id="@+id/tab_alarm"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/background"
-                android:orientation="vertical">
-            </LinearLayout>
+
 
         </FrameLayout>
     </LinearLayout>
