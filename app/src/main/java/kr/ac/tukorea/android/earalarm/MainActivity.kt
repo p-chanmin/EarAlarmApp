@@ -138,15 +138,20 @@ class MainActivity : TabActivity() {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
-        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 른 뒤에 전달하기 때문에 PendingIntent로 만든다.
+        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
         val pendingIntent = PendingIntent.getBroadcast(
             this, AlarmReceiver.NOTIFICATION_ID, intent,
             PendingIntent.FLAG_MUTABLE)
 
         // 타이머 시작
         startTimerbtn.setOnClickListener {
-            val triggerTime = (SystemClock.elapsedRealtime()  // 4
-                    + 5 * 1000)
+            // 현재 설정된 타이머를 분단위로 가지고 옴
+            val sleepMinTime = tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()
+
+            val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 설정
+                    + sleepMinTime * 60 * 1000)
+
+            // 버전별로 실행을 다르게 함
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(   // 5
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -161,7 +166,7 @@ class MainActivity : TabActivity() {
                     pendingIntent
                 )
             }
-            Toast.makeText(this, "Onetime Alarm On", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, Integer.toString(sleepMinTime)+"분 후에 알람이 울립니다", Toast.LENGTH_SHORT).show()
         }
 
 
