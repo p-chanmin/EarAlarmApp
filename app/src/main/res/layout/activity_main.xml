@@ -146,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
                         android:text="종료 시각 : 오후 00:00"
+                        android:textColor="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_ultra_light"
                         android:layout_marginTop="30dp"
                         android:layout_margin="10dp"
