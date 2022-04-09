@@ -1,12 +1,17 @@
 package kr.ac.tukorea.android.earalarm
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TabActivity
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
-import androidx.core.view.get
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,6 +26,7 @@ class MainActivity : TabActivity() {
     lateinit var resetbtn : Button
     lateinit var startTimerbtn : Button
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -124,6 +130,43 @@ class MainActivity : TabActivity() {
             tPicker.currentHour = 0
             tPicker.currentMinute = 0
         }
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
+        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 른 뒤에 전달하기 때문에 PendingIntent로 만든다흐.
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, AlarmReceiver.NOTIFICATION_ID, intent,
+            PendingIntent.FLAG_MUTABLE)
+
+        // 타이머 시작
+        startTimerbtn.setOnClickListener {
+            val triggerTime = (SystemClock.elapsedRealtime()  // 4
+                    + 5 * 1000)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(   // 5
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+                )
+            }
+            else{
+                alarmManager.setAndAllowWhileIdle(   // 5
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+                )
+            }
+            Toast.makeText(this, "Onetime Alarm On", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
+
+
+
+
 
     }
 }
