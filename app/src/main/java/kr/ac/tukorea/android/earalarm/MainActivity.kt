@@ -1,21 +1,27 @@
 package kr.ac.tukorea.android.earalarm
 
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.app.TabActivity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.os.Vibrator
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : TabActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit var tPicker : TimePicker
     lateinit var endtimeText : TextView
@@ -25,7 +31,9 @@ class MainActivity : TabActivity() {
     lateinit var add10min : Button
     lateinit var add5min : Button
     lateinit var resetbtn : Button
+    lateinit var settingbtn : Button
     lateinit var startTimerbtn : Button
+    lateinit var alarmDialog : View
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,20 +49,8 @@ class MainActivity : TabActivity() {
         add10min = findViewById<Button>(R.id.add10min)
         add5min = findViewById<Button>(R.id.add5min)
         resetbtn = findViewById<Button>(R.id.reset)
+        settingbtn = findViewById<Button>(R.id.setting1)
         startTimerbtn = findViewById<Button>(R.id.startTimer)
-
-        // 탭 설정
-        var tabHost = this.tabHost
-
-        var tabSpectimer = tabHost.newTabSpec("TIMER").setIndicator("Timer")
-        tabSpectimer.setContent(R.id.tab_timer)
-        tabHost.addTab(tabSpectimer)
-
-        var tabSpecAlarm = tabHost.newTabSpec("ALARM").setIndicator("Alarm")
-        tabSpecAlarm.setContent(R.id.tab_alarm)
-        tabHost.addTab(tabSpecAlarm)
-
-        tabHost.currentTab = 0
 
         // 타임 픽커가 바뀌면 종료 시각 반영
         tPicker.setOnTimeChangedListener { timePicker, hour, min ->
@@ -143,24 +139,28 @@ class MainActivity : TabActivity() {
             this, AlarmReceiver.NOTIFICATION_ID, intent,
             PendingIntent.FLAG_MUTABLE)
 
+        settingbtn.setOnClickListener {
+
+        }
+
         // 타이머 시작
         startTimerbtn.setOnClickListener {
             // 현재 설정된 타이머를 분단위로 가지고 옴
             val sleepMinTime = tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()
 
-            val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 설정
-                    + sleepMinTime * 60 * 1000)
+            val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 설정해야함
+                    + sleepMinTime * 1000)
 
             // 버전별로 실행을 다르게 함
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(   // 5
+                alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime,
                     pendingIntent
                 )
             }
             else{
-                alarmManager.setAndAllowWhileIdle(   // 5
+                alarmManager.setAndAllowWhileIdle(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime,
                     pendingIntent
