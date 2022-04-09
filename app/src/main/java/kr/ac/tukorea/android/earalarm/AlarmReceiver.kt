@@ -1,21 +1,17 @@
 package kr.ac.tukorea.android.earalarm
 
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.os.Vibrator
 import android.util.Log
-import android.view.View
-import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.startActivity
 
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -23,34 +19,46 @@ class AlarmReceiver : BroadcastReceiver() {
     companion object {
         const val TAG = "AlarmReceiver"
         const val NOTIFICATION_ID = 0
-        const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
+        const val PRIMARY_CHANNEL_ID = "Alarm_channel"
     }
+
+    private lateinit var context: Context
 
     lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
+        this.context = context
         Log.d(TAG, "Received intent : $intent")
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        print(context)
+        val str = intent.getStringExtra("state")
+        Log.d(TAG, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWW $str")
+
+        // RingtonePlayingService 서비스 intent 생성
+        val service_intent = Intent(context, RingtonePlayingService::class.java)
+
+        // RingtonePlayinService로 extra string값 보내기
+        service_intent.putExtra("state", str)
+
+        this.context.startService(service_intent)
+        // 오레오 버전 이상부터는 StartForegroundService를 사용해야한다고 하는데
+        // StartForegroundService를 사용하면 오류 발생
+        // StartService 사용하면 일단 재생됨
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            this.context.startForegroundService(service_intent)
+//            Log.d(TAG, "StartForegroundService")
+//        }else{
+//            this.context.startService(service_intent)
+//            Log.d(TAG, "StartService")
+//        }
+
         createNotificationChannel()
         deliverNotification(context)
 
-        // popup(context)
-    }
-    private fun popup(context: Context){
-        var alarmDialog : View
 
-        alarmDialog = View.inflate(context, R.layout.dialog, null)
-        var dlg = AlertDialog.Builder(context)
-        dlg.setTitle("알람 해제")
-        dlg.setIcon(R.drawable.earalarm_ic)
-        dlg.setView(alarmDialog)
-        dlg.setPositiveButton("확인", null)
-        dlg.setNegativeButton("취소", null)
-        dlg.show()
     }
+
 
     private fun deliverNotification(context: Context) {
         val contentIntent = Intent(context, MainActivity::class.java)
@@ -71,8 +79,6 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
 
         notificationManager.notify(NOTIFICATION_ID, builder.build())
-
-
     }
 
     fun createNotificationChannel() {

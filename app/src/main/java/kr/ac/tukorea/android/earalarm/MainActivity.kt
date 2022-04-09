@@ -1,9 +1,7 @@
 package kr.ac.tukorea.android.earalarm
 
-import android.app.AlarmManager
-import android.app.AlertDialog
-import android.app.PendingIntent
-import android.app.TabActivity
+import android.app.*
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -131,25 +129,33 @@ class MainActivity : AppCompatActivity() {
             tPicker.currentMinute = 0
         }
 
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-        val intent = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
-        // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, AlarmReceiver.NOTIFICATION_ID, intent,
-            PendingIntent.FLAG_MUTABLE)
 
         settingbtn.setOnClickListener {
 
         }
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val intentAlarm = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
+
+        var pendingIntent : PendingIntent
 
         // 타이머 시작
         startTimerbtn.setOnClickListener {
+
+            intentAlarm.putExtra("state","alarm-on")
+            // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
+            pendingIntent = PendingIntent.getBroadcast(
+                this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
+                PendingIntent.FLAG_MUTABLE)
+
             // 현재 설정된 타이머를 분단위로 가지고 옴
             val sleepMinTime = tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()
 
             val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 설정해야함
                     + sleepMinTime * 1000)
+
+
 
             // 버전별로 실행을 다르게 함
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -169,12 +175,21 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, Integer.toString(sleepMinTime)+"분 후에 알람이 울립니다", Toast.LENGTH_SHORT).show()
         }
 
-
-
-
-
-
-
+        // 알람 해제 수정 필요
+        if (getIntent() != null && getIntent().getStringExtra("state") == "alarm-on"){
+            alarmDialog = View.inflate(this@MainActivity, R.layout.dialog, null)
+            var dlg = AlertDialog.Builder(this@MainActivity)
+            dlg.setTitle("알람 해제")
+            dlg.setIcon(R.drawable.clock_with_earphone)
+            dlg.setView(alarmDialog)
+            dlg.setPositiveButton("해제"){ alarmDialog, which ->
+                // 알람 매니저 취소
+                //alarmManager.cancel(pendingIntent)
+                intentAlarm.putExtra("state", "alarm-off")
+                sendBroadcast(intentAlarm)
+            }
+            dlg.show()
+        }
 
 
     }
