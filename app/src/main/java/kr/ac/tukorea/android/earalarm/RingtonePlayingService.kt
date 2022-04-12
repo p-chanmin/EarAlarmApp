@@ -1,15 +1,13 @@
 package kr.ac.tukorea.android.earalarm
 
 
-import android.app.AlertDialog
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.media.MediaPlayer
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import android.view.View
 
 
 class RingtonePlayingService : Service() {
@@ -23,34 +21,15 @@ class RingtonePlayingService : Service() {
     var startId = 0
     var isRunning = false
 
-    private lateinit var notificationManager: NotificationManager
-
+    // 바인더 설정
+    private val binder : IBinder = LocalBinder()
     override fun onBind(intent: Intent?): IBinder? {
-        return null
+        return binder
     }
-
-//    override fun onCreate() {
-//        notificationManager = this.getSystemService(
-//            Context.NOTIFICATION_SERVICE) as NotificationManager
-//
-//        createNotificationChannel()
-//
-//    }
-//
-//    fun createNotificationChannel() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val notificationChannel = NotificationChannel(
-//                PRIMARY_CHANNEL_ID,
-//                "Stand up notification",
-//                NotificationManager.IMPORTANCE_HIGH
-//            )
-//            notificationChannel.enableLights(true)
-//            notificationChannel.lightColor = Color.RED
-//            notificationChannel.enableVibration(true)
-//            notificationChannel.description = "AlarmManager Tests"
-//            notificationManager.createNotificationChannel(notificationChannel)
-//        }
-//    }
+    inner class LocalBinder : Binder() {
+        // Return this instance of LocalService so clients can call public methods
+        fun getService(): RingtonePlayingService = this@RingtonePlayingService
+    }
 
     // 알람이 재생될 때 메인화면 띄우기
     fun alarmOnMain(){
@@ -75,26 +54,25 @@ class RingtonePlayingService : Service() {
             mediaPlayer!!.start()
             isRunning = true
             this.startId = 0
-            Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@미디어 재생")
-            // alarmOnMain()
-
-        } else if (isRunning && startId == 0) {
+            Log.d(AlarmReceiver.TAG, "미디어 재생")
+            //alarmOnMain()
+        } else if (isRunning && startId == 0) { // 알람 울릴때 끄라고 했을 때
             mediaPlayer!!.stop()
             mediaPlayer!!.reset()
             mediaPlayer!!.release()
             isRunning = false
             this.startId = 0
-            Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@2")
-        } else if (!isRunning && startId == 0) {
+            Log.d(AlarmReceiver.TAG, "알람 울리는 중 해제")
+        } else if (!isRunning && startId == 0) {    // 안 울릴때 끄라고 했을 때
             isRunning = false
             this.startId = 0
-            Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@3")
-        } else if (isRunning && startId == 1) {
-            isRunning = true
-            this.startId = 1
-            Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@4")
+            Log.d(AlarmReceiver.TAG, "알람 울리기 전 해제")
         }
         return START_NOT_STICKY
+    }
+
+    fun stopAlarm(){
+        mediaPlayer!!.stop()
     }
 
     override fun onDestroy() {
