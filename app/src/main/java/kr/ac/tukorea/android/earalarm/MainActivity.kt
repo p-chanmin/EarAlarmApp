@@ -2,15 +2,10 @@ package kr.ac.tukorea.android.earalarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
 import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -245,25 +240,20 @@ class MainActivity : AppCompatActivity() {
         // 알람 해제 버튼 클릭
         alarmOffbtn.setOnClickListener {
             prefs.setString("state", "alarm_off")
-            try {
-                intentAlarm.putExtra("state", "alarm-off")
-                pendingIntent = PendingIntent.getBroadcast(
-                    this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
-                    PendingIntent.FLAG_MUTABLE
-                )
-                alarmManager.cancel(pendingIntent)
-                intentAlarm.putExtra("state", "alarm-off")
-                sendBroadcast(intentAlarm)
-            } catch (e: Exception) {
-                Log.d("123", "오류 발생시")
-//                if (mBound){
-//                    mService.stopAlarm()
-//                }
-            }finally {
-                alarmOffView.visibility = View.VISIBLE
-                alarmOnView.visibility = View.GONE
-                resetbtn.callOnClick()
-            }
+
+            intentAlarm.putExtra("state", "alarm-off")
+            pendingIntent = PendingIntent.getBroadcast(
+                this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
+                PendingIntent.FLAG_MUTABLE
+            )
+            alarmManager.cancel(pendingIntent)
+            intentAlarm.putExtra("state", "alarm-off")
+            sendBroadcast(intentAlarm)
+
+            alarmOffView.visibility = View.VISIBLE
+            alarmOnView.visibility = View.GONE
+            resetbtn.callOnClick()
+
 
         }
     }

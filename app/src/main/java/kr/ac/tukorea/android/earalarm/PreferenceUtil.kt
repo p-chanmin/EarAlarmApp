@@ -1,6 +1,5 @@
 package kr.ac.tukorea.android.earalarm
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.SharedPreferences
 

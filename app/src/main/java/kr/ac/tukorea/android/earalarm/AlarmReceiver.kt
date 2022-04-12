@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.startActivity
 
 
 class AlarmReceiver : BroadcastReceiver() {
