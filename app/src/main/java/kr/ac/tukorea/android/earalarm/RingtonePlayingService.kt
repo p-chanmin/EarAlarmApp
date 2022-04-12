@@ -1,21 +1,15 @@
 package kr.ac.tukorea.android.earalarm
 
 
-import android.app.NotificationChannel
+import android.app.AlertDialog
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.graphics.Color
 import android.media.MediaPlayer
-import android.nfc.Tag
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.NotificationCompat
-
+import android.view.View
 
 
 class RingtonePlayingService : Service() {
@@ -64,6 +58,7 @@ class RingtonePlayingService : Service() {
         main_intent.putExtra("state", "alarm-on")
         startActivity(main_intent.addFlags(FLAG_ACTIVITY_NEW_TASK))
     }
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@시작한다")
         var startId : Int
@@ -81,7 +76,8 @@ class RingtonePlayingService : Service() {
             isRunning = true
             this.startId = 0
             Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@미디어 재생")
-            alarmOnMain()
+            // alarmOnMain()
+
         } else if (isRunning && startId == 0) {
             mediaPlayer!!.stop()
             mediaPlayer!!.reset()

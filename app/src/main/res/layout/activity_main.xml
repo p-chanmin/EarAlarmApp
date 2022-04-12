@@ -8,7 +8,90 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:orientation="vertical" >
+
+        <!-- 알람 설정 시 화면 -->
+        <LinearLayout
+            android:id="@+id/tab_alarm_on"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:layout_margin="30dp"
+            android:visibility="gone"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:layout_gravity="center"
+                >
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/clock_with_earphone"
+                    android:layout_margin="10dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/alarm_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0분 알람"
+                    android:textSize="30dp"
+                    android:fontFamily="@font/nanumbarun_gothic_bold"
+                    android:textColor="@color/normal_text"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center">
+                </TextView>
+                <TextView
+                    android:id="@+id/alarm_endtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종료 시각 00:00"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/nanumbarun_gothic_bold"
+                    android:textColor="@color/normal_text"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="알람이 울립니다"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/nanumbarun_gothic_bold"
+                    android:textColor="@color/normal_text"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/background"
+                android:layout_margin="20dp">
+
+                <Button
+                    android:id="@+id/alarm_off_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="알람 해제"
+                    android:backgroundTint="@color/normal_text"
+                    android:textColor="@color/background"
+                    android:fontFamily="@font/nanumbarun_gothic_bold">
+                </Button>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
         <!-- 타이머 알람 탭 레이아웃 -->
         <LinearLayout
@@ -16,6 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <LinearLayout
