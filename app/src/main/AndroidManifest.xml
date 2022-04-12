@@ -19,7 +19,9 @@
             android:enabled="true"
             android:exported="false"></receiver>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
