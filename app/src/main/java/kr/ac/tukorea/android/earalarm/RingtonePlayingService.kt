@@ -52,6 +52,7 @@ class RingtonePlayingService : Service() {
         if (!isRunning && startId == 1) {
             mediaPlayer = MediaPlayer.create(this, R.raw.testsound)
             mediaPlayer!!.start()
+            mediaPlayer!!.isLooping = true
             isRunning = true
             this.startId = 0
             Log.d(AlarmReceiver.TAG, "미디어 재생")
