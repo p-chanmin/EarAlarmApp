@@ -3,43 +3,62 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:padding="15dp">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:src="@drawable/clock_with_earphone"></ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이어폰이 연결 되었을 때만 동작"
+            android:textColor="@color/normal_text"
+            android:layout_marginRight="10dp"></TextView>
+        <CheckBox
+            android:id="@+id/earPhoneMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </CheckBox>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/setmedia"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0분 알람"
-        android:textSize="30dp"
-        android:fontFamily="@font/nanumbarun_gothic_bold"
-        android:textColor="@color/normal_text"
-        android:layout_margin="5dp"
-        android:layout_gravity="center">
-    </TextView>
-    <TextView
-        android:layout_width="wrap_content"
+        android:gravity="left|center"
+        android:backgroundTint="@color/white"
+        android:background="#00ff0000"
+        android:text="알람음 설정 : testsound.mp3"
+        android:textAllCaps="false"
+        android:textColor="@color/normal_text"></Button>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="현재시각 00:00"
-        android:textSize="20dp"
-        android:fontFamily="@font/nanumbarun_gothic_bold"
-        android:textColor="@color/normal_text"
-        android:layout_margin="5dp"
-        android:layout_gravity="center">
-    </TextView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="알람이 울립니다"
-        android:textSize="20dp"
-        android:fontFamily="@font/nanumbarun_gothic_bold"
-        android:textColor="@color/normal_text"
-        android:layout_margin="5dp"
-        android:layout_gravity="center">
-    </TextView>
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람 볼륨 설정"
+            android:textColor="@color/normal_text"
+            android:layout_marginRight="10dp"></TextView>
+        <SeekBar
+            android:layout_marginTop="5dp"
+            android:id="@+id/alarm_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </SeekBar>
+    </LinearLayout>
+
+
+
+
+
 
 </LinearLayout>

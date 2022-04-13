@@ -160,16 +160,18 @@
                     android:orientation="horizontal"
                     android:gravity="right">
                     <TextView
-                        android:id="@+id/alarm_volume"
+                        android:id="@+id/alarm_volume_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="알람볼륨 : 100"
+                        android:fontFamily="@font/nanumbarun_gothic_bold"
                         android:layout_marginRight="20dp"></TextView>
                     <TextView
-                        android:id="@+id/alarm_media"
+                        android:id="@+id/alarm_media_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="알람음 : textsound.mp3"
+                        android:fontFamily="@font/nanumbarun_gothic_bold"
                         android:layout_marginRight="20dp"></TextView>
 
                 </LinearLayout>

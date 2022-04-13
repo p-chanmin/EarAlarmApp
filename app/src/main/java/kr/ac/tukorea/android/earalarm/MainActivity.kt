@@ -1,11 +1,14 @@
 package kr.ac.tukorea.android.earalarm
 
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -13,6 +16,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var alarmTextmin: TextView
     lateinit var alarmTextendtime: TextView
     lateinit var endtime: String
+    lateinit var settingView : View
+    lateinit var mediabtn : Button
 
     companion object {
         lateinit var prefs: PreferenceUtil
@@ -90,7 +96,6 @@ class MainActivity : AppCompatActivity() {
         alarmOffbtn = findViewById<Button>(R.id.alarm_off_btn)
         alarmTextmin = findViewById<TextView>(R.id.alarm_min)
         alarmTextendtime = findViewById<TextView>(R.id.alarm_endtime)
-
 
         // 타임 픽커가 바뀌면 종료 시각 반영
         tPicker.setOnTimeChangedListener { timePicker, hour, min ->
@@ -173,6 +178,21 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intentAlarm =
             Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
+        
+        // 알람 설정 버튼 이벤트
+        settingbtn.setOnClickListener {
+            settingView = View.inflate(this, R.layout.dialog, null)
+            var dlg = AlertDialog.Builder(this)
+            dlg.setTitle("알람 설정")
+            dlg.setIcon(R.drawable.clock_with_earphone)
+            dlg.setView(settingView)
+            dlg.setPositiveButton("설정", null)
+            mediabtn = settingView.findViewById<Button>(R.id.setmedia)
+            mediabtn.setOnClickListener {
+
+            }
+            dlg.show()
+        }
         
         // 타이머 시작 버튼 이벤트
         startTimerbtn.setOnClickListener {
