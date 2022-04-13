@@ -169,13 +169,12 @@ class MainActivity : AppCompatActivity() {
             tPicker.currentMinute = 0
         }
 
+        // 알람 매니저, 알람 Intent 설정
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
         val intentAlarm =
             Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
-
-
-        // 타이머 시작
+        
+        // 타이머 시작 버튼 이벤트
         startTimerbtn.setOnClickListener {
             intentAlarm.putExtra("state", "alarm-on")
             // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
@@ -205,6 +204,7 @@ class MainActivity : AppCompatActivity() {
                     pendingIntent
                 )
             }
+            // 토스트 메세지 출력
             Toast.makeText(
                 this,
                 Integer.toString(sleepMinTime) + "분 후에 알람이 울립니다",
@@ -217,19 +217,20 @@ class MainActivity : AppCompatActivity() {
             prefs.setString("state", "alarm_on")
             prefs.setString("alarmTextmin", alarmTextmin.text.toString())
             prefs.setString("alarmTextendtime", alarmTextendtime.text.toString())
-
-
+            
+            // 뷰 설정
             alarmOffView.visibility = View.GONE
             alarmOnView.visibility = View.VISIBLE
 
         }
 
+        // MainActivity 실행 시 현재 상태를 고려하여 뷰 설정
         when (prefs.getString("state", "alarm_off")) {
-            "alarm_off" -> {
+            "alarm_off" -> {    // 알람이 꺼져있을 경우 뷰 설정
                 alarmOffView.visibility = View.VISIBLE
                 alarmOnView.visibility = View.GONE
             }
-            "alarm_on" -> {
+            "alarm_on" -> { // 알람 실행 중 일 경우 뷰 설정 및 시간 가져오기
                 alarmOffView.visibility = View.GONE
                 alarmOnView.visibility = View.VISIBLE
                 alarmTextmin.text = prefs.getString("alarmTextmin", "00분 알람")
@@ -239,22 +240,23 @@ class MainActivity : AppCompatActivity() {
 
         // 알람 해제 버튼 클릭
         alarmOffbtn.setOnClickListener {
+            // 현재 상태를 알람 해제 상태로 저장
             prefs.setString("state", "alarm_off")
-
+            // pendingIntent에 알람 off 상태를 저장해서 보냄
             intentAlarm.putExtra("state", "alarm-off")
             pendingIntent = PendingIntent.getBroadcast(
                 this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
                 PendingIntent.FLAG_MUTABLE
             )
+            // 알람 취소
             alarmManager.cancel(pendingIntent)
-            intentAlarm.putExtra("state", "alarm-off")
             sendBroadcast(intentAlarm)
-
+            // 알람 해제 후, 뷰 설정 및 초기화
             alarmOffView.visibility = View.VISIBLE
             alarmOnView.visibility = View.GONE
             resetbtn.callOnClick()
-
-
+            // 토스트 메세지 출력
+            Toast.makeText(this, "알람이 해제되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
 }
