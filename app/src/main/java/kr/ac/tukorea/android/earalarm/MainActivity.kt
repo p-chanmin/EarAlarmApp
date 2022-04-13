@@ -3,6 +3,7 @@ package kr.ac.tukorea.android.earalarm
 import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,8 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import org.w3c.dom.Text
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,12 +38,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var alarmOnView: View
     lateinit var alarmOffView: View
     lateinit var alarmOffbtn: Button
-    lateinit var pendingIntent: PendingIntent
     lateinit var alarmTextmin: TextView
     lateinit var alarmTextendtime: TextView
     lateinit var endtime: String
     lateinit var settingView : View
     lateinit var mediabtn : Button
+    lateinit var alarm_media_text : TextView
+    lateinit var alarm_volume_text : TextView
+    lateinit var setmedia : TextView
+    lateinit var media_path : String
+
 
     companion object {
         lateinit var prefs: PreferenceUtil
@@ -97,6 +104,39 @@ class MainActivity : AppCompatActivity() {
         alarmTextmin = findViewById<TextView>(R.id.alarm_min)
         alarmTextendtime = findViewById<TextView>(R.id.alarm_endtime)
 
+        alarm_media_text = findViewById<TextView>(R.id.alarm_media_text)
+        alarm_volume_text = findViewById<TextView>(R.id.alarm_volume_text)
+
+
+        // MainActivity 실행 시 현재 상태를 고려하여 뷰 설정
+        when (prefs.getString("state", "alarm_off")) {
+            "alarm_off" -> {    // 알람이 꺼져있을 경우 뷰 설정
+                alarmOffView.visibility = View.VISIBLE
+                alarmOnView.visibility = View.GONE
+            }
+            "alarm_on" -> { // 알람 실행 중 일 경우 뷰 설정 및 시간 가져오기
+                alarmOffView.visibility = View.GONE
+                alarmOnView.visibility = View.VISIBLE
+                alarmTextmin.text = prefs.getString("alarmTextmin", "00분 알람")
+                alarmTextendtime.text = prefs.getString("alarmTextendtime", "종료 시각 : 00:00")
+            }
+        }
+        // 타임픽커 기본 설정
+        // 시, 분 0으로 초기화 및 24시간 보기로 설정
+        tPicker.currentHour = 0
+        tPicker.currentMinute = 0
+        tPicker.setIs24HourView(true)
+        startTimerbtn.setClickable(false)
+
+        // 알람 매니저, 알람 Intent 설정
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intentAlarm = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
+        Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("path")}")
+        Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("state")}")
+        media_path = prefs.getString("media_path", "defult")
+        Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 $media_path")
+        alarm_media_text.text = "알람음 : " + prefs.getString("media_name", "기본음")
+
         // 타임 픽커가 바뀌면 종료 시각 반영
         tPicker.setOnTimeChangedListener { timePicker, hour, min ->
             val currentTime: Long = System.currentTimeMillis()
@@ -141,12 +181,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        // 타임픽커 기본 설정
-        // 시, 분 0으로 초기화 및 24시간 보기로 설정
-        tPicker.currentHour = 0
-        tPicker.currentMinute = 0
-        tPicker.setIs24HourView(true)
-
         // 시간 추가 , 리셋 버튼 이벤트
         add1hour.setOnClickListener {
             tPicker.currentHour = tPicker.getCurrentHour() + 1
@@ -174,33 +208,38 @@ class MainActivity : AppCompatActivity() {
             tPicker.currentMinute = 0
         }
 
-        // 알람 매니저, 알람 Intent 설정
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val intentAlarm =
-            Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
-        
+
         // 알람 설정 버튼 이벤트
         settingbtn.setOnClickListener {
-            settingView = View.inflate(this, R.layout.dialog, null)
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), Context.MODE_PRIVATE)
             var dlg = AlertDialog.Builder(this)
             dlg.setTitle("알람 설정")
+            settingView = View.inflate(this, R.layout.dialog, null)
             dlg.setIcon(R.drawable.clock_with_earphone)
             dlg.setView(settingView)
-            dlg.setPositiveButton("설정", null)
             mediabtn = settingView.findViewById<Button>(R.id.setmedia)
+            mediabtn.text = "알람음 설정 : " + prefs.getString("media_name", "기본음")
             mediabtn.setOnClickListener {
-
+                var i = Intent(this, MyMusicPlayer::class.java)
+                Log.d("updateSongList : ", "CHECK1")
+                startActivityForResult(i, 0)
             }
+            dlg.setPositiveButton("설정", null)
             dlg.show()
         }
         
         // 타이머 시작 버튼 이벤트
         startTimerbtn.setOnClickListener {
+            intentAlarm.putExtra("path", media_path)
             intentAlarm.putExtra("state", "alarm-on")
+            Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("path")}")
+            Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("state")}")
+            Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm}")
+            Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 $media_path")
             // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
-            pendingIntent = PendingIntent.getBroadcast(
+            var pendingIntent = PendingIntent.getBroadcast(
                 this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
-                PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
             // 현재 설정된 타이머를 분단위로 가지고 옴
             val sleepMinTime = tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()
@@ -237,25 +276,11 @@ class MainActivity : AppCompatActivity() {
             prefs.setString("state", "alarm_on")
             prefs.setString("alarmTextmin", alarmTextmin.text.toString())
             prefs.setString("alarmTextendtime", alarmTextendtime.text.toString())
-            
+
             // 뷰 설정
             alarmOffView.visibility = View.GONE
             alarmOnView.visibility = View.VISIBLE
 
-        }
-
-        // MainActivity 실행 시 현재 상태를 고려하여 뷰 설정
-        when (prefs.getString("state", "alarm_off")) {
-            "alarm_off" -> {    // 알람이 꺼져있을 경우 뷰 설정
-                alarmOffView.visibility = View.VISIBLE
-                alarmOnView.visibility = View.GONE
-            }
-            "alarm_on" -> { // 알람 실행 중 일 경우 뷰 설정 및 시간 가져오기
-                alarmOffView.visibility = View.GONE
-                alarmOnView.visibility = View.VISIBLE
-                alarmTextmin.text = prefs.getString("alarmTextmin", "00분 알람")
-                alarmTextendtime.text = prefs.getString("alarmTextendtime", "종료 시각 : 00:00")
-            }
         }
 
         // 알람 해제 버튼 클릭
@@ -264,9 +289,9 @@ class MainActivity : AppCompatActivity() {
             prefs.setString("state", "alarm_off")
             // pendingIntent에 알람 off 상태를 저장해서 보냄
             intentAlarm.putExtra("state", "alarm-off")
-            pendingIntent = PendingIntent.getBroadcast(
+            var pendingIntent = PendingIntent.getBroadcast(
                 this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
-                PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
             // 알람 취소
             alarmManager.cancel(pendingIntent)
@@ -277,6 +302,25 @@ class MainActivity : AppCompatActivity() {
             resetbtn.callOnClick()
             // 토스트 메세지 출력
             Toast.makeText(this, "알람이 해제되었습니다", Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // 설정에서 알람음을 변경 했을 때
+        if(requestCode == 0){
+            if(data?.hasExtra("name") == true){
+                var path : String = data?.getStringExtra("absolutePath").toString()
+                var name : String = data?.getStringExtra("name").toString()
+                mediabtn.text = "알람음 설정 : " + name
+                alarm_media_text.text = "알람음 : " + name
+                media_path = path
+                prefs.setString("media_path", media_path)
+                prefs.setString("media_name", name)
+
+            }
         }
     }
 }

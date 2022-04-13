@@ -20,6 +20,7 @@ class RingtonePlayingService : Service() {
     var mediaPlayer: MediaPlayer? = null
     var startId = 0
     var isRunning = false
+    lateinit var path : String
 
     // 바인더 설정
     private val binder : IBinder = LocalBinder()
@@ -42,6 +43,8 @@ class RingtonePlayingService : Service() {
         Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@시작한다")
         var startId : Int
         val getState = intent.getStringExtra("state")!!
+        Log.d("서비스에서 시작할 때@@@@@@@@ ", "@@@@@@@@@@@@@@@@@@@@@@@@")
+
         startId = when (getState) {
             "alarm-on" -> 1
             "alarm-off" -> 0
@@ -50,8 +53,18 @@ class RingtonePlayingService : Service() {
 
         // 알람음 재생 X , 알람음 시작 클릭
         if (!isRunning && startId == 1) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.testsound)
+            mediaPlayer = MediaPlayer()
+            path = intent.getStringExtra("path")!!
+            if (path == "defult"){
+                mediaPlayer = MediaPlayer.create(this, R.raw.samplesound)
+            }
+            else{
+                mediaPlayer!!.setDataSource(path)
+                mediaPlayer!!.prepare()
+            }
             mediaPlayer!!.start()
+//            mediaPlayer = MediaPlayer.create(this, R.raw.testsound)
+//            mediaPlayer!!.start()
             mediaPlayer!!.isLooping = true
             isRunning = true
             this.startId = 0
