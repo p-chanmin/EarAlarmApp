@@ -8,35 +8,28 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 
 
 class AlarmReceiver : BroadcastReceiver() {
-
     companion object {
-        const val TAG = "AlarmReceiver"
         const val NOTIFICATION_ID = 0
         const val PRIMARY_CHANNEL_ID = "Alarm_channel"
     }
-
+    // NotificationManager 설정
     private lateinit var context: Context
-//    lateinit var state: String
-//    lateinit var path: String
-
     lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
         this.context = context
-        Log.d(TAG, "Received intent : $intent")
+
+        // NotificationManager 초기화
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE) as NotificationManager
+        // PendingIntent로 부터 받은 intent의 정보 저장
         var state = intent.getStringExtra("state")
         var path = intent.getStringExtra("path")
         var volume = intent.getStringExtra("volume")
-        Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@ $path")
-        Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@  $state")
-        Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@  $volume")
 
         // RingtonePlayingService 서비스 intent 생성
         val service_intent = Intent(context, RingtonePlayingService::class.java)
@@ -48,7 +41,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
         // ringtone 서비스 시작
         this.context.startService(service_intent)
-
         // 오레오 버전 이상부터는 StartForegroundService를 사용해야한다고 하는데
         // StartForegroundService를 사용하면 오류 발생
         // StartService 사용하면 일단 재생됨
@@ -66,7 +58,7 @@ class AlarmReceiver : BroadcastReceiver() {
             deliverNotification(context)
         }
     }
-
+    // Notification 출력
     private fun deliverNotification(context: Context) {
         val contentIntent = Intent(context, MainActivity::class.java)
             .setAction(Intent.ACTION_MAIN)
@@ -91,6 +83,7 @@ class AlarmReceiver : BroadcastReceiver() {
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 
+    // Notification 채널 생성
     fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
