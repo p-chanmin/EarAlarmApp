@@ -245,10 +245,10 @@ class MainActivity : AppCompatActivity() {
             // 현재 설정된 타이머를 분단위로 가지고 옴
             val sleepMinTime = tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()
 
-//            val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 실제 배포용
-//                    + sleepMinTime * 60 * 1000)
-            val triggerTime = (SystemClock.elapsedRealtime()  // 테스트용
-                    + sleepMinTime * 1000)
+            val triggerTime = (SystemClock.elapsedRealtime()  // 분단위 -> 초단위 * 60 트리거 시간 실제 배포용
+                    + sleepMinTime * 60 * 1000)
+//            val triggerTime = (SystemClock.elapsedRealtime()  // 테스트용
+//                    + sleepMinTime * 1000)
 
             // 알람매니저가 pendingIntent를 triggerTime 후에 보냄, 버전별로 실행을 다르게 함
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
