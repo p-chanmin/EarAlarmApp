@@ -4,6 +4,7 @@ package kr.ac.tukorea.android.earalarm
 import android.app.Service
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
@@ -43,6 +44,7 @@ class RingtonePlayingService : Service() {
         Log.d(AlarmReceiver.TAG, "@@@@@@@@@@@@@@시작한다")
         var startId : Int
         val getState = intent.getStringExtra("state")!!
+        val getVolume = intent.getStringExtra("volume")!!
         Log.d("서비스에서 시작할 때@@@@@@@@ ", "@@@@@@@@@@@@@@@@@@@@@@@@")
 
         startId = when (getState) {
@@ -51,8 +53,15 @@ class RingtonePlayingService : Service() {
             else -> 0
         }
 
+        // 오디오 매니저 설정
+        val mAudioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+
         // 알람음 재생 X , 알람음 시작 클릭
         if (!isRunning && startId == 1) {
+            // 알람 볼륨 설정
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                (mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*(0.01 * getVolume.toInt())).toInt(),
+                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE)
             mediaPlayer = MediaPlayer()
             path = intent.getStringExtra("path")!!
             if (path == "defult"){
@@ -71,6 +80,9 @@ class RingtonePlayingService : Service() {
             Log.d(AlarmReceiver.TAG, "미디어 재생")
             //alarmOnMain()
         } else if (isRunning && startId == 0) { // 알람 울릴때 끄라고 했을 때
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                (getVolume).toInt(),
+                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE)
             mediaPlayer!!.stop()
             mediaPlayer!!.reset()
             mediaPlayer!!.release()

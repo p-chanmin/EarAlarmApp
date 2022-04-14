@@ -5,16 +5,14 @@ import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.SystemClock
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -47,6 +45,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var alarm_volume_text : TextView
     lateinit var setmedia : TextView
     lateinit var media_path : String
+    lateinit var volume : String
+    lateinit var volumeBeforeAlarm : String
+    lateinit var volume_seek : SeekBar
 
 
     companion object {
@@ -128,14 +129,22 @@ class MainActivity : AppCompatActivity() {
         tPicker.setIs24HourView(true)
         startTimerbtn.setClickable(false)
 
+        // 오디오 매니저 설정
+        val mAudioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         // 알람 매니저, 알람 Intent 설정
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intentAlarm = Intent(this, AlarmReceiver::class.java)  // 알람 조건이 충족되었을 때, 리시버로 전달될 인텐트를 설정
         Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("path")}")
         Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("state")}")
+        
+        // 알람음과 알람볼륨 설정을 가져오고, 없다면 기본값을 가져옴
         media_path = prefs.getString("media_path", "defult")
-        Log.d("MainActivity@@@@@@@@@@", "미디어 재생 경로 $media_path")
+        volume = prefs.getString("volume", "80")
+        // 알람이 울리기 전 미디어 볼륨 가져옴
+        volumeBeforeAlarm = prefs.getString("volumeBeforeAlarm", mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toString())
+        // 인터페이스 반영
         alarm_media_text.text = "알람음 : " + prefs.getString("media_name", "기본음")
+        alarm_volume_text.text = "알람볼륨 : " + prefs.getString("volume", "80")
 
         // 타임 픽커가 바뀌면 종료 시각 반영
         tPicker.setOnTimeChangedListener { timePicker, hour, min ->
@@ -211,27 +220,47 @@ class MainActivity : AppCompatActivity() {
 
         // 알람 설정 버튼 이벤트
         settingbtn.setOnClickListener {
+            // 저장소 공간 허용
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), Context.MODE_PRIVATE)
+
             var dlg = AlertDialog.Builder(this)
             dlg.setTitle("알람 설정")
             settingView = View.inflate(this, R.layout.dialog, null)
             dlg.setIcon(R.drawable.clock_with_earphone)
             dlg.setView(settingView)
+
             mediabtn = settingView.findViewById<Button>(R.id.setmedia)
+            volume_seek = settingView.findViewById<SeekBar>(R.id.volume_seek)
             mediabtn.text = "알람음 설정 : " + prefs.getString("media_name", "기본음")
+            volume_seek.setProgress(Integer.parseInt(volume))
             mediabtn.setOnClickListener {
                 var i = Intent(this, MyMusicPlayer::class.java)
                 Log.d("updateSongList : ", "CHECK1")
                 startActivityForResult(i, 0)
             }
+            volume_seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                    Log.d("SeekBark : ", "volumeSet : $p1")
+                    prefs.setString("volume", p1.toString())
+                    volume = p1.toString()
+                    alarm_volume_text.text = "알람볼륨 : " + p1.toString()
+                }
+                override fun onStartTrackingTouch(p0: SeekBar?) {}
+                override fun onStopTrackingTouch(p0: SeekBar?) {}
+            })
             dlg.setPositiveButton("설정", null)
             dlg.show()
         }
         
         // 타이머 시작 버튼 이벤트
         startTimerbtn.setOnClickListener {
+            // 알람이 울리기 전 미디어 볼륨 저장
+            prefs.setString("volumeBeforeAlarm", mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toString())
+            volumeBeforeAlarm = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toString()
+            // 알람 인텐트에 미디어 경로, 상태, 볼륨을 저장
             intentAlarm.putExtra("path", media_path)
             intentAlarm.putExtra("state", "alarm-on")
+            intentAlarm.putExtra("volume", volume)
             Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("path")}")
             Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm.getStringExtra("state")}")
             Log.d("시작 버튼 눌렀을 때@@@@@@@@@@", "미디어 재생 경로 ${intentAlarm}")
@@ -289,6 +318,7 @@ class MainActivity : AppCompatActivity() {
             prefs.setString("state", "alarm_off")
             // pendingIntent에 알람 off 상태를 저장해서 보냄
             intentAlarm.putExtra("state", "alarm-off")
+            intentAlarm.putExtra("volume", volumeBeforeAlarm)
             var pendingIntent = PendingIntent.getBroadcast(
                 this, AlarmReceiver.NOTIFICATION_ID, intentAlarm,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT

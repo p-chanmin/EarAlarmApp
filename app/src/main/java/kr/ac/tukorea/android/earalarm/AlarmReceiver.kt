@@ -33,8 +33,10 @@ class AlarmReceiver : BroadcastReceiver() {
             Context.NOTIFICATION_SERVICE) as NotificationManager
         var state = intent.getStringExtra("state")
         var path = intent.getStringExtra("path")
+        var volume = intent.getStringExtra("volume")
         Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@ $path")
         Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@  $state")
+        Log.d(TAG, "알람 리시버에서 받을때@@@@@@@@  $volume")
 
         // RingtonePlayingService 서비스 intent 생성
         val service_intent = Intent(context, RingtonePlayingService::class.java)
@@ -42,6 +44,7 @@ class AlarmReceiver : BroadcastReceiver() {
         // RingtonePlayinService로 extra string값 보내기
         service_intent.putExtra("state", state)
         service_intent.putExtra("path", path)
+        service_intent.putExtra("volume", volume)
 
         // ringtone 서비스 시작
         this.context.startService(service_intent)
