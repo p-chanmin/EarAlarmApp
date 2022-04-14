@@ -23,11 +23,10 @@
 
         <activity android:name=".MyMusicPlayer"
             android:requestLegacyExternalStorage="true"></activity>
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask"/>
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
