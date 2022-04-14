@@ -6,25 +6,6 @@
     android:background="@color/white"
     android:padding="15dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이어폰이 연결 되었을 때만 동작"
-            android:textColor="@color/normal_text"
-            android:layout_marginRight="10dp"></TextView>
-        <CheckBox
-            android:id="@+id/earPhoneMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </CheckBox>
-    </LinearLayout>
-
     <Button
         android:id="@+id/setmedia"
         android:layout_width="match_parent"
@@ -49,8 +30,8 @@
             android:textColor="@color/normal_text"
             android:layout_marginRight="10dp"></TextView>
         <SeekBar
+            android:id="@+id/volume_seek"
             android:layout_marginTop="5dp"
-            android:id="@+id/alarm_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </SeekBar>
