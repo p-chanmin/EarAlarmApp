@@ -247,6 +247,7 @@
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
                         android:textColor="@color/white"
+                        android:enabled="false"
                         ></Button>
                     <Button
                         android:id="@+id/setting1"
