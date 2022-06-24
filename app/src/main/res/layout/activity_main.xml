@@ -157,7 +157,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:gravity="right">
                     <TextView
                         android:id="@+id/alarm_volume_text"
@@ -172,7 +172,8 @@
                         android:layout_height="wrap_content"
                         android:text="알람음 : textsound.mp3"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:layout_marginRight="20dp"></TextView>
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="5dp"></TextView>
 
                 </LinearLayout>
                 <LinearLayout
