@@ -43,7 +43,7 @@ class RingtonePlayingService : Service() {
             // alarmReceiver 에서 path 정보를 저장
             path = intent.getStringExtra("path")!!
             // path가 defult인 경우와 절대경로인 경우
-            if (path == "defult"){  // defult인 경우 samplesound 저장
+            if (path == getString(R.string.baseMusic)){  // defult인 경우 samplesound 저장
                 mediaPlayer = MediaPlayer.create(this, R.raw.samplesound)
             }
             else{   // 절대경로인 경우 해당 경로의 미디어 저장

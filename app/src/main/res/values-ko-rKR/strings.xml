@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ear Alarm</string>
+    <string name="timertext_default">00분 후에 알람이 울립니다</string>
+    <string name="timertext">%d분 후에 알람이 울립니다</string>
+    <string name="endtimetext_default">종료 시각 : 오후 00:00</string>
+    <string name="endtimetext">종료 시각 : %s</string>
+    <string name="PM">오후</string>
+    <string name="AM">오전</string>
+    <string name="startTimer">타이머 시작</string>
+    <string name="setting1">알람설정</string>
+    <string name="reset">초기화</string>
+    <string name="alarm_volume_text">알람볼륨 : %s</string>
+    <string name="alarm_media_text">알람음 : %s</string>
+    <string name="AlarmSettings">알람 설정</string>
+    <string name="baseMusic">기본음</string>
+    <string name="mediabtn">알람음 설정 : %s</string>
+    <string name="Alarm_volume_settings">알람 볼륨 설정</string>
+    <string name="AlarmOff">알람이 해제되었습니다</string>
+    <string name="alarmTextmin">%s분 알람</string>
+    <string name="turnOffAlarm">알람 해제</string>
+    <string name="alarmTurnOffText">알람이 울립니다</string>
+    <string name="notiTitle">알람이 울렸습니다</string>
+    <string name="notiContent">클릭하여 알람을 해제하세요.</string>
+    <string name="settingBtn">설정</string>
+</resources>

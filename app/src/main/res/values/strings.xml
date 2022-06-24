@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Ear Alarm</string>
+    <string name="timertext_default">The alarm will go off in 00 minutes</string>
+    <string name="timertext">The alarm will go off in %d minutes</string>
+    <string name="endtimetext_default">End time : PM 00:00</string>
+    <string name="endtimetext">End time : %s</string>
+    <string name="PM">PM</string>
+    <string name="AM">AM</string>
+    <string name="startTimer">Timer start</string>
+    <string name="setting1">Setting</string>
+    <string name="reset">reset</string>
+    <string name="alarm_volume_text">Alarm volume : %s</string>
+    <string name="alarm_media_text">Alarm sound : %s</string>
+    <string name="AlarmSettings">Alarm Settings</string>
+    <string name="baseMusic">Default music</string>
+    <string name="mediabtn">Alarm sound setting : %s</string>
+    <string name="Alarm_volume_settings">Alarm volume setting</string>
+    <string name="AlarmOff">The alarm is off</string>
+    <string name="alarmTextmin">%s minute alarm</string>
+    <string name="turnOffAlarm">Turn off the alarm</string>
+    <string name="alarmTurnOffText">The alarm goes off</string>
+    <string name="notiTitle">The alarm went off</string>
+    <string name="notiContent">Click to turn off the alarm.</string>
+    <string name="settingBtn">Complete</string>
 </resources>

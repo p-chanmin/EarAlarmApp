@@ -105,14 +105,14 @@ class MainActivity : AppCompatActivity() {
         val intentAlarm = Intent(this, AlarmReceiver::class.java)
         
         // 알람음과 알람볼륨 설정을 가져오고, 없다면 기본값을 가져옴
-        media_path = prefs.getString("media_path", "defult")
+        media_path = prefs.getString("media_path", getString(R.string.baseMusic))
         volume = prefs.getString("volume", "80")
         // 알람이 울리기 전 미디어 볼륨 가져옴
         volumeBeforeAlarm = prefs.getString("volumeBeforeAlarm", mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toString())
         
         // 인터페이스 반영
-        alarm_media_text.text = "알람음 : " + prefs.getString("media_name", "기본음")
-        alarm_volume_text.text = "알람볼륨 : " + prefs.getString("volume", "80")
+        alarm_media_text.text = String.format(getString(R.string.alarm_media_text), prefs.getString("media_name", getString(R.string.baseMusic)))
+        alarm_volume_text.text = String.format(getString(R.string.alarm_volume_text), prefs.getString("volume", "80"))
 
         // 타임 픽커가 바뀌면 종료 시각 뷰 반영
         tPicker.setOnTimeChangedListener { timePicker, hour, min ->
@@ -134,20 +134,20 @@ class MainActivity : AppCompatActivity() {
             }
             //am pm 전환
             if (hourTmp == 12) {
-                ampm = "오후"
+                ampm = getString(R.string.PM)
             } else if (hourTmp > 12) {
-                ampm = "오후"
+                ampm = getString(R.string.PM)
                 hourTmp -= 12
             } else {
-                ampm = "오전"
+                ampm = getString(R.string.AM)
             }
             endtime = ampm + " " + String.format("%02d", hourTmp) + ":" +
                     String.format("%02d", minTmp)
 
-            endtimeText.text = "종료 시각 : " + endtime
+            endtimeText.text = String.format(getString(R.string.endtimetext), endtime)
 
             endtimerText.text =
-                Integer.toString(tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute()) + "분 후에 알람이 울립니다"
+                String.format(getString(R.string.timertext), tPicker.getCurrentHour() * 60 + tPicker.getCurrentMinute())
 
             // 타이머가 0시간 0분 일 경우 타이머 시작 버튼 비활성화
             if (tPicker.getCurrentHour() == 0 && tPicker.getCurrentMinute() == 0) {
@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
             
             // 다이어로그 생성
             var dlg = AlertDialog.Builder(this)
-            dlg.setTitle("알람 설정")
+            dlg.setTitle(getString(R.string.AlarmSettings))
             settingView = View.inflate(this, R.layout.dialog, null)
             dlg.setIcon(R.drawable.clock_with_earphone)
             dlg.setView(settingView)
@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
             mediabtn = settingView.findViewById<Button>(R.id.setmedia)
             volume_seek = settingView.findViewById<SeekBar>(R.id.volume_seek)
             // 설정에서 현재 상태 반영
-            mediabtn.text = "알람음 설정 : " + prefs.getString("media_name", "기본음")
+            mediabtn.text = String.format(getString(R.string.alarm_media_text), prefs.getString("media_name", getString(R.string.baseMusic)))
             volume_seek.setProgress(Integer.parseInt(volume))
             // 알람음 변경 버튼 클릭 시
             mediabtn.setOnClickListener {
@@ -216,13 +216,13 @@ class MainActivity : AppCompatActivity() {
                     // 알람 볼륨 상태를 저장하고 뷰에 반영
                     prefs.setString("volume", p1.toString())
                     volume = p1.toString()
-                    alarm_volume_text.text = "알람볼륨 : " + p1.toString()
+                    alarm_volume_text.text = String.format(getString(R.string.alarm_volume_text), p1.toString())
                 }
                 override fun onStartTrackingTouch(p0: SeekBar?) {}
                 override fun onStopTrackingTouch(p0: SeekBar?) {}
             })
             // 다이어로그 설정 버튼 추가
-            dlg.setPositiveButton("설정", null)
+            dlg.setPositiveButton(getString(R.string.settingBtn), null)
             // 다이어로그 출력
             dlg.show()
         }
@@ -237,6 +237,8 @@ class MainActivity : AppCompatActivity() {
             intentAlarm.putExtra("path", media_path)
             intentAlarm.putExtra("state", "alarm-on")
             intentAlarm.putExtra("volume", volume)
+            intentAlarm.putExtra("notiTitle", getString(R.string.notiTitle))
+            intentAlarm.putExtra("notiContent", getString(R.string.notiContent))
 
             // AlarmManager가 인텐트를 갖고 있다가 일정 시간이 흐른 뒤에 전달하기 때문에 PendingIntent로 만든다.
             var pendingIntent = PendingIntent.getBroadcast(
@@ -266,11 +268,11 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             // 토스트 메세지 출력
-            Toast.makeText(this, Integer.toString(sleepMinTime) + "분 후에 알람이 울립니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, String.format(getString(R.string.timertext), sleepMinTime), Toast.LENGTH_SHORT).show()
 
             //레이아웃 설정
-            alarmTextmin.text = sleepMinTime.toString() + "분 알람"
-            alarmTextendtime.text = "종료 시각 " + endtime
+            alarmTextmin.text = String.format(getString(R.string.alarmTextmin), sleepMinTime.toString())
+            alarmTextendtime.text = String.format(getString(R.string.endtimetext), endtime)
             prefs.setString("state", "alarm_on")
             prefs.setString("alarmTextmin", alarmTextmin.text.toString())
             prefs.setString("alarmTextendtime", alarmTextendtime.text.toString())
@@ -302,7 +304,7 @@ class MainActivity : AppCompatActivity() {
             resetbtn.callOnClick()
 
             // 토스트 메세지 출력
-            Toast.makeText(this, "알람이 해제되었습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.AlarmOff), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -315,8 +317,8 @@ class MainActivity : AppCompatActivity() {
                 var path : String = data?.getStringExtra("absolutePath").toString()
                 var name : String = data?.getStringExtra("name").toString()
                 // 레이아웃에 반영
-                mediabtn.text = "알람음 설정 : " + name
-                alarm_media_text.text = "알람음 : " + name
+                mediabtn.text = String.format(getString(R.string.mediabtn), name)
+                alarm_media_text.text = String.format(getString(R.string.alarm_media_text), name)
                 // 설정 저장
                 media_path = path
                 prefs.setString("media_path", media_path)
