@@ -1,9 +1,12 @@
 <h1 align="center">Ear Alarm</h1>
 
 <p align="center">
-  <a href="https://android-arsenal.com/api?level=16"><img alt="API" src="https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat"/></a>
-  <a href="https://github.com/p-chanmin"><img alt="Profile" src="https://img.shields.io/badge/GitHub-p--chanmin-informational?logo=github"/></a> 
-  <a><img src="https://img.shields.io/github/last-commit/beygee/survive"/></a>
+  <a href="https://github.com/p-chanmin"><img alt="Profile" src="https://img.shields.io/badge/GitHub-p--chanmin-informational?logo=github"/></a>
+  <a href="https://android-arsenal.com/api?level=16"><img alt="API" src="https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat"/></a><br> 
+    <a><img src="https://img.shields.io/badge/Android%20Studio-2021.2.1-%233DDC84?logo=Android%20Studio"/></a>
+    <a><img src="https://img.shields.io/github/languages/top/p-chanmin/EarAlarmApp"/></a>
+  <a><img src="https://img.shields.io/github/last-commit/p-chanmin/EarAlarmApp"/></a>
+  <a><img alt="Profile" src="https://img.shields.io/github/v/tag/p-chanmin/EarAlarmApp"/></a> 
 </p>
 
 
