@@ -1,45 +1,32 @@
-# Ear Alarm (이어폰 타이머 알람)
-<p><img src="https://user-images.githubusercontent.com/87304360/175566918-3fc62650-3072-4788-bfc1-edcf2f5d30f8.png" height="120px" width="120px" align="left"></p>
+<h1 align="center">Ear Alarm</h1>
+
+<p align="center">
+  <a href="https://android-arsenal.com/api?level=16"><img alt="API" src="https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://github.com/p-chanmin"><img alt="Profile" src="https://img.shields.io/badge/GitHub-p--chanmin-informational?logo=github"/></a> 
+  <a><img src="https://img.shields.io/github/last-commit/beygee/survive"/></a>
+</p>
 
 
 
-
-
-
-
-안드로이드 개인 프로젝트 (2022.04.07. ~ 2022.04.15.)
-
----
 
 ## Download
+Go to the [Google Play](https://play.google.com/store/apps/details?id=kr.ac.tukorea.android.earalarm) to download the latest App.
 
-<p><img src="https://user-images.githubusercontent.com/87304360/175567236-57d0aec2-8bec-424f-9fc9-2a30d3ee72e1.png" height="200px" width="400px" align="left"></p>
-
-
-
-https://play.google.com/store/apps/details?id=kr.ac.tukorea.android.earalarm
-
+<p align="center">
+<img src="https://user-images.githubusercontent.com/87304360/175567236-57d0aec2-8bec-424f-9fc9-2a30d3ee72e1.png"/>
+</p>
 
 
 
+## Story Board
 
----
-
-## Version
-
-<img src="https://img.shields.io/badge/version-v1.0.0-g" align="left">(2022.04.18.)
-
-<img src="https://img.shields.io/badge/version-v1.1.0-g" align="left">(2022.06.24.)
+<p align="center"> 
+	<img src="https://user-images.githubusercontent.com/87304360/175566531-084670dc-23f1-4730-8690-6c5b7ee104fc.png"/>
+</p>
 
 
 
----
+## MAD Score
+![summary](https://user-images.githubusercontent.com/87304360/180384479-e48c0c44-5099-4d59-80a2-48e64b158cf5.png)
 
-## StoryBoard
-
-![스토리보드](https://user-images.githubusercontent.com/87304360/175566531-084670dc-23f1-4730-8690-6c5b7ee104fc.png)
-
-
-
----
 
