@@ -16,6 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EarAlarm">
         <service android:name=".RingtonePlayingService" />
+
+        <!-- 구글 애드몹 메타 데이터 -->
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
+
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"

@@ -9,11 +9,16 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +49,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var volumeBeforeAlarm : String
     lateinit var volume_seek : SeekBar
 
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
+
     companion object {
         lateinit var prefs: PreferenceUtil
     }
@@ -52,6 +60,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val adRequest = AdRequest.Builder().build()
+        // 애드몹 출력 함수
+        fun showAdMob(): Boolean{
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(this)
+                Log.d(TAG, "The interstitial ad Show complite")
+                return true
+            } else {
+                Log.d(TAG, "No Ad loaded")
+                return false
+            }
+        }
+        fun loadAdMob(){
+            InterstitialAd.load(this,getString(R.string.admob_EndAlarm), adRequest, object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, adError?.toString())
+                    mInterstitialAd = null
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                }
+            })
+        }
 
         // 사용자 설정값 저장용
         prefs = PreferenceUtil(applicationContext)
@@ -86,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                 alarmOnView.visibility = View.VISIBLE
                 alarmTextmin.text = prefs.getString("alarmTextmin", "00분 알람")
                 alarmTextendtime.text = prefs.getString("alarmTextendtime", "종료 시각 : 00:00")
+                loadAdMob()
             }
         }
         // 타임픽커 기본 설정
@@ -280,6 +315,9 @@ class MainActivity : AppCompatActivity() {
             // 뷰 설정
             alarmOffView.visibility = View.GONE
             alarmOnView.visibility = View.VISIBLE
+
+            loadAdMob()
+
         }
 
         // 알람 해제 버튼 클릭
@@ -305,8 +343,15 @@ class MainActivity : AppCompatActivity() {
 
             // 토스트 메세지 출력
             Toast.makeText(this, getString(R.string.AlarmOff), Toast.LENGTH_SHORT).show()
+
+            showAdMob()
+
         }
+
+
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
