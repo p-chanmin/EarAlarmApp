@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
@@ -28,8 +29,18 @@ android {
         multiDexEnabled = true
     }
 
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = getPropertyKey("SIGNED_KEY_ALIAS")
+            keyPassword = getPropertyKey("SIGNED_KEY_PASSWORD")
+            storePassword = getPropertyKey("SIGNED_STORE_PASSWORD")
+            storeFile = file(getPropertyKey("SIGNED_STORE_FILE"))
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
