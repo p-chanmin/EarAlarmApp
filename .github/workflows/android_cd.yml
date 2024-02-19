@@ -2,8 +2,8 @@ name: Build & upload to Firebase App Distribution
 
 on:
   push:
-    branches: [ main ]
-
+    tags:
+      - "v*.*.*"
 jobs:
   build:
     runs-on: ubuntu-latest
