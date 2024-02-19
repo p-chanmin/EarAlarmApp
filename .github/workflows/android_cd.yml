@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
-          path: android/app/build/outputs/apk/release/
+          path: app/release/
           if-no-files-found: error
 
       - name: Create Github Release
@@ -51,7 +51,7 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            app/build/outputs/apk/release/app-release.apk
+            app/release/app-release.apk
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
