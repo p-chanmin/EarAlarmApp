@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         fun loadAdMob(){
-            InterstitialAd.load(this,getString(R.string.admob_EndAlarm), adRequest, object : InterstitialAdLoadCallback() {
+            InterstitialAd.load(this, getString(R.string.admob_alarm_id), adRequest, object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d(TAG, adError?.toString())
+                    Log.d(TAG, adError.toString())
                     mInterstitialAd = null
                 }
 

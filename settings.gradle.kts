@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Ear Alarm"
-include ':app'
+include(":app")
