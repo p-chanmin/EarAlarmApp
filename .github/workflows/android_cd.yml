@@ -39,6 +39,9 @@ jobs:
       - name: Build Release APK
         run: ./gradlew :app:assembleRelease
 
+      - name: Find APK
+        run: find . -name "*.apk"
+
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
