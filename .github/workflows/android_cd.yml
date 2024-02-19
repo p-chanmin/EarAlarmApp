@@ -34,6 +34,13 @@ jobs:
       - name: Build Release APK
         run: ./gradlew :app:assembleRelease
 
+      - name: Upload Release Build to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          path: android/app/build/outputs/apk/release/
+          if-no-files-found: error
+
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
         with:
