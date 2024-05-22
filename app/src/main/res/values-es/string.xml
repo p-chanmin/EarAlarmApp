@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ear Alarm</string>
+
+    <string name="timer_start">Iniciar temporizador</string>
+    <string name="timer_reset">Reiniciar</string>
+    <string name="timer_1_hour_plus">+1 Hora</string>
+    <string name="timer_30_minute_plus">+30 Min</string>
+    <string name="timer_10_minute_plus">+10 Min</string>
+    <string name="timer_5_minute_plus">+5 Min</string>
+    <string name="timer_info_minute">La alarma sonará en %d minutos</string>
+    <string name="timer_info_end_time">Hora de finalización: %s</string>
+
+    <string name="alarm_info_minute">Alarma de %d minuto(s)</string>
+    <string name="dismiss_alarm">Desactivar alarma</string>
+
+    <string name="setting_alarm_text">Parámetros</string>
+    <string name="setting_alarm_volume">Volumen de la alarma: %s</string>
+    <string name="setting_alarm_media">Sonido de la alarma: %s</string>
+    <string name="setting_complete_text">Completo</string>
+    <string name="setting_default_sound">Sonido predeterminado</string>
+
+    <string name="notification_title">Alarma sonando</string>
+    <string name="notification_content">Haga clic para desactivar la alarma.</string>
+
+    <string name="notification_channel_timer_alarm_name">Alarma del temporizador</string>
+    <string name="notification_channel_timer_alarm_description">Canal de notificación para alarmas del temporizador.</string>
+
+    <string name="permission_notification_title_request">Permiso de notificación requerido</string>
+    <string name="permission_notification_message_request">Permita las notificaciones para recibir alertas cuando el temporizador suene. ¿Le gustaría permitirlo?</string>
+    <string name="permission_notification_denied">Permita las notificaciones en\nParámetros - Información de la aplicación - Notificaciones</string>
+
+    <string name="permission_exact_alarm_title_request">Permiso de alarma exacta y recordatorio requerido</string>
+    <string name="permission_exact_alarm_message_request">Se requiere permiso para usar el servicio de alarma. ¿Le gustaría ir a la pantalla de configuración?</string>
+    <string name="permission_exact_alarm_denied">Solicitud de permiso denegada</string>
+
+    <string name="permission_positive">Sí</string>
+    <string name="permission_negative">No</string>
+</resources>

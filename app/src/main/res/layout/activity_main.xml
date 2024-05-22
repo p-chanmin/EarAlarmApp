@@ -1,286 +1,278 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="kr.ac.tukorea.android.earalarm.presentation.main.MainViewModel" />
+
+        <import type="android.view.View" />
+
+        <import type="kr.ac.tukorea.android.earalarm.presentation.main.model.ViewType" />
+    </data>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <!-- 알람 설정 시 화면 -->
+        <!-- Alarm Measuring Screen -->
         <LinearLayout
-            android:id="@+id/tab_alarm_on"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="32dp"
+            android:background="@color/background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.viewType == ViewType.MEASURING ?View.VISIBLE:View.GONE}"
+            tools:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/nanumbarun_gothic_bold"
+                android:text="@{viewModel.measuringUiState.leftTime}"
+                android:textColor="@color/normal_text"
+                android:textSize="30sp"
+                tools:text="00:00:00" />
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="64dp"
+                android:layout_marginBottom="12dp"
+                android:max="100"
+                android:progress="@{viewModel.measuringUiState.progress}"
+                tools:progress="80" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/nanumbarun_gothic_bold"
+                android:text="@{@string/alarm_info_minute(viewModel.measuringUiState.minute)}"
+                android:textColor="@color/normal_text"
+                android:textSize="30sp"
+                tools:text="@string/alarm_info_minute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/nanumbarun_gothic_bold"
+                android:text="@{@string/timer_info_end_time(viewModel.measuringUiState.endTimeString)}"
+                android:textColor="@color/normal_text"
+                android:textSize="20sp"
+                tools:text="@string/timer_info_end_time" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/normal_text"
+                android:fontFamily="@font/nanumbarun_gothic_bold"
+                android:onClick="@{() -> viewModel.dismissAlarm()}"
+                android:text="@string/dismiss_alarm"
+                android:textColor="@color/background" />
+
+        </LinearLayout>
+
+        <!-- Main Screen -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
             android:orientation="vertical"
-            android:layout_margin="30dp"
-            android:visibility="gone"
-            android:gravity="center">
+            android:visibility="@{viewModel.viewType == ViewType.MAIN ?View.VISIBLE:View.GONE}"
+            tools:visibility="visible">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                >
-                <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/clock_with_earphone"
-                    android:layout_margin="10dp"></ImageView>
-
-                <TextView
-                    android:id="@+id/alarm_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0분 알람"
-                    android:textSize="30dp"
-                    android:fontFamily="@font/nanumbarun_gothic_bold"
-                    android:textColor="@color/normal_text"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center">
-                </TextView>
-                <TextView
-                    android:id="@+id/alarm_endtime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="종료 시각 00:00"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/nanumbarun_gothic_bold"
-                    android:textColor="@color/normal_text"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center">
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/alarmTurnOffText"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/nanumbarun_gothic_bold"
-                    android:textColor="@color/normal_text"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center">
-                </TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/background"
-                android:layout_margin="20dp">
-
-                <Button
-                    android:id="@+id/alarm_off_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/turnOffAlarm"
-                    android:backgroundTint="@color/normal_text"
-                    android:textColor="@color/background"
-                    android:fontFamily="@font/nanumbarun_gothic_bold">
-                </Button>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-        <!-- 타이머 알람 레이아웃 -->
-        <LinearLayout
-            android:id="@+id/tab_timer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background"
-            android:visibility="visible"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:orientation="vertical"
+                android:layout_margin="32dp"
                 android:layout_weight="1"
-                android:layout_margin="30dp"
+                android:background="@color/background"
                 android:gravity="center"
-                android:layout_gravity="center"
-                >
+                android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/timertext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="@string/timertext_default"
-                    android:textColor="@color/normal_text"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="32dp"
                     android:fontFamily="@font/nanumbarun_gothic_bold"
-                    android:layout_marginTop="30dp"
-                    android:layout_margin="10dp"
                     android:gravity="center"
-                    ></TextView>
+                    android:text="@{@string/timer_info_minute(viewModel.mainUiState.hour * 60 + viewModel.mainUiState.minute)}"
+                    android:textColor="@color/normal_text"
+                    android:textSize="16sp"
+                    tools:text="@string/timer_info_minute" />
+
                 <TextView
-                    android:id="@+id/endtimetext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:text="@string/endtimetext_default"
-                    android:textColor="@color/normal_text"
-                    android:fontFamily="@font/nanumbarun_gothic_bold"
+                    android:layout_margin="8dp"
                     android:layout_marginTop="30dp"
-                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nanumbarun_gothic_bold"
                     android:gravity="center"
-                    ></TextView>
+                    android:text="@{@string/timer_info_end_time(viewModel.mainUiState.estimatedEndTime)}"
+                    android:textColor="@color/normal_text"
+                    android:textSize="20sp"
+                    tools:text="@string/timer_info_end_time" />
 
                 <TimePicker
-                    android:id="@+id/timePicker"
-                    android:timePickerMode="spinner"
+                    android:id="@+id/time_picker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    ></TimePicker>
+                    android:hour="@{viewModel.mainUiState.hour}"
+                    android:minute="@{viewModel.mainUiState.minute}"
+                    android:onTimeChanged="@{(_, hour, min) -> viewModel.updateTimePicker(hour, min)}"
+                    android:timePickerMode="spinner" />
             </LinearLayout>
-            <!-- 버튼 영역 -->
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_weight="2"
+                android:background="@color/background"
                 android:gravity="center"
-                android:layout_weight="1"
-                >
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="right">
+                    android:layout_marginHorizontal="16dp"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:id="@+id/alarm_volume_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/alarm_volume_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:layout_marginRight="20dp"></TextView>
+                        android:text="@{@string/setting_alarm_volume(viewModel.mainUiState.volume)}"
+                        tools:text="@string/setting_alarm_volume" />
+
                     <TextView
-                        android:id="@+id/alarm_media_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/alarm_media_text"
+                        android:layout_marginTop="4dp"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="5dp"></TextView>
+                        android:text="@{@string/setting_alarm_media(viewModel.mainUiState.alarmMedia != null ? viewModel.mainUiState.alarmMedia.name : @string/setting_default_sound)}"
+                        tools:text="@string/setting_alarm_media" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="10dp"
-                    >
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/add1hour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:text="+1 hour"
+                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(60)}"
+                        android:text="@string/timer_1_hour_plus"
                         android:textColor="@color/white"
-                        android:textSize="15dp"></Button>
+                        android:textSize="15sp" />
+
                     <Button
-                        android:id="@+id/add30min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+30 min"
-                        android:layout_margin="5dp"
-                        android:textSize="15dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(30)}"
+                        android:text="@string/timer_30_minute_plus"
                         android:textColor="@color/white"
-                        ></Button>
+                        android:textSize="15sp" />
+
                     <Button
-                        android:id="@+id/add10min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+10 min"
-                        android:layout_margin="5dp"
-                        android:textSize="15dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(10)}"
+                        android:text="@string/timer_10_minute_plus"
                         android:textColor="@color/white"
-                        ></Button>
+                        android:textSize="15sp" />
+
                     <Button
-                        android:id="@+id/add5min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+5  min"
-                        android:layout_margin="5dp"
-                        android:textSize="15dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(5)}"
+                        android:text="@string/timer_5_minute_plus"
                         android:textColor="@color/white"
-                        ></Button>
+                        android:textSize="15sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="10dp"
-                    >
+                    android:layout_marginHorizontal="8dp"
+                    android:orientation="horizontal">
+
                     <Button
-                        android:id="@+id/startTimer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/startTimer"
-                        android:textSize="15dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="10"
                         android:backgroundTint="@color/normal_text"
+                        android:enabled="@{viewModel.mainUiState.timerStartEnabled}"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:onClick="@{() -> viewModel.startTimerAlarm()}"
+                        android:text="@string/timer_start"
                         android:textColor="@color/white"
-                        android:enabled="false"
-                        ></Button>
+                        android:textSize="15sp" />
+
                     <Button
-                        android:id="@+id/setting1"
+                        android:id="@+id/btn_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/setting1"
-                        android:textSize="15dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:text="@string/setting_alarm_text"
                         android:textColor="@color/white"
-                        ></Button>
+                        android:textSize="15sp" />
+
                     <Button
-                        android:id="@+id/reset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/reset"
-                        android:textSize="15dp"
-                        android:layout_margin="5dp"
-                        android:layout_weight="2"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
                         android:backgroundTint="@color/normal_text"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
+                        android:onClick="@{() -> viewModel.resetTimePicker()}"
+                        android:text="@string/timer_reset"
                         android:textColor="@color/white"
-                        ></Button>
+                        android:textSize="15sp" />
                 </LinearLayout>
-
 
             </LinearLayout>
 
-
         </LinearLayout>
-    </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

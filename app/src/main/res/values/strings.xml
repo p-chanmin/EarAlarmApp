@@ -1,25 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ear Alarm</string>
-    <string name="timertext_default">The alarm will go off in 00 minutes</string>
-    <string name="timertext">The alarm will go off in %d minutes</string>
-    <string name="endtimetext_default">End time : PM 00:00</string>
-    <string name="endtimetext">End time : %s</string>
-    <string name="PM">PM</string>
-    <string name="AM">AM</string>
-    <string name="startTimer">Timer start</string>
-    <string name="setting1">Setting</string>
-    <string name="reset">reset</string>
-    <string name="alarm_volume_text">Alarm volume : %s</string>
-    <string name="alarm_media_text">Alarm sound : %s</string>
-    <string name="AlarmSettings">Alarm Settings</string>
-    <string name="baseMusic">Default music</string>
-    <string name="mediabtn">Alarm sound setting : %s</string>
-    <string name="Alarm_volume_settings">Alarm volume setting</string>
-    <string name="AlarmOff">The alarm is off</string>
-    <string name="alarmTextmin">%s minute alarm</string>
-    <string name="turnOffAlarm">Turn off the alarm</string>
-    <string name="alarmTurnOffText">The alarm goes off</string>
-    <string name="notiTitle">The alarm went off</string>
-    <string name="notiContent">Click to turn off the alarm.</string>
-    <string name="settingBtn">Complete</string>
+
+    <string name="timer_start">Start Timer</string>
+    <string name="timer_reset">Reset</string>
+    <string name="timer_1_hour_plus">+1 Hour</string>
+    <string name="timer_30_minute_plus">+30 Min</string>
+    <string name="timer_10_minute_plus">+10 Min</string>
+    <string name="timer_5_minute_plus">+5 Min</string>
+    <string name="timer_info_minute">Alarm will ring in %d minutes</string>
+    <string name="timer_info_end_time">End Time: %s</string>
+
+    <string name="alarm_info_minute">%d minute(s) alarm</string>
+    <string name="dismiss_alarm">Dismiss Alarm</string>
+
+    <string name="setting_alarm_text">Setting</string>
+    <string name="setting_alarm_volume">Alarm Volume: %s</string>
+    <string name="setting_alarm_media">Alarm Sound: %s</string>
+    <string name="setting_complete_text">Complete</string>
+    <string name="setting_default_sound">Default Sound</string>
+
+    <string name="notification_title">Alarm Ringing</string>
+    <string name="notification_content">Click to dismiss the alarm.</string>
+
+    <string name="notification_channel_timer_alarm_name">Timer Alarm</string>
+    <string name="notification_channel_timer_alarm_description">Notification channel for timer alarms.</string>
+
+    <string name="permission_notification_title_request">Notification Permission Required</string>
+    <string name="permission_notification_message_request">Allow notifications to receive alerts when the timer rings. Would you like to allow?</string>
+    <string name="permission_notification_denied">Please allow notifications in\nSettings - App Info - Notifications</string>
+
+    <string name="permission_exact_alarm_title_request">Exact Alarm and Reminder Permission Required</string>
+    <string name="permission_exact_alarm_message_request">Permission is required to use the alarm service. Would you like to go to the settings screen?</string>
+    <string name="permission_exact_alarm_denied">Permission request denied</string>
+
+    <string name="permission_positive">Yes</string>
+    <string name="permission_negative">No</string>
 </resources>
