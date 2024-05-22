@@ -25,8 +25,6 @@ android {
 
         resValue("string", "admob_app_id", getPropertyKey("admob_app_id"))
         resValue("string", "admob_alarm_id", getPropertyKey("admob_alarm_id"))
-
-        multiDexEnabled = true
     }
 
     signingConfigs {
