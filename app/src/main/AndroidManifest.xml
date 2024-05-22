@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="kr.ac.tukorea.android.earalarm">
 
-    <uses-permission android:name = "android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name = "android.permission.VIBRATE"/>
-    <uses-permission android:name = "android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name = "android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name = "android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <application
+        android:name=".EarAlarmApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_main"
+        android:icon="@mipmap/ic_earalarm_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_main_round"
+        android:roundIcon="@mipmap/ic_earalarm_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EarAlarm">
-        <service android:name=".RingtonePlayingService" />
+        android:theme="@style/Theme.EarAlarm"
+        tools:targetApi="34">
 
-        <!-- 구글 애드몹 메타 데이터 -->
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
+            android:value="@string/admob_app_id" />
+
+        <service
+            android:name=".presentation.service.AlarmPlayingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
         <receiver
-            android:name=".AlarmReceiver"
-            android:enabled="true"
-            android:exported="false"></receiver>
-
-        <activity android:name=".MyMusicPlayer"
-            android:requestLegacyExternalStorage="true"></activity>
+            android:name=".presentation.broadcast.AlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:exported="true">
+            android:name=".presentation.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-
     </application>
-
 </manifest>
