@@ -29,13 +29,22 @@
 
 |                          알람 설정                           |                          알람 해제                           |                          background                          |                             설정                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/df4ecbc6-e60d-44e7-b76f-3bc71537d2a3" width="220"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/701e4e5d-c8d6-424b-8ba0-3696bf0a2494" width="220"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/71b73765-6b2b-42ef-9590-3d9fc48ee9bf" width="220"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/de4d0c3e-a2d2-417e-b9bc-0066261694b3" width="220"> |
+| <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/df4ecbc6-e60d-44e7-b76f-3bc71537d2a3" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/701e4e5d-c8d6-424b-8ba0-3696bf0a2494" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/71b73765-6b2b-42ef-9590-3d9fc48ee9bf" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/de4d0c3e-a2d2-417e-b9bc-0066261694b3" width="200"> |
 
 <br>
 
-**EarAlarm**은 다국어 지원이 되어 있어 전 세계의 사용자들이 이용할 수 있습니다.
+**EarAlarm**은 여러 언어를 지원합니다.
 
-현재 **영어(en), 한국어(ko), 스페인어(es), 프랑스어(fr), 인도네시아어(in), 일본어(ja), 중국어(간체)(zh-CN), 중국어(번체)(zh-TW)** 의 언어로 사용 가능합니다. 
+**사용 가능 언어**
+
+- **영어(en)**
+- **한국어(ko)**
+- **스페인어(es)**
+- **프랑스어(fr)**
+- **인도네시아어(in)**
+- **일본어(ja)**
+- **중국어(간체)(zh-CN)**
+- **중국어(번체)(zh-TW)**
 
 <br>
 
