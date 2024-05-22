@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ear Alarm</string>
+
+    <string name="timer_start">开始计时器</string>
+    <string name="timer_reset">重置</string>
+    <string name="timer_1_hour_plus">+1 小时</string>
+    <string name="timer_30_minute_plus">+30 分钟</string>
+    <string name="timer_10_minute_plus">+10 分钟</string>
+    <string name="timer_5_minute_plus">+5 分钟</string>
+    <string name="timer_info_minute">将在 %d 分钟后响铃</string>
+    <string name="timer_info_end_time">结束时间：%s</string>
+
+    <string name="alarm_info_minute">%d 分钟的闹钟</string>
+    <string name="dismiss_alarm">解除闹钟</string>
+
+    <string name="setting_alarm_text">设置</string>
+    <string name="setting_alarm_volume">闹钟音量：%s</string>
+    <string name="setting_alarm_media">闹钟铃声：%s</string>
+    <string name="setting_complete_text">完成</string>
+    <string name="setting_default_sound">默认声音</string>
+
+    <string name="notification_title">闹钟响了</string>
+    <string name="notification_content">点击解除闹钟。</string>
+
+    <string name="notification_channel_timer_alarm_name">计时器闹钟</string>
+    <string name="notification_channel_timer_alarm_description">计时器闹钟通知频道。</string>
+
+    <string name="permission_notification_title_request">需要通知权限</string>
+    <string name="permission_notification_message_request">允许通知以接收计时器响铃提醒。您想允许吗？</string>
+    <string name="permission_notification_denied">请在 设置 - 应用信息 - 通知 中允许通知</string>
+
+    <string name="permission_exact_alarm_title_request">需要准确闹钟和提醒权限</string>
+    <string name="permission_exact_alarm_message_request">使用闹钟服务需要权限。您想前往设置屏幕吗？</string>
+    <string name="permission_exact_alarm_denied">权限请求被拒绝</string>
+
+    <string name="permission_positive">是</string>
+    <string name="permission_negative">否</string>
+</resources>
