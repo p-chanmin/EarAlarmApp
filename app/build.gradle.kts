@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "kr.ac.tukorea.android.earalarm"
-        minSdk = 19
+        minSdk = 26
         targetSdk = 34
         versionCode = 3
         versionName = "1.2.1"
