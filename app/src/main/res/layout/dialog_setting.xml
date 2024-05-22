@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="kr.ac.tukorea.android.earalarm.presentation.main.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/setmedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="#00ff0000"
+            android:backgroundTint="@color/white"
+            android:gravity="start|center"
+            android:text="@{@string/setting_alarm_media(viewModel.mainUiState.alarmMedia != null ? viewModel.mainUiState.alarmMedia.name : @string/setting_default_sound)}"
+            android:textAllCaps="false"
+            android:textColor="@color/normal_text"
+            tools:text="@string/setting_alarm_media" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@{@string/setting_alarm_volume(viewModel.mainUiState.volume)}"
+            android:textColor="@color/normal_text"
+            tools:text="@string/setting_alarm_volume" />
+
+        <SeekBar
+            android:id="@+id/volume_seek"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:max="100"
+            android:onProgressChanged="@{(_, v, __) -> viewModel.setVolume(v)}" />
+
+    </LinearLayout>
+</layout>
