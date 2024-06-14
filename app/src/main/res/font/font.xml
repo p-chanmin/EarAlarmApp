@@ -4,14 +4,6 @@
 
     <font android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/nanumgoding"/>
-
-    <font android:fontStyle="normal"
-        android:fontWeight="400"
         android:font="@font/nanumbarun_gothic_bold"/>
-
-    <font android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/nanumbarun_gothic_ultra_light"/>
 
 </font-family>
