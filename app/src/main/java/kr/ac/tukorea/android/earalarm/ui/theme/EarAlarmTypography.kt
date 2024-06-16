@@ -41,15 +41,15 @@ val Typography = Typography(
         fontSize = 20.sp,
     ),
     labelLarge = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarunBold,
         fontSize = 18.sp,
     ),
     labelMedium = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarunBold,
         fontSize = 16.sp,
     ),
     labelSmall = TextStyle(
-        fontFamily = nanumbarunRegular,
-        fontSize = 14.sp,
+        fontFamily = nanumbarunBold,
+        fontSize = 15.sp,
     )
 )
