@@ -14,6 +14,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -33,6 +39,8 @@ import kr.ac.tukorea.android.earalarm.presentation.alarm.AlarmHelper
 import kr.ac.tukorea.android.earalarm.presentation.main.model.MainUiEvent
 import kr.ac.tukorea.android.earalarm.presentation.notification.NotificationHelper
 import kr.ac.tukorea.android.earalarm.presentation.service.AlarmPlayingService
+import kr.ac.tukorea.android.earalarm.ui.components.buttons.PrimaryButton
+import kr.ac.tukorea.android.earalarm.ui.theme.EarAlarmTheme
 import kr.ac.tukorea.android.earalarm.utils.toPath
 import javax.inject.Inject
 
@@ -80,6 +88,12 @@ class MainActivity : AppCompatActivity() {
         loadInterstitialAd()
         askNotificationPermission()
 
+        binding.composeViewTimeAdd.setContent {
+            EarAlarmTheme {
+                TimeAddButtons(viewModel = mainViewModel)
+            }
+        }
+
         binding.btnSetting.setOnClickListener {
             val binding: DialogSettingBinding = DataBindingUtil.inflate<DialogSettingBinding?>(
                 layoutInflater, R.layout.dialog_setting, null, false
@@ -96,6 +110,28 @@ class MainActivity : AppCompatActivity() {
                 setView(binding.root)
                 setPositiveButton(getString(R.string.setting_complete_text), null)
             }.show()
+        }
+    }
+
+    @Composable
+    fun TimeAddButtons(viewModel: MainViewModel) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            PrimaryButton(id = R.string.timer_1_hour_plus) {
+                viewModel.updateTimePickerWithMinute(60)
+            }
+            PrimaryButton(id = R.string.timer_30_minute_plus) {
+                viewModel.updateTimePickerWithMinute(30)
+            }
+            PrimaryButton(id = R.string.timer_10_minute_plus) {
+                viewModel.updateTimePickerWithMinute(10)
+            }
+            PrimaryButton(id = R.string.timer_5_minute_plus) {
+                viewModel.updateTimePickerWithMinute(5)
+            }
         }
     }
 

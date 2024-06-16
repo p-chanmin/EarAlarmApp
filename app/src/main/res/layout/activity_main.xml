@@ -171,60 +171,11 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/compose_view_time_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/normal_text"
-                        android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(60)}"
-                        android:text="@string/timer_1_hour_plus"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/normal_text"
-                        android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(30)}"
-                        android:text="@string/timer_30_minute_plus"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/normal_text"
-                        android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(10)}"
-                        android:text="@string/timer_10_minute_plus"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/normal_text"
-                        android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:onClick="@{() -> viewModel.updateTimePickerWithMinute(5)}"
-                        android:text="@string/timer_5_minute_plus"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                    android:layout_margin="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
