@@ -49,7 +49,7 @@ val Typography = Typography(
         fontSize = 16.sp,
     ),
     labelSmall = TextStyle(
-        fontFamily = nanumbarunBold,
-        fontSize = 15.sp,
+        fontFamily = nanumbarunRegular,
+        fontSize = 14.sp,
     )
 )
