@@ -143,7 +143,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             if (alarmHelper.checkScheduleExactAlarms()) {
                 val minute = _alarmUiState.value.hour * 60 + _alarmUiState.value.minute
-                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(minute.toLong())
+                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(minute.toLong())
+//                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(minute.toLong())
 
                 alarmHelper.setTimerAlarm(
                     TimerAlarmInfo(
