@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kr.ac.tukorea.android.earalarm.R
 import kr.ac.tukorea.android.earalarm.data.datastore.DataStoreHelper
 import kr.ac.tukorea.android.earalarm.presentation.notification.NotificationHelper
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,7 +69,8 @@ class AlarmPlayingService : Service() {
                     )
 
                     if (!mediaPlayer.isPlaying) {
-                        if (mediaFile == null) {
+                        if (mediaFile == null || !mediaFile.exists()) {
+                            dataStoreHelper.removeMediaPath()
                             mediaPlayer = MediaPlayer.create(
                                 this@AlarmPlayingService,
                                 R.raw.samplesound
