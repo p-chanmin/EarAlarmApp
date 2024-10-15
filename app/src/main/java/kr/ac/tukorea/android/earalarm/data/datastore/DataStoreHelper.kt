@@ -45,6 +45,12 @@ class DataStoreHelper @Inject constructor(
         }
     }
 
+    suspend fun removeMediaPath() {
+        dataStore.edit {
+            it.remove(MEDIA)
+        }
+    }
+
     suspend fun storeUserSettingVolume(volume: Int) {
         dataStore.edit {
             it[USER_SETTING_VOLUME] = volume

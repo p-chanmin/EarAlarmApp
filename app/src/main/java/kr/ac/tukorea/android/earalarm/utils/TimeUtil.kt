@@ -16,9 +16,9 @@ fun ZonedDateTime.getRemainingTimeFromNow(): String {
     )
 }
 
-fun getTimerProgressFromNow(startTime: ZonedDateTime, endTime: ZonedDateTime): Int {
+fun getTimerProgressFromNow(startTime: ZonedDateTime, endTime: ZonedDateTime): Float {
     val totalTime = Duration.between(startTime, endTime).toMillis().toDouble()
     val measuredTime = Duration.between(startTime, ZonedDateTime.now()).toMillis().toDouble()
-    val percent = (measuredTime / totalTime) * 100
-    return if (percent < 0) 0 else if (percent > 100) 100 else percent.toInt()
+    val percent = (measuredTime / totalTime)
+    return if (percent < 0) 0f else if (percent > 1) 1f else percent.toFloat()
 }

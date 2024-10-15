@@ -5,11 +5,11 @@
 
         <variable
             name="viewModel"
-            type="kr.ac.tukorea.android.earalarm.presentation.main.MainViewModel" />
+            type="kr.ac.tukorea.android.earalarm.presentation.main.viewmodel.MainViewModel" />
 
         <import type="android.view.View" />
 
-        <import type="kr.ac.tukorea.android.earalarm.presentation.main.model.ViewType" />
+        <import type="kr.ac.tukorea.android.earalarm.presentation.main.output.ViewType" />
     </data>
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="@{viewModel.viewType == ViewType.MEASURING ?View.VISIBLE:View.GONE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_marginHorizontal="64dp"
                 android:layout_marginBottom="12dp"
                 android:max="100"
-                android:progress="@{viewModel.measuringUiState.progress}"
+                android:progress="0"
                 tools:progress="80" />
 
             <TextView
@@ -91,7 +91,7 @@
             android:layout_height="match_parent"
             android:background="@color/background"
             android:orientation="vertical"
-            android:visibility="@{viewModel.viewType == ViewType.MAIN ?View.VISIBLE:View.GONE}"
+            android:visibility="@{viewModel.viewType == ViewType.ALARM ?View.VISIBLE:View.GONE}"
             tools:visibility="visible">
 
             <LinearLayout
@@ -111,7 +111,7 @@
                     android:layout_marginTop="32dp"
                     android:fontFamily="@font/nanumbarun_gothic_bold"
                     android:gravity="center"
-                    android:text="@{@string/timer_info_minute(viewModel.mainUiState.hour * 60 + viewModel.mainUiState.minute)}"
+                    android:text="@{@string/timer_info_minute(viewModel.alarmUiState.hour * 60 + viewModel.alarmUiState.minute)}"
                     android:textColor="@color/normal_text"
                     android:textSize="16sp"
                     tools:text="@string/timer_info_minute" />
@@ -123,7 +123,7 @@
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/nanumbarun_gothic_bold"
                     android:gravity="center"
-                    android:text="@{@string/timer_info_end_time(viewModel.mainUiState.estimatedEndTime)}"
+                    android:text="@{@string/timer_info_end_time(viewModel.alarmUiState.estimatedEndTime)}"
                     android:textColor="@color/normal_text"
                     android:textSize="20sp"
                     tools:text="@string/timer_info_end_time" />
@@ -132,8 +132,8 @@
                     android:id="@+id/time_picker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hour="@{viewModel.mainUiState.hour}"
-                    android:minute="@{viewModel.mainUiState.minute}"
+                    android:hour="@{viewModel.alarmUiState.hour}"
+                    android:minute="@{viewModel.alarmUiState.minute}"
                     android:onTimeChanged="@{(_, hour, min) -> viewModel.updateTimePicker(hour, min)}"
                     android:timePickerMode="spinner" />
             </LinearLayout>
@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:text="@{@string/setting_alarm_volume(viewModel.mainUiState.volume)}"
+                        android:text="@{@string/setting_alarm_volume(viewModel.alarmUiState.volume)}"
                         tools:text="@string/setting_alarm_volume" />
 
                     <TextView
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
-                        android:text="@{@string/setting_alarm_media(viewModel.mainUiState.alarmMedia != null ? viewModel.mainUiState.alarmMedia.name : @string/setting_default_sound)}"
+                        android:text="@{@string/setting_alarm_media(viewModel.alarmUiState.alarmMedia != null ? viewModel.alarmUiState.alarmMedia.name : @string/setting_default_sound)}"
                         tools:text="@string/setting_alarm_media" />
 
                 </LinearLayout>
@@ -238,7 +238,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="10"
                         android:backgroundTint="@color/normal_text"
-                        android:enabled="@{viewModel.mainUiState.timerStartEnabled}"
+                        android:enabled="@{viewModel.alarmUiState.timerStartEnabled}"
                         android:fontFamily="@font/nanumbarun_gothic_bold"
                         android:onClick="@{() -> viewModel.startTimerAlarm()}"
                         android:text="@string/timer_start"
