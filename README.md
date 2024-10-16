@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://github.com/p-chanmin"><img alt="Profile" src="https://img.shields.io/badge/GitHub-p--chanmin-informational?logo=github"/></a>
   <a href="https://android-arsenal.com/api?level=26"><img alt="API" src="https://img.shields.io/badge/API-26%2B-brightgreen.svg?style=flat"/></a><br> 
-    <a><img src="https://img.shields.io/badge/Android%20Studio-Hedgehog | 2023.1.1-%233DDC84?logo=Android%20Studio"/></a>
+    <a><img src="https://img.shields.io/badge/Android%20Studio-Koala | 2024.1.1-%233DDC84?logo=Android%20Studio"/></a>
     <a><img src="https://img.shields.io/github/languages/top/p-chanmin/EarAlarmApp"/></a>
   <a><img src="https://img.shields.io/github/last-commit/p-chanmin/EarAlarmApp"/></a>
   <a><img alt="Profile" src="https://img.shields.io/github/v/tag/p-chanmin/EarAlarmApp"/></a> 
