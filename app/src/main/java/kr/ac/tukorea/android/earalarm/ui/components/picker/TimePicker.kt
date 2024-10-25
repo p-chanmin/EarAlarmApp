@@ -52,7 +52,7 @@ fun <T> WheelPicker(
     ) {
         LazyColumn(
             state = state,
-            modifier = Modifier.height(itemHeight * (unfocusedCount * 2 + 1)),
+            modifier = Modifier.height(itemHeight * (unfocusedCount * 2 + 1) - 4.dp),
             flingBehavior = flingBehavior,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
