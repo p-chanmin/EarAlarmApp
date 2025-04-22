@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="kr.ac.tukorea.android.earalarm">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".EarAlarmApp"
@@ -20,30 +17,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id" />
-
-        <service
-            android:name=".presentation.service.AlarmPlayingService"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback" />
-
-        <receiver
-            android:name=".presentation.broadcast.AlarmReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name=".presentation.main.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:value="${ADMOB_APP_ID}" />
 
     </application>
 </manifest>

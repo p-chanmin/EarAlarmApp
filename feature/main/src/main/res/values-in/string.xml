@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ear Alarm</string>
+
+    <string name="timer_start">Mulai Timer</string>
+    <string name="timer_reset">Setel Ulang</string>
+    <string name="timer_1_hour_plus">+1 Jam</string>
+    <string name="timer_30_minute_plus">+30 Menit</string>
+    <string name="timer_10_minute_plus">+10 Menit</string>
+    <string name="timer_5_minute_plus">+5 Menit</string>
+    <string name="timer_info_minute">Alarm akan berbunyi dalam %d menit</string>
+    <string name="timer_info_end_time">Waktu Berakhir: %s</string>
+
+    <string name="alarm_info_minute">Alarm %d menit</string>
+    <string name="dismiss_alarm">Hentikan Alarm</string>
+
+    <string name="setting_alarm_text">Pengaturan</string>
+    <string name="setting_alarm_volume">Volume Alarm: %s</string>
+    <string name="setting_alarm_media">Suara Alarm: %s</string>
+    <string name="setting_complete_text">Selesai</string>
+    <string name="setting_default_sound">Suara Default</string>
+
+    <string name="notification_title">Alarm Berbunyi</string>
+    <string name="notification_content">Klik untuk menghentikan alarm.</string>
+
+    <string name="notification_channel_timer_alarm_name">Alarm Timer</string>
+    <string name="notification_channel_timer_alarm_description">Saluran notifikasi untuk alarm timer.</string>
+
+    <string name="permission_notification_title_request">Izin Notifikasi Diperlukan</string>
+    <string name="permission_notification_message_request">Izinkan notifikasi untuk menerima peringatan saat alarm berbunyi. Apakah Anda ingin mengizinkannya?</string>
+    <string name="permission_notification_denied">Silakan izinkan notifikasi di\nPengaturan - Info Aplikasi - Notifikasi</string>
+
+    <string name="permission_exact_alarm_title_request">Izin Alarm Tepat dan Penging Diperlukan</string>
+    <string name="permission_exact_alarm_message_request">Izin diperlukan untuk menggunakan layanan alarm. Apakah Anda ingin pergi ke layar pengaturan?</string>
+    <string name="permission_exact_alarm_denied">Permintaan izin ditolak</string>
+
+    <string name="permission_positive">Ya</string>
+    <string name="permission_negative">Tidak</string>
+</resources>
