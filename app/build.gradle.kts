@@ -37,15 +37,8 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
-            buildConfigField("String", "ADMOB_APP_ID", "\"${getPropertyKey("TEST_ADMOB_APP_ID")}\"")
-            manifestPlaceholders["ADMOB_APP_ID"] = getPropertyKey("TEST_ADMOB_APP_ID")
-        }
-
         getByName("release") {
             signingConfig = signingConfigs.getByName("debug")
-            buildConfigField("String", "ADMOB_APP_ID", "\"${getPropertyKey("RELEASE_ADMOB_APP_ID")}\"")
-            manifestPlaceholders["ADMOB_APP_ID"] = getPropertyKey("RELEASE_ADMOB_APP_ID")
             isDebuggable = false
         }
     }

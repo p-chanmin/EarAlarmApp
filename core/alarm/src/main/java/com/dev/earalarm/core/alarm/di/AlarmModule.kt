@@ -16,7 +16,7 @@ class AlarmModule {
 
     @Singleton
     @Provides
-    fun provideAlarmHelper(
+    fun provideAlarmManager(
         timerRepository: TimerRepository,
         @ApplicationContext context: Context,
     ) = EarAlarmManager(timerRepository, context)

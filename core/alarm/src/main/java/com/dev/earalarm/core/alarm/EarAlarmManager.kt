@@ -55,6 +55,7 @@ class EarAlarmManager @Inject constructor(
         )
 
         alarmManager.cancel(pendingIntent)
+        context.stopService(Intent(context, EarAlarmPlayingService::class.java))
         timerRepository.removeTimerAlarmInfo()
     }
 

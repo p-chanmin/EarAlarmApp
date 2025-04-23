@@ -3,6 +3,7 @@ package com.dev.earalarm.feature.timer.measure
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dev.earalarm.core.alarm.EarAlarmManager
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.feature.timer.model.MeasureUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeasureViewModel @Inject constructor(
-    private val timerRepository: TimerRepository
+    private val timerRepository: TimerRepository,
+    private val alarmManager: EarAlarmManager,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
@@ -81,7 +83,7 @@ class MeasureViewModel @Inject constructor(
 
     fun dismissTimerAlarm() {
         viewModelScope.launch {
-            timerRepository.removeTimerAlarmInfo()
+            alarmManager.cancelTimerAlarm()
         }
     }
 

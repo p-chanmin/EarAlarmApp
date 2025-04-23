@@ -15,7 +15,7 @@ class NotificationModule {
 
     @Singleton
     @Provides
-    fun provideNotificationHelper(
+    fun provideNotificationManager(
         @ApplicationContext context: Context,
     ) = EarAlarmNotificationManager(context)
 }
