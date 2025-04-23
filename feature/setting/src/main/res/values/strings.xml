@@ -1,2 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="setting_alarm_text">Setting</string>
+    <string name="setting_alarm_volume">Alarm Volume: %s</string>
+    <string name="setting_alarm_media">Alarm Sound: %s</string>
+    <string name="setting_default_sound">Default Sound</string>
 </resources>

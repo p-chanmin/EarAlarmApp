@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_alarm_text">設定</string>
+    <string name="setting_alarm_volume">鬧鐘音量：%s</string>
+    <string name="setting_alarm_media">鬧鐘鈴聲：%s</string>
+    <string name="setting_default_sound">預設聲音</string>
+</resources>

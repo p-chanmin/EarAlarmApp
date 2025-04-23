@@ -2,6 +2,7 @@ package com.dev.earalarm.feature.timer.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dev.earalarm.core.alarm.EarAlarmManager
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
@@ -12,6 +13,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,6 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val timerRepository: TimerRepository,
     private val earAlarmManager: EarAlarmManager,
 ): ViewModel() {
 
@@ -37,7 +42,18 @@ class HomeViewModel @Inject constructor(
     )
 
     init {
-        println("HomeViewModel Init $this")
+        loadTimerSetting()
+    }
+
+    private fun loadTimerSetting() {
+        combine(timerRepository.alarmVolume, timerRepository.mediaPath) { volume, media ->
+            _homeUiState.update {
+                it.copy(
+                    volume = volume,
+                    alarmMedia = media
+                )
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun updateNotificationPermissionState(permissionState: PermissionState, dialogState: Boolean) {

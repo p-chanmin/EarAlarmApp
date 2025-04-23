@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_alarm_text">Pengaturan</string>
+    <string name="setting_alarm_volume">Volume Alarm: %s</string>
+    <string name="setting_alarm_media">Suara Alarm: %s</string>
+    <string name="setting_default_sound">Suara Default</string>
+</resources>
