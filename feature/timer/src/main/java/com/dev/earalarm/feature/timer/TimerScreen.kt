@@ -7,23 +7,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
+import com.dev.earalarm.feature.timer.home.HomeScreen
+import com.dev.earalarm.feature.timer.measure.MeasureScreen
 
 @Composable
 internal fun TimerScreen(
     paddingValues: PaddingValues,
-    onShowErrorSnackBar: (message: String) -> Unit,
+    onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     navigateToSetting: () -> Unit,
+    timerViewModel: TimerViewModel = hiltViewModel(),
 ) {
 
-//    val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
+    val hasTimer by timerViewModel.hasTimer.collectAsStateWithLifecycle()
 
-    TimerContent(
-        navigateToSetting = navigateToSetting
-    )
+    if (!hasTimer) {
+        HomeScreen(
+            paddingValues = paddingValues,
+            onShowErrorSnackBar = onShowErrorSnackBar,
+            navigateToSetting = navigateToSetting
+        )
+    } else {
+        MeasureScreen()
+    }
 }
 
 @Composable

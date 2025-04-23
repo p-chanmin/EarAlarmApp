@@ -1,2 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="timer_start">Start Timer</string>
+    <string name="timer_reset">Reset</string>
+    <string name="timer_1_hour_plus">+1 Hour</string>
+    <string name="timer_30_minute_plus">+30 Min</string>
+    <string name="timer_10_minute_plus">+10 Min</string>
+    <string name="timer_5_minute_plus">+5 Min</string>
+    <string name="timer_info_minute">Alarm will ring in %d minutes</string>
+    <string name="timer_info_end_time">End Time: %s</string>
+
+    <string name="alarm_info_minute">%d minute(s) alarm</string>
+    <string name="dismiss_alarm">Dismiss Alarm</string>
+
+    <string name="setting_alarm_text">Setting</string>
+    <string name="setting_alarm_volume">Alarm Volume: %s</string>
+    <string name="setting_alarm_media">Alarm Sound: %s</string>
+    <string name="setting_default_sound">Default Sound</string>
+
+    <string name="permission_notification_title_request">Notification Permission Required</string>
+    <string name="permission_notification_message_request">Allow notifications to receive alerts when the timer rings. Would you like to allow?</string>
+    <string name="permission_notification_denied">Please allow notifications in Settings - App Info - Notifications</string>
+    <string name="permission_notification_denied_text">Notifications denied</string>
+
+    <string name="permission_exact_alarm_title_request">Exact Alarm and Reminder Permission Required</string>
+    <string name="permission_exact_alarm_message_request">Permission is required to use the alarm service. Would you like to go to the settings screen?</string>
+    <string name="permission_exact_alarm_denied">Permission request denied</string>
+
+    <string name="permission_positive">Yes</string>
+    <string name="permission_negative">No</string>
 </resources>

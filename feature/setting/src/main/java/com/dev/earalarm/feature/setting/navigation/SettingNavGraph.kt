@@ -13,7 +13,7 @@ fun NavController.navigateToSetting() {
 
 fun NavGraphBuilder.settingNavGraph(
     paddingValues: PaddingValues,
-    onShowErrorSnackBar: (String) -> Unit,
+    onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     popBackStack: () -> Unit,
 ) {
     composable<Route.Setting> {

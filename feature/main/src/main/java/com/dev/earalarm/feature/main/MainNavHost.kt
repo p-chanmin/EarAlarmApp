@@ -12,7 +12,7 @@ import com.dev.earalarm.feature.setting.navigation.settingNavGraph
 internal fun MainNavHost(
     navigator: MainNavigator,
     paddingValues: PaddingValues,
-    onShowErrorSnackBar: (String) -> Unit,
+    onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
 ) {
     NavHost(
         navController = navigator.navController,

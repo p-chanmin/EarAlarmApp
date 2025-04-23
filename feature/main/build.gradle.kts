@@ -12,7 +12,7 @@ dependencies {
     implementation(project(":feature:setting"))
 
     // Datastore
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.1.4")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")

@@ -13,7 +13,7 @@ fun NavController.navigateToTimer() {
 
 fun NavGraphBuilder.timerNavGraph(
     paddingValues: PaddingValues,
-    onShowErrorSnackBar: (String) -> Unit,
+    onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     navigateToSetting: () -> Unit,
 ) {
     composable<Route.Timer> {

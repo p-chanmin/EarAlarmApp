@@ -15,7 +15,7 @@ import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 @Composable
 internal fun SettingScreen(
     paddingValues: PaddingValues,
-    onShowErrorSnackBar: (message: String) -> Unit,
+    onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     popBackStack: () -> Unit,
 ) {
 
