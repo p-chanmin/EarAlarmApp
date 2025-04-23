@@ -91,84 +91,19 @@ fun <T> WheelPicker(
     }
 }
 
-//@Composable
-//fun TimePicker(
-//    hours: List<Int>,
-//    minutes: List<Int>,
-//    hourState: LazyListState,
-//    minuteState: LazyListState,
-//    modifier: Modifier = Modifier,
-//    itemWidth: Dp = 80.dp,
-//    itemHeight: Dp = 50.dp,
-//    unfocusedCount: Int = 1,
-//    onTimeUpdated: (hour: Int, minute: Int) -> Unit
-//) {
-//
-//    LaunchedEffect(hourState, minuteState) {
-//        val hourFlow = snapshotFlow { hourState.firstVisibleItemIndex }
-//        val minuteFlow = snapshotFlow { minuteState.firstVisibleItemIndex }
-//
-//        combine(hourFlow, minuteFlow) { hourIndex, minuteIndex ->
-//            Pair(hourIndex, minuteIndex)
-//        }.collectLatest { (hourIndex, minuteIndex) ->
-//            val hour = hours[(hourIndex + unfocusedCount) % hours.size]
-//            val minute = minutes[(minuteIndex + unfocusedCount) % minutes.size]
-//            onTimeUpdated(hour, minute)
-//        }
-//    }
-//
-//    Row(
-//        modifier = modifier
-//            .background(MaterialTheme.colorScheme.background),
-//        verticalAlignment = Alignment.CenterVertically,
-//        horizontalArrangement = Arrangement.Center
-//    ) {
-//        WheelPicker(
-//            list = hours,
-//            state = hourState,
-//            itemWidth = itemWidth,
-//            itemHeight = itemHeight,
-//            unfocusedCount = unfocusedCount
-//        ) { index ->
-//            Text(
-//                text = "${hours[index]}", style = MaterialTheme.typography.bodySmall
-//            )
-//        }
-//        Text(
-//            text = ":",
-//            style = MaterialTheme.typography.bodySmall,
-//            modifier = Modifier.padding(horizontal = Paddings.small)
-//        )
-//        WheelPicker(
-//            list = minutes,
-//            state = minuteState,
-//            itemWidth = itemWidth,
-//            itemHeight = itemHeight,
-//            unfocusedCount = unfocusedCount
-//        ) { index ->
-//            Text(
-//                text = "${minutes[index]}", style = MaterialTheme.typography.bodySmall
-//            )
-//        }
-//    }
-//}
-
 @Preview
 @Composable
 fun TimePickerPreview() {
     EarAlarmTheme {
 
         val hours = (0..99).toList()
-        val minutes = (0..59).toList()
-        val hourState =
+        val state =
             rememberLazyListState(initialFirstVisibleItemIndex = (Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % hours.size) - 1)
-        val minuteState =
-            rememberLazyListState(initialFirstVisibleItemIndex = (Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % minutes.size) - 1)
 
         WheelPicker(
             modifier = Modifier,
             list = hours,
-            state = hourState,
+            state = state,
             itemWidth = 80.dp,
             itemHeight = 50.dp,
             unfocusedCount = 1,

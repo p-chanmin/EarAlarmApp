@@ -5,7 +5,6 @@ import java.time.ZonedDateTime
 
 @Immutable
 data class MeasureUiState(
-    val isMeasuring: Boolean = false,
     val minute: Int = 0,
     val startTime: ZonedDateTime = ZonedDateTime.now(),
     val endTime: ZonedDateTime = ZonedDateTime.now(),

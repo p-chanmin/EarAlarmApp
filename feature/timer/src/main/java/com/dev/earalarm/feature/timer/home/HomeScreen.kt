@@ -26,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -46,9 +49,12 @@ import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
 import com.dev.earalarm.feature.timer.component.PermissionDialog
 import com.dev.earalarm.feature.timer.component.PrimaryButton
+import com.dev.earalarm.feature.timer.component.TimerControlButtons
 import com.dev.earalarm.feature.timer.component.WheelPicker
 import com.dev.earalarm.feature.timer.model.HomeUiState
 import com.dev.earalarm.feature.timer.model.PermissionState
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -68,9 +74,7 @@ internal fun HomeScreen(
         paddingValues = paddingValues,
         onShowErrorSnackBar = onShowErrorSnackBar,
         navigateToSetting = navigateToSetting,
-        confirmExactAlarmPermission = {},
         updateNotificationPermissionState = homeViewModel::updateNotificationPermissionState,
-        audioFilePickerLauncher = {},
         dismissDialog = homeViewModel::dismissDialog,
         startTimerAlarm = homeViewModel::startTimerAlarm,
         updateTimerAlarm = homeViewModel::updateTimerAlarm,
@@ -83,9 +87,7 @@ private fun HomeContent(
     paddingValues: PaddingValues,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     navigateToSetting: () -> Unit,
-    confirmExactAlarmPermission: () -> Unit,
     updateNotificationPermissionState: (PermissionState, Boolean) -> Unit,
-    audioFilePickerLauncher: () -> Unit,
     dismissDialog: () -> Unit,
     startTimerAlarm: () -> Unit,
     updateTimerAlarm: (Int, Int) -> Unit,
@@ -137,13 +139,17 @@ private fun HomeContent(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        val hours = (0..99).toList()
-        val minutes = (0..59).toList()
-        val initialHourIndex = (Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % hours.size) - 1
-        val initialMinuteIndex = (Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % minutes.size) - 1
+        val hours by remember { mutableStateOf((0..99).toPersistentList()) }
+        val minutes by remember { mutableStateOf((0..59).toPersistentList()) }
+        val initialHourIndex by remember {
+            mutableIntStateOf((Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % hours.size) - 1)
+        }
+        val initialMinuteIndex by remember {
+            mutableIntStateOf((Int.MAX_VALUE / 2) - (Int.MAX_VALUE / 2 % minutes.size) - 1)
+        }
         val hourState = rememberLazyListState(initialFirstVisibleItemIndex = initialHourIndex)
         val minuteState = rememberLazyListState(initialFirstVisibleItemIndex = initialMinuteIndex)
-        val unfocusedCount = 1
+        val unfocusedCount by remember { mutableIntStateOf(1) }
         val coroutineScope = rememberCoroutineScope()
 
         LaunchedEffect(hourState, minuteState) {
@@ -282,10 +288,11 @@ private fun HomeContent(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
                             .clickable {
-                                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                }
+                                val intent =
+                                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                                        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                    }
                                 context.startActivity(intent)
                             },
                         text = stringResource(
@@ -327,116 +334,22 @@ private fun HomeContent(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = Paddings.xlarge)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Paddings.small),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                PrimaryButton(
-                    id = R.string.timer_1_hour_plus,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small)
-                ) {
-                    coroutineScope.launch {
-                        hourState.scrollToItem(hourState.firstVisibleItemIndex + 1)
-                    }
-                }
-                PrimaryButton(
-                    id = R.string.timer_30_minute_plus,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small)
-                ) {
-                    coroutineScope.launch {
-                        val min =
-                            minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
-                        if (min >= 30) {
-                            hourState.scrollToItem(hourState.firstVisibleItemIndex + 1)
-                        }
-                        minuteState.scrollToItem(minuteState.firstVisibleItemIndex + 30)
-                    }
-                }
-                PrimaryButton(
-                    id = R.string.timer_10_minute_plus,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small)
-                ) {
-                    coroutineScope.launch {
-                        val min =
-                            minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
-                        if (min >= 50) {
-                            hourState.scrollToItem(hourState.firstVisibleItemIndex + 1)
-                        }
-                        minuteState.scrollToItem(minuteState.firstVisibleItemIndex + 10)
-                    }
-                }
-                PrimaryButton(
-                    id = R.string.timer_5_minute_plus,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small)
-                ) {
-                    coroutineScope.launch {
-                        val min =
-                            minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
-                        if (min >= 55) {
-                            hourState.scrollToItem(hourState.firstVisibleItemIndex + 1)
-                        }
-                        minuteState.scrollToItem(minuteState.firstVisibleItemIndex + 5)
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Paddings.small)
-                    .padding(top = Paddings.medium),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PrimaryButton(
-                    id = R.string.timer_start,
-                    modifier = Modifier
-                        .weight(2f)
-                        .padding(horizontal = Paddings.small),
-                    enabled = homeUiState.hour != 0 || homeUiState.minute != 0,
-                    onClick = startTimerAlarm
-                )
-
-                PrimaryButton(
-                    id = R.string.setting_alarm_text,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small),
-                    onClick = navigateToSetting
-                )
-                PrimaryButton(
-                    id = R.string.timer_reset,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Paddings.small)
-                ) {
-                    coroutineScope.launch {
-                        minuteState.scrollToItem(initialMinuteIndex)
-                        hourState.scrollToItem(initialHourIndex)
-                    }
-                }
-            }
-        }
+        TimerControlButtons(
+            homeUiState = homeUiState,
+            hours = hours,
+            minutes = minutes,
+            initialHourIndex = initialHourIndex,
+            initialMinuteIndex = initialMinuteIndex,
+            hourState = hourState,
+            minuteState = minuteState,
+            unfocusedCount = unfocusedCount,
+            startTimerAlarm = startTimerAlarm,
+            navigateToSetting = navigateToSetting
+        )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true, locale = "ko")
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, locale = "ko")
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, locale = "ko")
 @Composable
 private fun HomeContentPreview() {
@@ -448,9 +361,7 @@ private fun HomeContentPreview() {
             paddingValues = PaddingValues(),
             onShowErrorSnackBar = {},
             navigateToSetting = {},
-            confirmExactAlarmPermission = {},
             updateNotificationPermissionState = { _, _ -> },
-            audioFilePickerLauncher = {},
             dismissDialog = {},
             startTimerAlarm = {},
             updateTimerAlarm = { _, _ -> }

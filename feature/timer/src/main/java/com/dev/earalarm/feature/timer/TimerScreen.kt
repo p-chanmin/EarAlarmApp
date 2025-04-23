@@ -34,7 +34,10 @@ internal fun TimerScreen(
             navigateToSetting = navigateToSetting
         )
     } else {
-        MeasureScreen()
+        MeasureScreen(
+            paddingValues = paddingValues,
+            onShowErrorSnackBar = onShowErrorSnackBar,
+        )
     }
 }
 
