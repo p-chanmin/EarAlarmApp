@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.dev.core.admob.LocalAdMobManager
+import com.dev.core.admob.banner.BannersAds
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import kotlinx.coroutines.launch
 
@@ -53,6 +55,8 @@ private fun MainScreenContent(
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     snackBarHostState: SnackbarHostState,
 ) {
+    val adMobManager = LocalAdMobManager.current
+
     Scaffold(
         modifier = modifier,
         content = { paddingValues ->
@@ -63,8 +67,9 @@ private fun MainScreenContent(
             )
         },
         bottomBar = {
-            Box(
-                modifier = Modifier.fillMaxWidth().height(48.dp).background(Color.Yellow)
+            BannersAds(
+                modifier = Modifier.fillMaxWidth(),
+                adRequest = adMobManager.adRequest
             )
         },
         snackbarHost = {

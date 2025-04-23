@@ -1,5 +1,6 @@
 package com.dev.earalarm.feature.timer.measure
 
+import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,16 +19,22 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidedValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dev.core.admob.AdMobManager
+import com.dev.core.admob.FakeAdMobManager
+import com.dev.core.admob.LocalAdMobManager
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
@@ -62,6 +69,9 @@ private fun MeasureContent(
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
+        val adMobManager = LocalAdMobManager.current
+        val context = LocalContext.current
+
         val configuration = LocalConfiguration.current
         val screenWidthDp = configuration.screenWidthDp
         val screenHeightDp = configuration.screenHeightDp
@@ -114,7 +124,10 @@ private fun MeasureContent(
             PrimaryButton(
                 modifier = Modifier.padding(top = Paddings.large),
                 id = R.string.dismiss_alarm,
-                onClick = dismissTimerAlarm
+                onClick = {
+                    adMobManager.showInterstitialAlarmAd(context as Activity)
+                    dismissTimerAlarm()
+                }
             )
         }
     }
@@ -125,10 +138,14 @@ private fun MeasureContent(
 @Composable
 private fun MeasureContentPreview() {
     EarAlarmTheme {
-        MeasureContent(
-            measureUiState = MeasureUiState(),
-            paddingValues = PaddingValues(),
-            dismissTimerAlarm = {},
-        )
+        CompositionLocalProvider(
+            LocalAdMobManager provides FakeAdMobManager()
+        ) {
+            MeasureContent(
+                measureUiState = MeasureUiState(),
+                paddingValues = PaddingValues(),
+                dismissTimerAlarm = {},
+            )
+        }
     }
 }
