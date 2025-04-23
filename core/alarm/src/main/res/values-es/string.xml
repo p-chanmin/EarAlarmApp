@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dismiss_alarm">Desactivar alarma</string>
+
+    <string name="notification_title">Alarma sonando</string>
+    <string name="notification_content">Haga clic para desactivar la alarma.</string>
+
+    <string name="notification_channel_timer_alarm_name">Alarma del temporizador</string>
+    <string name="notification_channel_timer_alarm_description">Canal de notificación para alarmas del temporizador.</string>
+</resources>

@@ -8,48 +8,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.dev.earalarm.core.designsystem.R
 
-private val nanumbarunBold = FontFamily(
+private val nanumbarun = FontFamily(
+    Font(R.font.nanumbarun_gothic_regular, FontWeight.Normal),
     Font(R.font.nanumbarun_gothic_bold, FontWeight.Bold)
-)
-private val nanumbarunRegular = FontFamily(
-    Font(R.font.nanumbarun_gothic_regular, FontWeight.Normal)
 )
 
 val Typography = Typography(
     headlineLarge = TextStyle(
-        fontFamily = nanumbarunBold,
+        fontFamily = nanumbarun,
         fontSize = 30.sp,
     ),
     headlineMedium = TextStyle(
-        fontFamily = nanumbarunBold,
+        fontFamily = nanumbarun,
         fontSize = 25.sp,
     ),
     headlineSmall = TextStyle(
-        fontFamily = nanumbarunBold,
+        fontFamily = nanumbarun,
         fontSize = 20.sp,
     ),
     bodyLarge = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarun,
         fontSize = 30.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarun,
         fontSize = 25.sp,
     ),
     bodySmall = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarun,
         fontSize = 20.sp,
     ),
     labelLarge = TextStyle(
-        fontFamily = nanumbarunBold,
+        fontFamily = nanumbarun,
         fontSize = 18.sp,
     ),
     labelMedium = TextStyle(
-        fontFamily = nanumbarunBold,
+        fontFamily = nanumbarun,
         fontSize = 16.sp,
     ),
     labelSmall = TextStyle(
-        fontFamily = nanumbarunRegular,
+        fontFamily = nanumbarun,
         fontSize = 14.sp,
     )
 )

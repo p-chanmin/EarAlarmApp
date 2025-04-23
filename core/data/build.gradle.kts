@@ -7,5 +7,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.gson)
+    implementation(libs.datastore.preferences)
+
     implementation(project(":core:model"))
 }

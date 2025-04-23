@@ -1,2 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="dismiss_alarm">Dismiss Alarm</string>
+
+    <string name="notification_title">Alarm Ringing</string>
+    <string name="notification_content">Click to dismiss the alarm.</string>
+
+    <string name="notification_channel_timer_alarm_name">Timer Alarm</string>
+    <string name="notification_channel_timer_alarm_description">Notification channel for timer alarms.</string>
 </resources>

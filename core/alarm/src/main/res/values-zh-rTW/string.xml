@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dismiss_alarm">解除鬧鐘</string>
+
+    <string name="notification_title">鬧鐘響了</string>
+    <string name="notification_content">點擊解除鬧鐘。</string>
+
+    <string name="notification_channel_timer_alarm_name">計時器鬧鐘</string>
+    <string name="notification_channel_timer_alarm_description">計時器鬧鐘通知頻道。</string>
+</resources>

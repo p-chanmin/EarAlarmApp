@@ -34,12 +34,6 @@ internal fun Project.configureKotlinAndroid() {
             }
         }
 
-        packaging {
-            resources {
-                excludes.add("META-INF/**")
-            }
-        }
-
         buildFeatures {
             buildConfig = true
         }

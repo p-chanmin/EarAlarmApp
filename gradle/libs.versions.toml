@@ -23,6 +23,9 @@ androidxComposeMaterial3 = "1.2.1"
 ## Room
 room = "2.6.1"
 
+## DataStore
+datastore = "1.1.4"
+
 ## ColorPicker
 colorpicker = "1.1.2"
 
@@ -97,6 +100,8 @@ coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
