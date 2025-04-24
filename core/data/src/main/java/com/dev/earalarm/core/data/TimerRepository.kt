@@ -2,6 +2,7 @@ package com.dev.earalarm.core.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -22,12 +23,12 @@ class TimerRepository @Inject constructor(
         it[ALARM_VOLUME] ?: DEFAULT_VOLUME_SIZE
     }.distinctUntilChanged()
 
-    val mediaPath: Flow<File?> = dataStore.data.map {
+    val media: Flow<File?> = dataStore.data.map {
         it[MEDIA]?.let { path -> File(path) }
     }.distinctUntilChanged()
 
-    val userSettingVolume: Flow<Int> = dataStore.data.map {
-        it[USER_SETTING_VOLUME] ?: DEFAULT_VOLUME_SIZE
+    val vibrate: Flow<Boolean> = dataStore.data.map {
+        it[VIBRATE] ?: true
     }.distinctUntilChanged()
 
     val alarmInfo: Flow<TimerAlarmInfo?> = dataStore.data.map {
@@ -46,15 +47,15 @@ class TimerRepository @Inject constructor(
         }
     }
 
-    suspend fun removeMediaPath() {
+    suspend fun setVibrate(isOn: Boolean) {
         dataStore.edit {
-            it.remove(MEDIA)
+            it[VIBRATE] = isOn
         }
     }
 
-    suspend fun setUserSettingVolume(volume: Int) {
+    suspend fun removeMediaPath() {
         dataStore.edit {
-            it[USER_SETTING_VOLUME] = volume
+            it.remove(MEDIA)
         }
     }
 
@@ -73,8 +74,8 @@ class TimerRepository @Inject constructor(
     companion object {
         val ALARM_VOLUME = intPreferencesKey("volume")
         val MEDIA = stringPreferencesKey("media")
+        val VIBRATE = booleanPreferencesKey("vibrate")
         val TIMER_ALARM_INFO = stringPreferencesKey("timerAlarmInfo")
-        val USER_SETTING_VOLUME = intPreferencesKey("userSettingVolume")
 
         const val DEFAULT_VOLUME_SIZE = 80
     }

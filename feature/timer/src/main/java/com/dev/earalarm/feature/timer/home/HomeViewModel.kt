@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadTimerSetting() {
-        combine(timerRepository.alarmVolume, timerRepository.mediaPath) { volume, media ->
+        combine(timerRepository.alarmVolume, timerRepository.media) { volume, media ->
             _homeUiState.update {
                 it.copy(
                     volume = volume,
