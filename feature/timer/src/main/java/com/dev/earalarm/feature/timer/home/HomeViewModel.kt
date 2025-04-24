@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
@@ -36,7 +37,7 @@ class HomeViewModel @Inject constructor(
     val homeUiState = _homeUiState.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        HomeUiState()
+        _homeUiState.value
     )
 
     init {
@@ -51,6 +52,8 @@ class HomeViewModel @Inject constructor(
                     alarmMedia = media
                 )
             }
+        }.catch { throwable ->
+            _errorFlow.emit(throwable)
         }.launchIn(viewModelScope)
     }
 
@@ -90,7 +93,6 @@ class HomeViewModel @Inject constructor(
                         endTime = endTime.toString()
                     )
                 )
-                println("알람 저장 완료.")
             } else {
                 _homeUiState.update {
                     it.copy(
@@ -114,10 +116,5 @@ class HomeViewModel @Inject constructor(
         return ZonedDateTime.now(ZoneOffset.UTC).plusHours(hour.toLong())
             .plusMinutes(minute.toLong()).withZoneSameInstant(ZoneId.systemDefault())
             .format(DateTimeFormatter.ofPattern("a hh:mm"))
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        println("HomeViewModel Cleared $this")
     }
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
@@ -48,24 +49,38 @@ class SettingViewModel @Inject constructor(
                     vibrate = vibrate
                 )
             }
+        }.catch { throwable ->
+            _errorFlow.emit(throwable)
         }.launchIn(viewModelScope)
     }
 
     fun setAlarmSound(path: String) {
         viewModelScope.launch {
-            timerRepository.setMediaPath(path)
+            try {
+                timerRepository.setMediaPath(path)
+            } catch (e: Throwable) {
+                _errorFlow.emit(e)
+            }
         }
     }
 
     fun setVolume(volume: Int) {
         viewModelScope.launch {
-            timerRepository.setAlarmVolume(volume)
+            try {
+                timerRepository.setAlarmVolume(volume)
+            } catch (e: Throwable) {
+                _errorFlow.emit(e)
+            }
         }
     }
 
     fun setVibrate(vibrate: Boolean) {
         viewModelScope.launch {
-            timerRepository.setVibrate(vibrate)
+            try {
+                timerRepository.setVibrate(vibrate)
+            } catch (e: Throwable) {
+                _errorFlow.emit(e)
+            }
         }
     }
 }

@@ -67,8 +67,13 @@ internal fun HomeScreen(
     navigateToSetting: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
-
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        homeViewModel.errorFlow.collect { throwable ->
+            onShowErrorSnackBar(throwable)
+        }
+    }
 
     HomeContent(
         homeUiState = homeUiState,

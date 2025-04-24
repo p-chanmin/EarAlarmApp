@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -38,31 +39,34 @@ class MeasureViewModel @Inject constructor(
     val measureUiState = _measureUiState.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        MeasureUiState()
+        _measureUiState.value
     )
 
     init {
         viewModelScope.launch {
-            timerRepository.alarmInfo.collectLatest { info ->
-                if (info != null) {
-                    _measureUiState.update {
-                        val startTime = ZonedDateTime.parse(info.startTime)
-                        val endTime = ZonedDateTime.parse(info.endTime)
-                        it.copy(
-                            minute = info.minute,
-                            startTime = startTime,
-                            endTime = endTime,
-                            endTimeString = endTime.withZoneSameInstant(ZoneId.systemDefault())
-                                .format(DateTimeFormatter.ofPattern("a hh:mm")),
-                            progress = getTimerProgressFromNow(startTime, endTime),
-                            leftTime = endTime.getRemainingTimeFromNow()
-                        )
+            timerRepository.alarmInfo
+                .catch { throwable ->
+                    _errorFlow.emit(throwable)
+                }.collectLatest { info ->
+                    if (info != null) {
+                        _measureUiState.update {
+                            val startTime = ZonedDateTime.parse(info.startTime)
+                            val endTime = ZonedDateTime.parse(info.endTime)
+                            it.copy(
+                                minute = info.minute,
+                                startTime = startTime,
+                                endTime = endTime,
+                                endTimeString = endTime.withZoneSameInstant(ZoneId.systemDefault())
+                                    .format(DateTimeFormatter.ofPattern("a hh:mm")),
+                                progress = getTimerProgressFromNow(startTime, endTime),
+                                leftTime = endTime.getRemainingTimeFromNow()
+                            )
+                        }
+                        measuringTimer()
+                    } else {
+                        measuringJob?.cancel()
                     }
-                    measuringTimer()
-                } else {
-                    measuringJob?.cancel()
                 }
-            }
         }
     }
 
@@ -84,6 +88,8 @@ class MeasureViewModel @Inject constructor(
     fun dismissTimerAlarm() {
         viewModelScope.launch {
             alarmManager.cancelTimerAlarm()
+            measuringJob?.cancel()
+            measuringJob = null
         }
     }
 
@@ -110,6 +116,6 @@ class MeasureViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        println("MeasureViewModel Cleared $this")
+        measuringJob?.cancel()
     }
 }

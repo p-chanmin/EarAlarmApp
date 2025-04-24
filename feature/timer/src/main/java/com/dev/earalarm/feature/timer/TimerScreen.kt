@@ -2,6 +2,7 @@ package com.dev.earalarm.feature.timer
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,8 +16,13 @@ internal fun TimerScreen(
     navigateToSetting: () -> Unit,
     timerViewModel: TimerViewModel = hiltViewModel(),
 ) {
-
     val hasTimer by timerViewModel.hasTimer.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        timerViewModel.errorFlow.collect { throwable ->
+            onShowErrorSnackBar(throwable)
+        }
+    }
 
     if (!hasTimer) {
         HomeScreen(
