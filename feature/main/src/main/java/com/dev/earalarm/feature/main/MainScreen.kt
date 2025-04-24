@@ -34,8 +34,7 @@ internal fun MainScreen(
     val context = LocalContext.current
     val onShowErrorSnackBar: (throwable: Throwable?) -> Unit = { throwable ->
         coroutineScope.launch {
-            val unknownErrorMessage = "알 수 없는 에러가 발생하였습니다."
-//                context.getString(R.string.feature_main_error_message_unknown)
+            val unknownErrorMessage = context.getString(R.string.error_message_unknown)
 
             snackBarHostState.showSnackbar(throwable?.message ?: unknownErrorMessage)
         }
