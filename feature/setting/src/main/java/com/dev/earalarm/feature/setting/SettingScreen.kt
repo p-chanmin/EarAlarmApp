@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +39,7 @@ import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.setting.model.SettingUiState
 import com.dev.earalarm.feature.setting.utils.toPath
+import java.io.File
 
 @Composable
 internal fun SettingScreen(
@@ -52,7 +56,8 @@ internal fun SettingScreen(
         paddingValues = paddingValues,
         popBackStack = popBackStack,
         setVolume = settingViewModel::setVolume,
-        setAlarmSound = settingViewModel::setAlarmSound
+        setAlarmSound = settingViewModel::setAlarmSound,
+        setVibrate = settingViewModel::setVibrate,
     )
 }
 
@@ -63,6 +68,7 @@ private fun SettingContent(
     popBackStack: () -> Unit,
     setVolume: (Int) -> Unit,
     setAlarmSound: (String) -> Unit,
+    setVibrate: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -109,65 +115,125 @@ private fun SettingContent(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        filePickerLauncher.launch("audio/*")
-                    }
-                    .padding(Paddings.large)
-                    .padding(horizontal = Paddings.medium)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.feature_setting_alarm_media),
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
-                    )
-                )
-                Text(
-                    modifier = Modifier.padding(top = Paddings.large),
-                    text = if (settingUiState.alarmMedia != null) {
-                        settingUiState.alarmMedia.name
-                    } else {
-                        stringResource(id = R.string.feature_setting_default_sound)
-                    },
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
-                    )
-                )
-            }
+            AlarmSoundSetting(
+                launchFilePicker = { filePickerLauncher.launch("audio/*") },
+                alarmMedia = settingUiState.alarmMedia
+            )
             HorizontalDivider(color = MaterialTheme.colorScheme.primary)
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Paddings.large)
-                    .padding(horizontal = Paddings.medium)
-            ) {
-                Text(
-                    modifier = Modifier.padding(top = Paddings.large),
-                    text = stringResource(
-                        id = R.string.feature_setting_alarm_volume,
-                        settingUiState.volume
-                    ),
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
-                    )
-                )
-
-                Slider(
-                    value = settingUiState.volume.toFloat() / 100,
-                    onValueChange = { newVolume ->
-                        setVolume((newVolume * 100).toInt())
-                    },
-                    colors = SliderDefaults.colors(
-                        thumbColor = EarAlarmMaterialTheme.colorScheme.active,
-                        activeTrackColor = EarAlarmMaterialTheme.colorScheme.active,
-                        inactiveTrackColor = EarAlarmMaterialTheme.colorScheme.inactive
-                    )
-                )
-            }
+            VolumeSetting(
+                volume = settingUiState.volume,
+                setVolume = setVolume
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.primary)
+            VibrateSetting(
+                vibrate = settingUiState.vibrate,
+                setVibrate = setVibrate
+            )
             HorizontalDivider(color = MaterialTheme.colorScheme.primary)
         }
+    }
+}
+
+@Composable
+private fun AlarmSoundSetting(
+    launchFilePicker: () -> Unit,
+    alarmMedia: File?
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { launchFilePicker() }
+            .padding(Paddings.large)
+            .padding(horizontal = Paddings.medium, vertical = Paddings.medium)
+    ) {
+        Text(
+            text = stringResource(id = R.string.feature_setting_alarm_media),
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = EarAlarmMaterialTheme.colorScheme.textPrimary
+            )
+        )
+        Text(
+            modifier = Modifier.padding(top = Paddings.large),
+            text = if (alarmMedia != null) {
+                alarmMedia.name
+            } else {
+                stringResource(id = R.string.feature_setting_default_sound)
+            },
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = EarAlarmMaterialTheme.colorScheme.textPrimary
+            )
+        )
+    }
+}
+
+@Composable
+private fun VolumeSetting(
+    volume: Int,
+    setVolume: (Int) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Paddings.large)
+            .padding(horizontal = Paddings.medium)
+    ) {
+        Text(
+            modifier = Modifier.padding(top = Paddings.large),
+            text = stringResource(
+                id = R.string.feature_setting_alarm_volume,
+                volume
+            ),
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = EarAlarmMaterialTheme.colorScheme.textPrimary
+            )
+        )
+
+        Slider(
+            value = volume.toFloat() / 100,
+            onValueChange = { newVolume ->
+                setVolume((newVolume * 100).toInt())
+            },
+            colors = SliderDefaults.colors(
+                thumbColor = EarAlarmMaterialTheme.colorScheme.active,
+                activeTrackColor = EarAlarmMaterialTheme.colorScheme.active,
+                inactiveTrackColor = EarAlarmMaterialTheme.colorScheme.inactive
+            )
+        )
+    }
+}
+
+@Composable
+private fun VibrateSetting(
+    vibrate: Boolean,
+    setVibrate: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { setVibrate(!vibrate) }
+            .padding(Paddings.large)
+            .padding(horizontal = Paddings.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(id = R.string.feature_setting_vibrate),
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = EarAlarmMaterialTheme.colorScheme.textPrimary
+            )
+        )
+        Switch(
+            checked = vibrate,
+            onCheckedChange = { setVibrate(!vibrate) },
+            colors = SwitchDefaults.colors().copy(
+                uncheckedThumbColor = EarAlarmMaterialTheme.colorScheme.primaryButton,
+                uncheckedBorderColor = EarAlarmMaterialTheme.colorScheme.inactive,
+                uncheckedTrackColor = EarAlarmMaterialTheme.colorScheme.inactive,
+                checkedThumbColor = EarAlarmMaterialTheme.colorScheme.primaryButton,
+                checkedBorderColor = EarAlarmMaterialTheme.colorScheme.active,
+                checkedTrackColor = EarAlarmMaterialTheme.colorScheme.active,
+            )
+        )
     }
 }
 
@@ -177,11 +243,14 @@ private fun SettingContent(
 fun SettingContentPreview() {
     EarAlarmTheme {
         SettingContent(
-            settingUiState = SettingUiState(),
+            settingUiState = SettingUiState(
+                vibrate = false
+            ),
             paddingValues = PaddingValues(),
             popBackStack = {},
             setVolume = {},
-            setAlarmSound = {}
+            setAlarmSound = {},
+            setVibrate = {}
         )
     }
 }

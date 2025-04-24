@@ -36,14 +36,25 @@ class SettingViewModel @Inject constructor(
     }
 
     private fun loadTimerSetting() {
-        combine(timerRepository.alarmVolume, timerRepository.mediaPath) { volume, media ->
+        combine(
+            timerRepository.alarmVolume,
+            timerRepository.media,
+            timerRepository.vibrate
+        ) { volume, media, vibrate ->
             _settingUiState.update {
                 it.copy(
                     volume = volume,
-                    alarmMedia = media
+                    alarmMedia = media,
+                    vibrate = vibrate
                 )
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun setAlarmSound(path: String) {
+        viewModelScope.launch {
+            timerRepository.setMediaPath(path)
+        }
     }
 
     fun setVolume(volume: Int) {
@@ -52,9 +63,9 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun setAlarmSound(path: String) {
+    fun setVibrate(vibrate: Boolean) {
         viewModelScope.launch {
-            timerRepository.setMediaPath(path)
+            timerRepository.setVibrate(vibrate)
         }
     }
 }

@@ -4,4 +4,5 @@
     <string name="feature_setting_alarm_volume">알람 볼륨 : %s</string>
     <string name="feature_setting_alarm_media">알람음</string>
     <string name="feature_setting_default_sound">기본음</string>
+    <string name="feature_setting_vibrate">진동</string>
 </resources>
