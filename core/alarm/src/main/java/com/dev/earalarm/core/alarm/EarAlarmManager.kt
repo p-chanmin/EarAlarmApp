@@ -7,12 +7,15 @@ import android.content.Intent
 import android.os.Build
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.ZonedDateTime
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class EarAlarmManager @Inject constructor(
     private val timerRepository: TimerRepository,
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

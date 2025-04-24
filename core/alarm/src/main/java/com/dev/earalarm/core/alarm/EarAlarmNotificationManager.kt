@@ -10,9 +10,14 @@ import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import com.dev.earalarm.core.navigation.DEEP_LINK_BASE_PATH
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class EarAlarmNotificationManager @Inject constructor(private val context: Context) {
+@Singleton
+class EarAlarmNotificationManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private val notificationManager: NotificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
