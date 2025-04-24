@@ -1,5 +1,6 @@
 package com.dev.earalarm.feature.timer.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
@@ -83,7 +84,8 @@ fun <T> WheelPicker(
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TimePickerPreview() {
     EarAlarmTheme {

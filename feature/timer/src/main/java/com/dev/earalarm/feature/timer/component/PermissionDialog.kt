@@ -1,6 +1,7 @@
 package com.dev.earalarm.feature.timer.component
 
 
+import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
+import com.dev.earalarm.core.designsystem.theme.EarAlarmMaterialTheme
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
@@ -44,8 +46,8 @@ fun PermissionDialog(
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.extraSmall,
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondary,
-                contentColor = MaterialTheme.colorScheme.onBackground
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = EarAlarmMaterialTheme.colorScheme.textPrimary
             )
         ) {
             Column(
@@ -73,7 +75,7 @@ fun PermissionDialog(
                     Text(
                         text = dismissButtonTextId?.let { stringResource(id = dismissButtonTextId) }
                             ?: dismissButtonText,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = EarAlarmMaterialTheme.colorScheme.inactive,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier
                             .padding(end = Paddings.extra)
@@ -83,7 +85,7 @@ fun PermissionDialog(
                     Text(
                         text = confirmButtonTextId?.let { stringResource(id = confirmButtonTextId) }
                             ?: confirmButtonText,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = EarAlarmMaterialTheme.colorScheme.active,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.clickable { onConfirm() }
                     )
@@ -94,7 +96,8 @@ fun PermissionDialog(
 }
 
 
-@Preview(locale = "ko")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PermissionDialogPreview() {
     EarAlarmTheme {

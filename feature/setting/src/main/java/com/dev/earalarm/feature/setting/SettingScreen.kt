@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dev.earalarm.core.designsystem.theme.EarAlarmMaterialTheme
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.setting.model.SettingUiState
@@ -92,15 +93,18 @@ private fun SettingContent(
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIosNew,
-                    contentDescription = ""
+                    contentDescription = "",
+                    tint = EarAlarmMaterialTheme.colorScheme.textPrimary
                 )
             }
             Text(
                 text = stringResource(R.string.setting_alarm_text),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                )
             )
         }
-        HorizontalDivider()
+        HorizontalDivider(color = MaterialTheme.colorScheme.primary)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -116,7 +120,9 @@ private fun SettingContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.setting_alarm_media),
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                    )
                 )
                 Text(
                     modifier = Modifier.padding(top = Paddings.large),
@@ -125,10 +131,12 @@ private fun SettingContent(
                     } else {
                         stringResource(id = R.string.setting_default_sound)
                     },
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                    )
                 )
             }
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.primary)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,12 +144,14 @@ private fun SettingContent(
                     .padding(horizontal = Paddings.medium)
             ) {
                 Text(
+                    modifier = Modifier.padding(top = Paddings.large),
                     text = stringResource(
                         id = R.string.setting_alarm_volume,
                         settingUiState.volume
                     ),
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.padding(top = Paddings.large)
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                    )
                 )
 
                 Slider(
@@ -150,13 +160,13 @@ private fun SettingContent(
                         setVolume((newVolume * 100).toInt())
                     },
                     colors = SliderDefaults.colors(
-                        thumbColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        activeTrackColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        inactiveTrackColor = MaterialTheme.colorScheme.primaryContainer
+                        thumbColor = EarAlarmMaterialTheme.colorScheme.active,
+                        activeTrackColor = EarAlarmMaterialTheme.colorScheme.active,
+                        inactiveTrackColor = EarAlarmMaterialTheme.colorScheme.inactive
                     )
                 )
             }
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.primary)
         }
     }
 }

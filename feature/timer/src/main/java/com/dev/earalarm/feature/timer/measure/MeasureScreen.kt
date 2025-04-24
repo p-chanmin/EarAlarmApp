@@ -22,12 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dev.core.admob.FakeAdMobManager
 import com.dev.core.admob.LocalAdMobManager
+import com.dev.earalarm.core.designsystem.theme.EarAlarmMaterialTheme
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
@@ -84,8 +86,12 @@ private fun MeasureContent(
                             .height(screenWidthDp.dp)
                             .padding(Paddings.xlarge),
                         progress = { measureUiState.progress },
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        trackColor = MaterialTheme.colorScheme.primaryContainer,
+                        color = if (measureUiState.progress >= 0.9f) {
+                            EarAlarmMaterialTheme.colorScheme.warning
+                        } else {
+                            EarAlarmMaterialTheme.colorScheme.active
+                        },
+                        trackColor = EarAlarmMaterialTheme.colorScheme.inactive,
                         strokeWidth = 10.dp
                     )
                 }
@@ -95,7 +101,9 @@ private fun MeasureContent(
                 ) {
                     Text(
                         text = measureUiState.leftTime,
-                        style = MaterialTheme.typography.headlineLarge
+                        style = MaterialTheme.typography.headlineLarge.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                        )
                     )
 
                     Text(
@@ -104,7 +112,10 @@ private fun MeasureContent(
                             id = R.string.alarm_info_minute,
                             measureUiState.minute
                         ),
-                        style = MaterialTheme.typography.headlineLarge
+                        style = MaterialTheme.typography.headlineLarge.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
 
                     Text(
@@ -113,7 +124,9 @@ private fun MeasureContent(
                             id = R.string.timer_info_end_time,
                             measureUiState.endTimeString
                         ),
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                        )
                     )
                 }
             }
@@ -138,7 +151,28 @@ private fun MeasureContentPreview() {
             LocalAdMobManager provides FakeAdMobManager()
         ) {
             MeasureContent(
-                measureUiState = MeasureUiState(),
+                measureUiState = MeasureUiState(
+                    progress = 0.5f
+                ),
+                paddingValues = PaddingValues(),
+                dismissTimerAlarm = {},
+            )
+        }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true, locale = "ko")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, locale = "ko")
+@Composable
+private fun MeasureContentWarningPreview() {
+    EarAlarmTheme {
+        CompositionLocalProvider(
+            LocalAdMobManager provides FakeAdMobManager()
+        ) {
+            MeasureContent(
+                measureUiState = MeasureUiState(
+                    progress = 0.9f
+                ),
                 paddingValues = PaddingValues(),
                 dismissTimerAlarm = {},
             )

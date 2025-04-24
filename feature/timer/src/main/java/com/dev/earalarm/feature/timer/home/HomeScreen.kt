@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
@@ -45,6 +46,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dev.earalarm.core.designsystem.theme.EarAlarmMaterialTheme
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
@@ -255,7 +257,6 @@ private fun HomeContent(
             )
         }
     }
-
 }
 
 @Composable
@@ -297,7 +298,9 @@ private fun HomeContentPortrait(
                         id = R.string.timer_info_minute,
                         homeUiState.hour * 60 + homeUiState.minute
                     ),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                    ),
                 )
 
                 Text(
@@ -305,7 +308,10 @@ private fun HomeContentPortrait(
                         id = R.string.timer_info_end_time,
                         homeUiState.estimatedEndTime
                     ),
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.padding(vertical = Paddings.xlarge)
                 )
 
@@ -324,11 +330,17 @@ private fun HomeContentPortrait(
                     ) { i ->
                         Text(
                             text = hours[i].toString(),
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
                     }
                     Text(
-                        text = ":"
+                        text = ":",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                        )
                     )
                     WheelPicker(
                         modifier = Modifier,
@@ -340,7 +352,10 @@ private fun HomeContentPortrait(
                     ) { i ->
                         Text(
                             text = hours[i].toString(),
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
                     }
                 }
@@ -362,7 +377,7 @@ private fun HomeContentPortrait(
                             id = R.string.permission_notification_denied_text
                         ),
                         style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
+                            .copy(color = EarAlarmMaterialTheme.colorScheme.textSecondary),
                     )
                 }
                 Column(
@@ -376,10 +391,12 @@ private fun HomeContentPortrait(
                             id = R.string.setting_alarm_volume,
                             homeUiState.volume
                         ),
-                        style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textSecondary
+                        ),
                     )
                     Text(
+                        modifier = Modifier.padding(top = Paddings.small),
                         text = stringResource(
                             id = R.string.setting_alarm_media,
                             if (homeUiState.alarmMedia != null) {
@@ -389,9 +406,7 @@ private fun HomeContentPortrait(
                             }
                         ),
                         style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
-                        modifier = Modifier
-                            .padding(top = Paddings.small)
+                            .copy(color = EarAlarmMaterialTheme.colorScheme.textSecondary)
                     )
                 }
             }
@@ -452,7 +467,9 @@ private fun HomeContentLandscape(
                         id = R.string.timer_info_minute,
                         homeUiState.hour * 60 + homeUiState.minute
                     ),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                    ),
                 )
 
                 Text(
@@ -460,7 +477,10 @@ private fun HomeContentLandscape(
                         id = R.string.timer_info_end_time,
                         homeUiState.estimatedEndTime
                     ),
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.padding(vertical = Paddings.xlarge)
                 )
 
@@ -479,11 +499,17 @@ private fun HomeContentLandscape(
                     ) { i ->
                         Text(
                             text = hours[i].toString(),
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
                     }
                     Text(
-                        text = ":"
+                        text = ":",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textPrimary
+                        )
                     )
                     WheelPicker(
                         modifier = Modifier,
@@ -495,7 +521,10 @@ private fun HomeContentLandscape(
                     ) { i ->
                         Text(
                             text = hours[i].toString(),
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = EarAlarmMaterialTheme.colorScheme.textPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
                     }
                 }
@@ -516,8 +545,9 @@ private fun HomeContentLandscape(
                         text = stringResource(
                             id = R.string.permission_notification_denied_text
                         ),
-                        style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textSecondary
+                        ),
                     )
                 }
                 Column(
@@ -531,10 +561,12 @@ private fun HomeContentLandscape(
                             id = R.string.setting_alarm_volume,
                             homeUiState.volume
                         ),
-                        style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textSecondary
+                        ),
                     )
                     Text(
+                        modifier = Modifier.padding(top = Paddings.small),
                         text = stringResource(
                             id = R.string.setting_alarm_media,
                             if (homeUiState.alarmMedia != null) {
@@ -543,10 +575,9 @@ private fun HomeContentLandscape(
                                 stringResource(id = R.string.setting_default_sound)
                             }
                         ),
-                        style = MaterialTheme.typography.labelSmall
-                            .copy(color = MaterialTheme.colorScheme.onSecondary),
-                        modifier = Modifier
-                            .padding(top = Paddings.small)
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = EarAlarmMaterialTheme.colorScheme.textSecondary
+                        )
                     )
                 }
             }
