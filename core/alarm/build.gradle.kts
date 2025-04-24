@@ -9,6 +9,5 @@ android {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:data"))
-    implementation(project(":core:notification"))
     implementation(project(":core:navigation"))
 }

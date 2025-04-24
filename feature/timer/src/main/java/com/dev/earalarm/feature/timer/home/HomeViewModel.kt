@@ -2,7 +2,6 @@ package com.dev.earalarm.feature.timer.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dev.earalarm.core.alarm.EarAlarmManager
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,7 +27,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val timerRepository: TimerRepository,
     private val earAlarmManager: EarAlarmManager,
-): ViewModel() {
+) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow get() = _errorFlow.asSharedFlow()
@@ -67,7 +65,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateTimerAlarm(hour: Int, minute: Int){
+    fun updateTimerAlarm(hour: Int, minute: Int) {
         viewModelScope.launch {
             _homeUiState.update {
                 it.copy(
@@ -81,7 +79,7 @@ class HomeViewModel @Inject constructor(
 
     fun startTimerAlarm() {
         viewModelScope.launch {
-            if(earAlarmManager.checkScheduleExactAlarms()) {
+            if (earAlarmManager.checkScheduleExactAlarms()) {
                 val minute = _homeUiState.value.hour * 60 + _homeUiState.value.minute
 //                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(minute.toLong())
                 val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(minute.toLong())

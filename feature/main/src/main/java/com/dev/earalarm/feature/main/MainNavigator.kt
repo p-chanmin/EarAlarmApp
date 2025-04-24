@@ -5,8 +5,8 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dev.earalarm.core.navigation.Route
-import com.dev.earalarm.feature.timer.navigation.navigateToTimer
 import com.dev.earalarm.feature.setting.navigation.navigateToSetting
+import com.dev.earalarm.feature.timer.navigation.navigateToTimer
 
 internal class MainNavigator(
     val navController: NavHostController,

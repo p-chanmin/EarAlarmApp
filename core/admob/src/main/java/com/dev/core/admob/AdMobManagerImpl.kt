@@ -2,14 +2,13 @@ package com.dev.core.admob
 
 import android.app.Activity
 import android.content.Context
-import androidx.compose.runtime.staticCompositionLocalOf
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 
-class AdMobManagerImpl(private val context: Context): AdMobManager {
+class AdMobManagerImpl(private val context: Context) : AdMobManager {
 
     override val adRequest = AdRequest.Builder().build()
 

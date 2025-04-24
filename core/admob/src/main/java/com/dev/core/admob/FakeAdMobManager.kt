@@ -4,7 +4,7 @@ import android.app.Activity
 import com.google.android.gms.ads.AdRequest
 
 
-class FakeAdMobManager: AdMobManager {
+class FakeAdMobManager : AdMobManager {
     override val adRequest: AdRequest
         get() = TODO("Not yet implemented")
 
