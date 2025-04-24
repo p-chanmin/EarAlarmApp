@@ -147,17 +147,13 @@ private fun MeasureContent(
 @Composable
 private fun MeasureContentPreview() {
     EarAlarmTheme {
-        CompositionLocalProvider(
-            LocalAdMobManager provides FakeAdMobManager()
-        ) {
-            MeasureContent(
-                measureUiState = MeasureUiState(
-                    progress = 0.5f
-                ),
-                paddingValues = PaddingValues(),
-                dismissTimerAlarm = {},
-            )
-        }
+        MeasureContent(
+            measureUiState = MeasureUiState(
+                progress = 0.5f
+            ),
+            paddingValues = PaddingValues(),
+            dismissTimerAlarm = {},
+        )
     }
 }
 
@@ -166,16 +162,12 @@ private fun MeasureContentPreview() {
 @Composable
 private fun MeasureContentWarningPreview() {
     EarAlarmTheme {
-        CompositionLocalProvider(
-            LocalAdMobManager provides FakeAdMobManager()
-        ) {
-            MeasureContent(
-                measureUiState = MeasureUiState(
-                    progress = 0.9f
-                ),
-                paddingValues = PaddingValues(),
-                dismissTimerAlarm = {},
-            )
-        }
+        MeasureContent(
+            measureUiState = MeasureUiState(
+                progress = 0.9f
+            ),
+            paddingValues = PaddingValues(),
+            dismissTimerAlarm = {},
+        )
     }
 }
