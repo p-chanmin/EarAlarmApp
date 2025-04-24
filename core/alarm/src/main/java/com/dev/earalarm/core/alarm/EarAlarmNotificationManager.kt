@@ -6,8 +6,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
+import com.dev.earalarm.core.navigation.DEEP_LINK_BASE_PATH
 import javax.inject.Inject
 
 class EarAlarmNotificationManager @Inject constructor(private val context: Context) {
@@ -20,8 +22,8 @@ class EarAlarmNotificationManager @Inject constructor(private val context: Conte
             context,
             EarAlarmManager.REQUEST_CODE_TIMER_ALARM,
             Intent(
-                context,
-                EarAlarmPlayingService::class.java // 변경 예정
+                Intent.ACTION_VIEW,
+                Uri.parse(DEEP_LINK_BASE_PATH + "timer")
             ).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
