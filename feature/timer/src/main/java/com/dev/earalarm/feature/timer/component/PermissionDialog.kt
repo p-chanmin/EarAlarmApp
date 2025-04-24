@@ -102,10 +102,10 @@ fun PermissionDialog(
 fun PermissionDialogPreview() {
     EarAlarmTheme {
         PermissionDialog(
-            titleId = R.string.permission_exact_alarm_title_request,
-            contentTextId = R.string.permission_exact_alarm_message_request,
-            confirmButtonTextId = R.string.permission_positive,
-            dismissButtonTextId = R.string.permission_negative,
+            titleId = R.string.feature_timer_permission_exact_alarm_title_request,
+            contentTextId = R.string.feature_timer_permission_exact_alarm_message_request,
+            confirmButtonTextId = R.string.feature_timer_permission_positive,
+            dismissButtonTextId = R.string.feature_timer_permission_negative,
             onDismiss = {},
             onConfirm = {}
         )

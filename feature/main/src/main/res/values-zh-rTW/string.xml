@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_message_unknown">發生未知錯誤。</string>
+    <string name="feature_main_error_message_unknown">發生未知錯誤。</string>
 </resources>

@@ -2,32 +2,32 @@
 <resources>
     <string name="app_name">Ear Alarm</string>
 
-    <string name="timer_start">Démarrer le minuteur</string>
-    <string name="timer_reset">Réinitialiser</string>
-    <string name="timer_1_hour_plus">+1 Heure</string>
-    <string name="timer_30_minute_plus">+30 Min</string>
-    <string name="timer_10_minute_plus">+10 Min</string>
-    <string name="timer_5_minute_plus">+5 Min</string>
-    <string name="timer_info_minute">L\'alarme sonnera dans %d minutes</string>
-    <string name="timer_info_end_time">Heure de fin : %s</string>
+    <string name="feature_timer_start">Démarrer le minuteur</string>
+    <string name="feature_timer_reset">Réinitialiser</string>
+    <string name="feature_timer_1_hour_plus">+1 Heure</string>
+    <string name="feature_timer_30_minute_plus">+30 Min</string>
+    <string name="feature_timer_10_minute_plus">+10 Min</string>
+    <string name="feature_timer_5_minute_plus">+5 Min</string>
+    <string name="feature_timer_info_minute">L\'alarme sonnera dans %d minutes</string>
+    <string name="feature_timer_info_end_time">Heure de fin : %s</string>
 
-    <string name="alarm_info_minute">Alarme de %d minute(s)</string>
-    <string name="dismiss_alarm">Désactiver l\'alarme</string>
+    <string name="feature_timer_alarm_info_minute">Alarme de %d minute(s)</string>
+    <string name="feature_timer_dismiss_alarm">Désactiver l\'alarme</string>
 
-    <string name="setting_alarm_text">Paramètres</string>
-    <string name="setting_alarm_volume">Volume de l\'alarme : %s</string>
-    <string name="setting_alarm_media">Son de l\'alarme : %s</string>
-    <string name="setting_default_sound">Son par défaut</string>
+    <string name="feature_timer_setting_alarm_text">Paramètres</string>
+    <string name="feature_timer_setting_alarm_volume">Volume de l\'alarme : %s</string>
+    <string name="feature_timer_setting_alarm_media">Son de l\'alarme : %s</string>
+    <string name="feature_timer_setting_default_sound">Son par défaut</string>
 
-    <string name="permission_notification_title_request">Permission de notification requise</string>
-    <string name="permission_notification_message_request">Autorisez les notifications pour recevoir des alertes lorsque le minuteur sonne. Voulez-vous autoriser ?</string>
-    <string name="permission_notification_denied">Veuillez autoriser les notifications dans Paramètres - Informations sur l\'application - Notifications</string>
-    <string name="permission_notification_denied_text">Notifications refusées</string>
+    <string name="feature_timer_permission_notification_title_request">Permission de notification requise</string>
+    <string name="feature_timer_permission_notification_message_request">Autorisez les notifications pour recevoir des alertes lorsque le minuteur sonne. Voulez-vous autoriser ?</string>
+    <string name="feature_timer_permission_notification_denied">Veuillez autoriser les notifications dans Paramètres - Informations sur l\'application - Notifications</string>
+    <string name="feature_timer_permission_notification_denied_text">Notifications refusées</string>
 
-    <string name="permission_exact_alarm_title_request">Permission d\'alarme et de rappel requise</string>
-    <string name="permission_exact_alarm_message_request">La permission est requise pour utiliser le service d\'alarme. Voulez-vous aller à l\'écran des paramètres ?</string>
-    <string name="permission_exact_alarm_denied">Demande de permission refusée</string>
+    <string name="feature_timer_permission_exact_alarm_title_request">Permission d\'alarme et de rappel requise</string>
+    <string name="feature_timer_permission_exact_alarm_message_request">La permission est requise pour utiliser le service d\'alarme. Voulez-vous aller à l\'écran des paramètres ?</string>
+    <string name="feature_timer_permission_exact_alarm_denied">Demande de permission refusée</string>
 
-    <string name="permission_positive">Oui</string>
-    <string name="permission_negative">Non</string>
+    <string name="feature_timer_permission_positive">Oui</string>
+    <string name="feature_timer_permission_negative">Non</string>
 </resources>

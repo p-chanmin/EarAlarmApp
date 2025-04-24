@@ -184,10 +184,10 @@ private fun HomeContent(
 
     if (homeUiState.deniedExactAlarmDialog) {
         PermissionDialog(
-            titleId = R.string.permission_exact_alarm_title_request,
-            contentTextId = R.string.permission_exact_alarm_message_request,
-            dismissButtonTextId = R.string.permission_negative,
-            confirmButtonTextId = R.string.permission_positive,
+            titleId = R.string.feature_timer_permission_exact_alarm_title_request,
+            contentTextId = R.string.feature_timer_permission_exact_alarm_message_request,
+            dismissButtonTextId = R.string.feature_timer_permission_negative,
+            confirmButtonTextId = R.string.feature_timer_permission_positive,
             onDismiss = {
                 dismissDialog()
             },
@@ -200,13 +200,13 @@ private fun HomeContent(
 
     if (homeUiState.deniedNotificationDialog) {
         PermissionDialog(
-            titleId = R.string.permission_notification_title_request,
-            contentTextId = R.string.permission_notification_message_request,
-            dismissButtonTextId = R.string.permission_negative,
-            confirmButtonTextId = R.string.permission_positive,
+            titleId = R.string.feature_timer_permission_notification_title_request,
+            contentTextId = R.string.feature_timer_permission_notification_message_request,
+            dismissButtonTextId = R.string.feature_timer_permission_negative,
+            confirmButtonTextId = R.string.feature_timer_permission_positive,
             onDismiss = {
                 onShowErrorSnackBar(
-                    Throwable(message = context.getString(R.string.permission_notification_denied))
+                    Throwable(message = context.getString(R.string.feature_timer_permission_notification_denied))
                 )
                 dismissDialog()
             },
@@ -295,7 +295,7 @@ private fun HomeContentPortrait(
             ) {
                 Text(
                     text = stringResource(
-                        id = R.string.timer_info_minute,
+                        id = R.string.feature_timer_info_minute,
                         homeUiState.hour * 60 + homeUiState.minute
                     ),
                     style = MaterialTheme.typography.labelMedium.copy(
@@ -305,7 +305,7 @@ private fun HomeContentPortrait(
 
                 Text(
                     text = stringResource(
-                        id = R.string.timer_info_end_time,
+                        id = R.string.feature_timer_info_end_time,
                         homeUiState.estimatedEndTime
                     ),
                     style = MaterialTheme.typography.headlineSmall.copy(
@@ -374,7 +374,7 @@ private fun HomeContentPortrait(
                                 navigateToNotificationPermissionSettings()
                             },
                         text = stringResource(
-                            id = R.string.permission_notification_denied_text
+                            id = R.string.feature_timer_permission_notification_denied_text
                         ),
                         style = MaterialTheme.typography.labelSmall
                             .copy(color = EarAlarmMaterialTheme.colorScheme.textSecondary),
@@ -388,7 +388,7 @@ private fun HomeContentPortrait(
                 ) {
                     Text(
                         text = stringResource(
-                            id = R.string.setting_alarm_volume,
+                            id = R.string.feature_timer_setting_alarm_volume,
                             homeUiState.volume
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(
@@ -398,11 +398,11 @@ private fun HomeContentPortrait(
                     Text(
                         modifier = Modifier.padding(top = Paddings.small),
                         text = stringResource(
-                            id = R.string.setting_alarm_media,
+                            id = R.string.feature_timer_setting_alarm_media,
                             if (homeUiState.alarmMedia != null) {
                                 homeUiState.alarmMedia.name
                             } else {
-                                stringResource(id = R.string.setting_default_sound)
+                                stringResource(id = R.string.feature_timer_setting_default_sound)
                             }
                         ),
                         style = MaterialTheme.typography.labelSmall
@@ -464,7 +464,7 @@ private fun HomeContentLandscape(
             ) {
                 Text(
                     text = stringResource(
-                        id = R.string.timer_info_minute,
+                        id = R.string.feature_timer_info_minute,
                         homeUiState.hour * 60 + homeUiState.minute
                     ),
                     style = MaterialTheme.typography.labelMedium.copy(
@@ -474,7 +474,7 @@ private fun HomeContentLandscape(
 
                 Text(
                     text = stringResource(
-                        id = R.string.timer_info_end_time,
+                        id = R.string.feature_timer_info_end_time,
                         homeUiState.estimatedEndTime
                     ),
                     style = MaterialTheme.typography.headlineSmall.copy(
@@ -543,7 +543,7 @@ private fun HomeContentLandscape(
                                 navigateToNotificationPermissionSettings()
                             },
                         text = stringResource(
-                            id = R.string.permission_notification_denied_text
+                            id = R.string.feature_timer_permission_notification_denied_text
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = EarAlarmMaterialTheme.colorScheme.textSecondary
@@ -558,7 +558,7 @@ private fun HomeContentLandscape(
                 ) {
                     Text(
                         text = stringResource(
-                            id = R.string.setting_alarm_volume,
+                            id = R.string.feature_timer_setting_alarm_volume,
                             homeUiState.volume
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(
@@ -568,11 +568,11 @@ private fun HomeContentLandscape(
                     Text(
                         modifier = Modifier.padding(top = Paddings.small),
                         text = stringResource(
-                            id = R.string.setting_alarm_media,
+                            id = R.string.feature_timer_setting_alarm_media,
                             if (homeUiState.alarmMedia != null) {
                                 homeUiState.alarmMedia.name
                             } else {
-                                stringResource(id = R.string.setting_default_sound)
+                                stringResource(id = R.string.feature_timer_setting_default_sound)
                             }
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(

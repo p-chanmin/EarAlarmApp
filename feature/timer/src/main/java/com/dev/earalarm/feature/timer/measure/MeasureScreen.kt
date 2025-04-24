@@ -109,7 +109,7 @@ private fun MeasureContent(
                     Text(
                         modifier = Modifier.padding(vertical = Paddings.medium),
                         text = stringResource(
-                            id = R.string.alarm_info_minute,
+                            id = R.string.feature_timer_alarm_info_minute,
                             measureUiState.minute
                         ),
                         style = MaterialTheme.typography.headlineLarge.copy(
@@ -121,7 +121,7 @@ private fun MeasureContent(
                     Text(
                         modifier = Modifier.padding(vertical = Paddings.medium),
                         text = stringResource(
-                            id = R.string.timer_info_end_time,
+                            id = R.string.feature_timer_info_end_time,
                             measureUiState.endTimeString
                         ),
                         style = MaterialTheme.typography.headlineSmall.copy(
@@ -132,7 +132,7 @@ private fun MeasureContent(
             }
             PrimaryButton(
                 modifier = Modifier.padding(top = Paddings.large),
-                id = R.string.dismiss_alarm,
+                id = R.string.feature_timer_dismiss_alarm,
                 onClick = {
                     adMobManager.showInterstitialAlarmAd(context as Activity)
                     dismissTimerAlarm()

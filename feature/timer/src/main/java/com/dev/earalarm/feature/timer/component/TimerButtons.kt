@@ -54,7 +54,7 @@ internal fun TimerControlButtons(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     PrimaryButton(
-                        id = R.string.timer_1_hour_plus,
+                        id = R.string.feature_timer_1_hour_plus,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
@@ -65,7 +65,7 @@ internal fun TimerControlButtons(
                         }
                     }
                     PrimaryButton(
-                        id = R.string.timer_30_minute_plus,
+                        id = R.string.feature_timer_30_minute_plus,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
@@ -82,7 +82,7 @@ internal fun TimerControlButtons(
                         }
                     }
                     PrimaryButton(
-                        id = R.string.timer_10_minute_plus,
+                        id = R.string.feature_timer_10_minute_plus,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
@@ -97,7 +97,7 @@ internal fun TimerControlButtons(
                         }
                     }
                     PrimaryButton(
-                        id = R.string.timer_5_minute_plus,
+                        id = R.string.feature_timer_5_minute_plus,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
@@ -121,7 +121,7 @@ internal fun TimerControlButtons(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     PrimaryButton(
-                        id = R.string.timer_start,
+                        id = R.string.feature_timer_start,
                         modifier = Modifier
                             .weight(2f)
                             .padding(horizontal = Paddings.small),
@@ -130,14 +130,14 @@ internal fun TimerControlButtons(
                     )
 
                     PrimaryButton(
-                        id = R.string.setting_alarm_text,
+                        id = R.string.feature_timer_setting_alarm_text,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small),
                         onClick = navigateToSetting
                     )
                     PrimaryButton(
-                        id = R.string.timer_reset,
+                        id = R.string.feature_timer_reset,
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
@@ -173,7 +173,7 @@ internal fun TimerControlButtons(
                         verticalArrangement = Arrangement.spacedBy(Paddings.large)
                     ) {
                         PrimaryButton(
-                            id = R.string.timer_1_hour_plus,
+                            id = R.string.feature_timer_1_hour_plus,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize()
@@ -184,7 +184,7 @@ internal fun TimerControlButtons(
                             }
                         }
                         PrimaryButton(
-                            id = R.string.timer_30_minute_plus,
+                            id = R.string.feature_timer_30_minute_plus,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize()
@@ -201,7 +201,7 @@ internal fun TimerControlButtons(
                             }
                         }
                         PrimaryButton(
-                            id = R.string.timer_10_minute_plus,
+                            id = R.string.feature_timer_10_minute_plus,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize()
@@ -216,7 +216,7 @@ internal fun TimerControlButtons(
                             }
                         }
                         PrimaryButton(
-                            id = R.string.timer_5_minute_plus,
+                            id = R.string.feature_timer_5_minute_plus,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize()
@@ -240,14 +240,14 @@ internal fun TimerControlButtons(
                         verticalArrangement = Arrangement.spacedBy(Paddings.large)
                     ) {
                         PrimaryButton(
-                            id = R.string.setting_alarm_text,
+                            id = R.string.feature_timer_setting_alarm_text,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize(),
                             onClick = navigateToSetting
                         )
                         PrimaryButton(
-                            id = R.string.timer_reset,
+                            id = R.string.feature_timer_reset,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize()
@@ -260,7 +260,7 @@ internal fun TimerControlButtons(
                     }
                 }
                 PrimaryButton(
-                    id = R.string.timer_start,
+                    id = R.string.feature_timer_start,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)

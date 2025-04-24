@@ -98,7 +98,7 @@ private fun SettingContent(
                 )
             }
             Text(
-                text = stringResource(R.string.setting_alarm_text),
+                text = stringResource(R.string.feature_setting_alarm_text),
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = EarAlarmMaterialTheme.colorScheme.textPrimary
                 )
@@ -119,7 +119,7 @@ private fun SettingContent(
                     .padding(horizontal = Paddings.medium)
             ) {
                 Text(
-                    text = stringResource(id = R.string.setting_alarm_media),
+                    text = stringResource(id = R.string.feature_setting_alarm_media),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = EarAlarmMaterialTheme.colorScheme.textPrimary
                     )
@@ -129,7 +129,7 @@ private fun SettingContent(
                     text = if (settingUiState.alarmMedia != null) {
                         settingUiState.alarmMedia.name
                     } else {
-                        stringResource(id = R.string.setting_default_sound)
+                        stringResource(id = R.string.feature_setting_default_sound)
                     },
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = EarAlarmMaterialTheme.colorScheme.textPrimary
@@ -146,7 +146,7 @@ private fun SettingContent(
                 Text(
                     modifier = Modifier.padding(top = Paddings.large),
                     text = stringResource(
-                        id = R.string.setting_alarm_volume,
+                        id = R.string.feature_setting_alarm_volume,
                         settingUiState.volume
                     ),
                     style = MaterialTheme.typography.labelSmall.copy(

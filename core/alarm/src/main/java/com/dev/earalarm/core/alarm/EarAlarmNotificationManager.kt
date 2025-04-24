@@ -41,14 +41,14 @@ class EarAlarmNotificationManager @Inject constructor(private val context: Conte
 
         return NotificationCompat.Builder(context, CHANNEL_ID_TIMER_ALARM)
             .setSmallIcon(R.mipmap.ic_earalarm_launcher)
-            .setContentTitle(context.getString(R.string.notification_title))
-            .setContentText(context.getString(R.string.notification_content))
+            .setContentTitle(context.getString(R.string.core_alarm_notification_title))
+            .setContentText(context.getString(R.string.core_alarm_notification_content))
             .setContentIntent(notificationPendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
             .addAction(
                 R.drawable.ic_alarm_off_24,
-                context.getString(R.string.dismiss_alarm),
+                context.getString(R.string.core_alarm_dismiss_alarm),
                 alarmDismissPendingIntent
             )
             .build()
@@ -56,8 +56,8 @@ class EarAlarmNotificationManager @Inject constructor(private val context: Conte
 
     fun registerNotificationChannels() {
         createNotificationChannel(
-            R.string.notification_channel_timer_alarm_name,
-            R.string.notification_channel_timer_alarm_description,
+            R.string.core_alarm_notification_channel_timer_alarm_name,
+            R.string.core_alarm_notification_channel_timer_alarm_description,
             CHANNEL_ID_TIMER_ALARM,
             NotificationManager.IMPORTANCE_HIGH
         )

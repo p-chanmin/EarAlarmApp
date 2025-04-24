@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dismiss_alarm">Hentikan Alarm</string>
+    <string name="core_alarm_dismiss_alarm">Hentikan Alarm</string>
 
-    <string name="notification_title">Alarm Berbunyi</string>
-    <string name="notification_content">Klik untuk menghentikan alarm.</string>
+    <string name="core_alarm_notification_title">Alarm Berbunyi</string>
+    <string name="core_alarm_notification_content">Klik untuk menghentikan alarm.</string>
 
-    <string name="notification_channel_timer_alarm_name">Alarm Timer</string>
-    <string name="notification_channel_timer_alarm_description">Saluran notifikasi untuk alarm timer.</string>
+    <string name="core_alarm_notification_channel_timer_alarm_name">Alarm Timer</string>
+    <string name="core_alarm_notification_channel_timer_alarm_description">Saluran notifikasi untuk alarm timer.</string>
 </resources>
