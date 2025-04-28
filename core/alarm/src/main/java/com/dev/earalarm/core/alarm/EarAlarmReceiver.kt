@@ -1,0 +1,50 @@
+package com.dev.earalarm.core.alarm
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.dev.earalarm.core.data.TimerRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class EarAlarmReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var timerRepository: TimerRepository
+
+    @Inject
+    lateinit var alarmHelper: EarAlarmManager
+
+    override fun onReceive(context: Context, intent: Intent) {
+        when (intent.action) {
+            Intent.ACTION_BOOT_COMPLETED -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    timerRepository.alarmInfo.first()?.let {
+                        if (ZonedDateTime.parse(it.endTime) > ZonedDateTime.now()) {
+                            alarmHelper.setTimerAlarm(it)
+                        } else {
+                            timerRepository.removeTimerAlarmInfo()
+                        }
+                    }
+                }
+            }
+
+            EarAlarmManager.INTENT_ACTION_TIMER_ALARM_ON -> {
+                val serviceIntent = Intent(context, EarAlarmPlayingService::class.java).apply {
+                    action = EarAlarmPlayingService.INTENT_ACTION_SERVICE_TIMER_ALARM_ON
+                }
+                context.startForegroundService(serviceIntent)
+            }
+
+            EarAlarmManager.INTENT_ACTION_TIMER_ALARM_DISMISS -> {
+                context.stopService(Intent(context, EarAlarmPlayingService::class.java))
+            }
+        }
+    }
+}

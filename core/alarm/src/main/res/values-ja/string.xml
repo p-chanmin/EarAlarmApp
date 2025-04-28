@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_alarm_dismiss_alarm">アラームを解除</string>
+
+    <string name="core_alarm_notification_title">アラームが鳴りました</string>
+    <string name="core_alarm_notification_content">クリックしてアラームを解除してください。</string>
+
+    <string name="core_alarm_notification_channel_timer_alarm_name">タイマー アラーム</string>
+    <string name="core_alarm_notification_channel_timer_alarm_description">タイマー アラームを受信する通知チャンネルです。</string>
+</resources>

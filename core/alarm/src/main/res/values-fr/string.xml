@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_alarm_dismiss_alarm">Désactiver l\'alarme</string>
+
+    <string name="core_alarm_notification_title">Alarme en cours</string>
+    <string name="core_alarm_notification_content">Cliquez pour désactiver l\'alarme.</string>
+
+    <string name="core_alarm_notification_channel_timer_alarm_name">Alarme du minuteur</string>
+    <string name="core_alarm_notification_channel_timer_alarm_description">Canal de notification pour les alarmes du minuteur.</string>
+</resources>

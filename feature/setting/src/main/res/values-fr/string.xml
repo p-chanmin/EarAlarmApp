@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_setting_alarm_text">Paramètres</string>
+    <string name="feature_setting_alarm_volume">Volume de l\'alarme : %s</string>
+    <string name="feature_setting_alarm_media">Son de l\'alarme</string>
+    <string name="feature_setting_default_sound">Son par défaut</string>
+    <string name="feature_setting_vibrate">Vibrer</string>
+</resources>

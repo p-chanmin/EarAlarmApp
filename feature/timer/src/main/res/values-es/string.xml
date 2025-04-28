@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ear Alarm</string>
+
+    <string name="feature_timer_start">Iniciar temporizador</string>
+    <string name="feature_timer_reset">Reiniciar</string>
+    <string name="feature_timer_1_hour_plus">+1 Hora</string>
+    <string name="feature_timer_30_minute_plus">+30 Min</string>
+    <string name="feature_timer_10_minute_plus">+10 Min</string>
+    <string name="feature_timer_5_minute_plus">+5 Min</string>
+    <string name="feature_timer_info_minute">La alarma sonará en %d minutos</string>
+    <string name="feature_timer_info_end_time">Hora de finalización: %s</string>
+
+    <string name="feature_timer_alarm_info_minute">Alarma de %d minuto(s)</string>
+    <string name="feature_timer_dismiss_alarm">Desactivar alarma</string>
+
+    <string name="feature_timer_setting_alarm_text">Parámetros</string>
+    <string name="feature_timer_setting_alarm_volume">Volumen de la alarma: %s</string>
+    <string name="feature_timer_setting_alarm_media">Sonido de la alarma: %s</string>
+    <string name="feature_timer_setting_default_sound">Sonido predeterminado</string>
+
+    <string name="feature_timer_permission_notification_title_request">Permiso de notificación requerido</string>
+    <string name="feature_timer_permission_notification_message_request">Permita las notificaciones para recibir alertas cuando el temporizador suene. ¿Le gustaría permitirlo?</string>
+    <string name="feature_timer_permission_notification_denied">Permita las notificaciones en Parámetros - Información de la aplicación - Notificaciones</string>
+    <string name="feature_timer_permission_notification_denied_text">Notificaciones denegadas</string>
+
+    <string name="feature_timer_permission_exact_alarm_title_request">Permiso de alarma exacta y recordatorio requerido</string>
+    <string name="feature_timer_permission_exact_alarm_message_request">Se requiere permiso para usar el servicio de alarma. ¿Le gustaría ir a la pantalla de configuración?</string>
+    <string name="feature_timer_permission_exact_alarm_denied">Solicitud de permiso denegada</string>
+
+    <string name="feature_timer_permission_positive">Sí</string>
+    <string name="feature_timer_permission_negative">No</string>
+</resources>
