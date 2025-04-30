@@ -5,4 +5,5 @@
     <string name="feature_setting_alarm_media">Sonido de la alarma</string>
     <string name="feature_setting_default_sound">Sonido predeterminado</string>
     <string name="feature_setting_vibrate">Vibrar</string>
+    <string name="feature_setting_privacy_policy">Política de privacidad</string>
 </resources>

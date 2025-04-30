@@ -1,6 +1,8 @@
 package com.dev.earalarm.feature.setting
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ScrollState
@@ -154,6 +156,8 @@ private fun SettingContent(
                 setVibrate = setVibrate
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.primary)
+            PrivacyPolicy()
+            HorizontalDivider(color = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -270,6 +274,34 @@ private fun VibrateSetting(
                 checkedThumbColor = EarAlarmMaterialTheme.colorScheme.primaryButton,
                 checkedBorderColor = EarAlarmMaterialTheme.colorScheme.active,
                 checkedTrackColor = EarAlarmMaterialTheme.colorScheme.active,
+            )
+        )
+    }
+}
+
+@Composable
+private fun PrivacyPolicy() {
+    val context = LocalContext.current
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://sites.google.com/view/oldogz7358-earalarm/%ED%99%88")
+                    )
+                )
+            }
+            .padding(Paddings.large)
+            .padding(horizontal = Paddings.medium, vertical = Paddings.large),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(id = R.string.feature_setting_privacy_policy),
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = EarAlarmMaterialTheme.colorScheme.textPrimary
             )
         )
     }
