@@ -14,6 +14,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import com.dev.earalarm.core.data.TimerRepository
+import com.dev.firebase.FirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,9 @@ class EarAlarmPlayingService : Service() {
 
     @Inject
     lateinit var notificationHelper: EarAlarmNotificationManager
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -77,7 +83,7 @@ class EarAlarmPlayingService : Service() {
     private suspend fun playAlarm() {
         notificationHelper.registerNotificationChannels()
 
-        val volume = timerRepository.alarmVolume.first() * 0.01f
+        val volume = timerRepository.alarmVolume.first()
         val vibrate = timerRepository.vibrate.first()
         val mediaFile = timerRepository.media.first()
 
@@ -105,9 +111,17 @@ class EarAlarmPlayingService : Service() {
 
             audioManager.setStreamVolume(
                 AudioManager.STREAM_MUSIC,
-                (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * volume).toInt(),
+                (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * volume * 0.01f).toInt(),
                 0
             )
+            firebaseManager.firebaseAnalytics.logEvent(FA.Event.ALARM_RING) {
+                param(FA.Param.Key.VOLUME, volume.toLong())
+                param(FA.Param.Key.VIBRATE, vibrate.toString())
+                param(
+                    FA.Param.Key.MEDIA,
+                    mediaFile?.let { FA.Param.Value.CUSTOM } ?: FA.Param.Value.DEFAULT
+                )
+            }
 
             mediaPlayer.start()
             mediaPlayer.isLooping = true
@@ -121,6 +135,7 @@ class EarAlarmPlayingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         CoroutineScope(Dispatchers.IO).launch {
+            firebaseManager.firebaseAnalytics.logEvent(FA.Event.ALARM_RING_STOP) {}
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.stop()
                 mediaPlayer.reset()

@@ -34,6 +34,9 @@ import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
 import com.dev.earalarm.feature.timer.component.PrimaryButton
 import com.dev.earalarm.feature.timer.model.MeasureUiState
+import com.dev.firebase.LocalFirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 
 @Composable
 internal fun MeasureScreen(
@@ -42,8 +45,11 @@ internal fun MeasureScreen(
     measureViewModel: MeasureViewModel = hiltViewModel()
 ) {
     val measureUiState by measureViewModel.measureUiState.collectAsStateWithLifecycle()
+    val firebaseManager = LocalFirebaseManager.current
+    val configuration = LocalConfiguration.current
 
     LaunchedEffect(Unit) {
+        firebaseManager.screenLogEvent("MeasureScreen", configuration.orientation)
         measureViewModel.errorFlow.collect { throwable ->
             onShowErrorSnackBar(throwable)
         }
@@ -62,6 +68,9 @@ private fun MeasureContent(
     paddingValues: PaddingValues,
     dismissTimerAlarm: () -> Unit,
 ) {
+
+    val firebaseManager = LocalFirebaseManager.current
+
     Box(
         modifier = Modifier
             .padding(paddingValues)
@@ -139,6 +148,9 @@ private fun MeasureContent(
                 modifier = Modifier.padding(top = Paddings.large),
                 id = R.string.feature_timer_dismiss_alarm,
                 onClick = {
+                    firebaseManager.firebaseAnalytics.logEvent(FA.Event.ALARM_DISMISS) {
+                        param(FA.Param.Key.DISMISS_TYPE, FA.Param.Value.DISMISS_SCREEN)
+                    }
                     adMobManager.showInterstitialAlarmAd(context as Activity)
                     dismissTimerAlarm()
                 }

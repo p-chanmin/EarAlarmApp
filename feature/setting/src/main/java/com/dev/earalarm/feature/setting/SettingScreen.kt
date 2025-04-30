@@ -3,6 +3,7 @@ package com.dev.earalarm.feature.setting
 import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.HorizontalDivider
@@ -29,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +44,9 @@ import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.setting.model.SettingUiState
 import com.dev.earalarm.feature.setting.utils.toPath
+import com.dev.firebase.LocalFirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import java.io.File
 
 @Composable
@@ -50,8 +57,11 @@ internal fun SettingScreen(
     settingViewModel: SettingViewModel = hiltViewModel()
 ) {
     val settingUiState by settingViewModel.settingUiState.collectAsStateWithLifecycle()
+    val firebaseManager = LocalFirebaseManager.current
+    val configuration = LocalConfiguration.current
 
     LaunchedEffect(Unit) {
+        firebaseManager.screenLogEvent("SettingScreen", configuration.orientation)
         settingViewModel.errorFlow.collect { throwable ->
             onShowErrorSnackBar(throwable)
         }
@@ -77,12 +87,19 @@ private fun SettingContent(
     setVibrate: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
+    val scrollState: ScrollState = rememberScrollState()
+    val firebaseManager = LocalFirebaseManager.current
 
     val filePickerLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 it.toPath(context, settingUiState.alarmMedia)
-                    ?.let { path -> setAlarmSound(path) }
+                    ?.let { path ->
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.SETTING_SOUND_CHANGE) {
+                            param(FA.Param.Key.MEDIA, FA.Param.Value.CUSTOM)
+                        }
+                        setAlarmSound(path)
+                    }
             }
         }
 
@@ -91,6 +108,7 @@ private fun SettingContent(
             .padding(paddingValues)
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(scrollState)
     ) {
         Row(
             modifier = Modifier
@@ -177,6 +195,8 @@ private fun VolumeSetting(
     volume: Int,
     setVolume: (Int) -> Unit,
 ) {
+    val firebaseManager = LocalFirebaseManager.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -203,7 +223,12 @@ private fun VolumeSetting(
                 thumbColor = EarAlarmMaterialTheme.colorScheme.active,
                 activeTrackColor = EarAlarmMaterialTheme.colorScheme.active,
                 inactiveTrackColor = EarAlarmMaterialTheme.colorScheme.inactive
-            )
+            ),
+            onValueChangeFinished = {
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.SETTING_VOLUME_CHANGE) {
+                    param(FA.Param.Key.VOLUME, volume.toLong())
+                }
+            }
         )
     }
 }
@@ -213,6 +238,8 @@ private fun VibrateSetting(
     vibrate: Boolean,
     setVibrate: (Boolean) -> Unit,
 ) {
+    val firebaseManager = LocalFirebaseManager.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -230,7 +257,12 @@ private fun VibrateSetting(
         )
         Switch(
             checked = vibrate,
-            onCheckedChange = { setVibrate(!vibrate) },
+            onCheckedChange = {
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.SETTING_VIBRATE_CHANGE) {
+                    param(FA.Param.Key.VIBRATE, (!vibrate).toString())
+                }
+                setVibrate(!vibrate)
+            },
             colors = SwitchDefaults.colors().copy(
                 uncheckedThumbColor = EarAlarmMaterialTheme.colorScheme.primaryButton,
                 uncheckedBorderColor = EarAlarmMaterialTheme.colorScheme.inactive,

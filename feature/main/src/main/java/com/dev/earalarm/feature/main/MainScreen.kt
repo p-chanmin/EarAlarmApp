@@ -16,6 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.dev.core.admob.LocalAdMobManager
 import com.dev.core.admob.banner.BannersAds
 import com.dev.earalarm.core.designsystem.theme.Paddings
+import com.dev.firebase.LocalFirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -23,13 +26,16 @@ internal fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
-
+    val firebaseManager = LocalFirebaseManager.current
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val onShowErrorSnackBar: (throwable: Throwable?) -> Unit = { throwable ->
         coroutineScope.launch {
             val unknownErrorMessage = context.getString(R.string.feature_main_error_message_unknown)
 
+            firebaseManager.firebaseAnalytics.logEvent(FA.Event.ERROR_DISPLAYED) {
+                param(FA.Param.Key.MESSAGE, throwable?.message ?: unknownErrorMessage)
+            }
             snackBarHostState.showSnackbar(throwable?.message ?: unknownErrorMessage)
         }
     }

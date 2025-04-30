@@ -18,6 +18,9 @@ import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
 import com.dev.earalarm.core.designsystem.theme.Paddings
 import com.dev.earalarm.feature.timer.R
 import com.dev.earalarm.feature.timer.model.HomeUiState
+import com.dev.firebase.LocalFirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
@@ -37,6 +40,7 @@ internal fun TimerControlButtons(
     startTimerAlarm: () -> Unit,
     navigateToSetting: () -> Unit,
 ) {
+    val firebaseManager = LocalFirebaseManager.current
     val coroutineScope = rememberCoroutineScope()
 
     when (orientation) {
@@ -59,6 +63,9 @@ internal fun TimerControlButtons(
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
                     ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                            param(FA.Param.Key.ADD_TYPE, FA.Param.Value.HOUR_1)
+                        }
                         coroutineScope.launch {
                             val index = hourState.firstVisibleItemIndex + 1
                             hourState.scrollToItem(index)
@@ -70,6 +77,9 @@ internal fun TimerControlButtons(
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
                     ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                            param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_30)
+                        }
                         coroutineScope.launch {
                             val min =
                                 minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -87,6 +97,9 @@ internal fun TimerControlButtons(
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
                     ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                            param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_10)
+                        }
                         coroutineScope.launch {
                             val min =
                                 minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -102,6 +115,9 @@ internal fun TimerControlButtons(
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
                     ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                            param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_5)
+                        }
                         coroutineScope.launch {
                             val min =
                                 minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -126,8 +142,15 @@ internal fun TimerControlButtons(
                             .weight(2f)
                             .padding(horizontal = Paddings.small),
                         enabled = homeUiState.hour != 0 || homeUiState.minute != 0,
-                        onClick = startTimerAlarm
-                    )
+                    ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.TIMER_START) {
+                            param(
+                                FA.Param.Key.TOTAL_MINUTES,
+                                (homeUiState.hour * 60 + homeUiState.minute).toLong()
+                            )
+                        }
+                        startTimerAlarm()
+                    }
 
                     PrimaryButton(
                         id = R.string.feature_timer_setting_alarm_text,
@@ -142,6 +165,9 @@ internal fun TimerControlButtons(
                             .weight(1f)
                             .padding(horizontal = Paddings.small)
                     ) {
+                        firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                            param(FA.Param.Key.ADD_TYPE, FA.Param.Value.RESET)
+                        }
                         coroutineScope.launch {
                             minuteState.scrollToItem(initialMinuteIndex)
                             hourState.scrollToItem(initialHourIndex)
@@ -178,6 +204,9 @@ internal fun TimerControlButtons(
                                 .weight(1f)
                                 .fillMaxSize()
                         ) {
+                            firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                                param(FA.Param.Key.ADD_TYPE, FA.Param.Value.HOUR_1)
+                            }
                             coroutineScope.launch {
                                 val index = hourState.firstVisibleItemIndex + 1
                                 hourState.scrollToItem(index)
@@ -189,6 +218,9 @@ internal fun TimerControlButtons(
                                 .weight(1f)
                                 .fillMaxSize()
                         ) {
+                            firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                                param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_30)
+                            }
                             coroutineScope.launch {
                                 val min =
                                     minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -206,6 +238,9 @@ internal fun TimerControlButtons(
                                 .weight(1f)
                                 .fillMaxSize()
                         ) {
+                            firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                                param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_10)
+                            }
                             coroutineScope.launch {
                                 val min =
                                     minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -221,6 +256,9 @@ internal fun TimerControlButtons(
                                 .weight(1f)
                                 .fillMaxSize()
                         ) {
+                            firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                                param(FA.Param.Key.ADD_TYPE, FA.Param.Value.MIN_5)
+                            }
                             coroutineScope.launch {
                                 val min =
                                     minutes[(minuteState.firstVisibleItemIndex + unfocusedCount) % minutes.size]
@@ -252,6 +290,9 @@ internal fun TimerControlButtons(
                                 .weight(1f)
                                 .fillMaxSize()
                         ) {
+                            firebaseManager.firebaseAnalytics.logEvent(FA.Event.QUICK_ADD) {
+                                param(FA.Param.Key.ADD_TYPE, FA.Param.Value.RESET)
+                            }
                             coroutineScope.launch {
                                 minuteState.scrollToItem(initialMinuteIndex)
                                 hourState.scrollToItem(initialHourIndex)
@@ -266,8 +307,15 @@ internal fun TimerControlButtons(
                         .weight(1f)
                         .padding(horizontal = Paddings.small),
                     enabled = homeUiState.hour != 0 || homeUiState.minute != 0,
-                    onClick = startTimerAlarm
-                )
+                ) {
+                    firebaseManager.firebaseAnalytics.logEvent(FA.Event.TIMER_START) {
+                        param(
+                            FA.Param.Key.TOTAL_MINUTES,
+                            (homeUiState.hour * 60 + homeUiState.minute).toLong()
+                        )
+                    }
+                    startTimerAlarm()
+                }
             }
         }
     }

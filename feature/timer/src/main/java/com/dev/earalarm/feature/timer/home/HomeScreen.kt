@@ -55,6 +55,9 @@ import com.dev.earalarm.feature.timer.component.TimerControlButtons
 import com.dev.earalarm.feature.timer.component.WheelPicker
 import com.dev.earalarm.feature.timer.model.HomeUiState
 import com.dev.earalarm.feature.timer.model.PermissionState
+import com.dev.firebase.LocalFirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
@@ -68,8 +71,11 @@ internal fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
+    val firebaseManager = LocalFirebaseManager.current
+    val configuration = LocalConfiguration.current
 
     LaunchedEffect(Unit) {
+        firebaseManager.screenLogEvent("HomeScreen", configuration.orientation)
         homeViewModel.errorFlow.collect { throwable ->
             onShowErrorSnackBar(throwable)
         }
@@ -101,6 +107,7 @@ private fun HomeContent(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val firebaseManager = LocalFirebaseManager.current
     val isPreview = LocalInspectionMode.current
 
     val permissionsLauncher = rememberLauncherForActivityResult(
@@ -108,14 +115,28 @@ private fun HomeContent(
     ) { permissions ->
         if (permissions.values.all { it }) {
             updateNotificationPermissionState(PermissionState.GRANTED, false)
+            firebaseManager.firebaseAnalytics.logEvent(FA.Event.PERMISSION_RESULT) {
+                param(FA.Param.Key.PERMISSION_TYPE, FA.Param.Value.NOTIFICATION)
+                param(FA.Param.Key.STATUS, FA.Param.Value.GRANTED)
+            }
         } else {
             val shouldShowRationale = permissions.keys.any {
                 shouldShowRequestPermissionRationale(context as Activity, it)
             }
             if (shouldShowRationale) {
                 updateNotificationPermissionState(PermissionState.DENIED, true)
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.PERMISSION_RESULT) {
+                    param(FA.Param.Key.PERMISSION_TYPE, FA.Param.Value.NOTIFICATION)
+                    param(FA.Param.Key.STATUS, FA.Param.Value.DENIED)
+                    param(FA.Param.Key.SHOW_RATIONALE, "true")
+                }
             } else {
                 updateNotificationPermissionState(PermissionState.DENIED, false)
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.PERMISSION_RESULT) {
+                    param(FA.Param.Key.PERMISSION_TYPE, FA.Param.Value.NOTIFICATION)
+                    param(FA.Param.Key.STATUS, FA.Param.Value.DENIED)
+                    param(FA.Param.Key.SHOW_RATIONALE, "false")
+                }
             }
         }
     }
@@ -141,6 +162,9 @@ private fun HomeContent(
     }
 
     val navigateToNotificationPermissionSettings = {
+        firebaseManager.firebaseAnalytics.logEvent(FA.Event.NAVIGATION) {
+            param(FA.Param.Key.DESTINATION, FA.Param.Value.NOTIFICATION)
+        }
         val intent =
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                 putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
@@ -151,6 +175,9 @@ private fun HomeContent(
 
     val navigateToExactAlarmRequest = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            firebaseManager.firebaseAnalytics.logEvent(FA.Event.NAVIGATION) {
+                param(FA.Param.Key.DESTINATION, FA.Param.Value.EXACT_ALARM)
+            }
             val intent = Intent(
                 Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
                 Uri.parse("package:${context.packageName}"),
@@ -194,9 +221,17 @@ private fun HomeContent(
             dismissButtonTextId = R.string.feature_timer_permission_negative,
             confirmButtonTextId = R.string.feature_timer_permission_positive,
             onDismiss = {
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.PERMISSION_RESULT) {
+                    param(FA.Param.Key.PERMISSION_TYPE, FA.Param.Value.EXACT_ALARM)
+                    param(FA.Param.Key.STATUS, FA.Param.Value.DENIED)
+                }
                 dismissDialog()
             },
             onConfirm = {
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.PERMISSION_RESULT) {
+                    param(FA.Param.Key.PERMISSION_TYPE, FA.Param.Value.EXACT_ALARM)
+                    param(FA.Param.Key.STATUS, FA.Param.Value.GRANTED)
+                }
                 navigateToExactAlarmRequest()
                 dismissDialog()
             }
