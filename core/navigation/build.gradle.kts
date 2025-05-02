@@ -1,6 +1,5 @@
 plugins {
     id("earalarm.android.library")
-    id("earalarm.android.compose")
     id("earalarm.android.kotlin.serialization")
 }
 

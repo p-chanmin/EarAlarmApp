@@ -1,4 +1,4 @@
-package com.dev.philo
+package com.dev
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -15,11 +15,9 @@ internal fun Project.configureComposeAndroid() {
             compose = true
         }
         dependencies {
-            add("implementation", platform(libs.findLibrary("androidx-compose-bom").get()))
-            add(
-                "androidTestImplementation",
-                platform(libs.findLibrary("androidx-compose-bom").get())
-            )
+            val bom = libs.findLibrary("androidx-compose-bom").get()
+            add("implementation", platform(bom))
+            add("androidTestImplementation", platform(bom))
 
             add("implementation", libs.findLibrary("androidx.compose.material3").get())
             add("implementation", libs.findLibrary("androidx.compose.material.icons").get())

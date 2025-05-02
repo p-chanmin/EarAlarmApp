@@ -1,4 +1,6 @@
-import com.dev.philo.configureKotlinAndroid
+import com.dev.configureHiltAndroid
+import com.dev.configureKotestAndroid
+import com.dev.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -7,10 +9,11 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.application")
-                apply("earalarm.android.hilt")
             }
 
             configureKotlinAndroid()
+            configureHiltAndroid()
+            configureKotestAndroid()
         }
     }
 }

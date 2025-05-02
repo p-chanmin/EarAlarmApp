@@ -1,4 +1,4 @@
-import com.dev.philo.configureComposeAndroid
+import com.dev.configureComposeAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

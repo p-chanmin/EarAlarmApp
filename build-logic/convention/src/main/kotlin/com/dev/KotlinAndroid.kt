@@ -1,4 +1,4 @@
-package com.dev.philo
+package com.dev
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -18,7 +18,6 @@ internal fun Project.configureKotlinAndroid() {
 
         defaultConfig {
             minSdk = 26
-
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
                 useSupportLibrary = true
@@ -54,6 +53,11 @@ internal fun Project.configureKotlinAndroid() {
 
     dependencies {
         add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
+        add("implementation", libs.findLibrary("junit4").get())
+        add("implementation", libs.findLibrary("kotlin.test").get())
+        add("implementation", libs.findLibrary("androidx.junit").get())
+        add("implementation", libs.findLibrary("androidx.test.espresso.core").get())
+        add("implementation", libs.findLibrary("androidx.uiautomator").get())
     }
 }
 

@@ -4,6 +4,12 @@ plugins {
 
 android {
     namespace = "com.dev.earalarm.core.alarm"
+
+    packaging {
+        resources {
+            excludes += "/META-INF/**"
+        }
+    }
 }
 
 dependencies {
