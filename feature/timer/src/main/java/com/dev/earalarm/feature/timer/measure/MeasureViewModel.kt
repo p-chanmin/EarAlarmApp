@@ -65,6 +65,8 @@ class MeasureViewModel @Inject constructor(
                         measuringTimer()
                     } else {
                         measuringJob?.cancel()
+                        measuringJob = null
+                        _measureUiState.update { MeasureUiState() }
                     }
                 }
         }
