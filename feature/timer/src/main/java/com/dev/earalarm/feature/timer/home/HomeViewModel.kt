@@ -84,8 +84,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             if (earAlarmManager.checkScheduleExactAlarms()) {
                 val minute = _homeUiState.value.hour * 60 + _homeUiState.value.minute
-//                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(minute.toLong())
-                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(minute.toLong())
+                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(minute.toLong())
+//                val endTime = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(minute.toLong())
                 earAlarmManager.setTimerAlarm(
                     TimerAlarmInfo(
                         minute = minute,
