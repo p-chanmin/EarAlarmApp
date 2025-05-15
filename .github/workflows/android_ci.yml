@@ -45,3 +45,10 @@ jobs:
         with:
           files: |
             **/build/test-results/testDebugUnitTest/**/*.xml
+
+      - name: JUnit Report
+        uses: mikepenz/action-junit-report@v4
+        if: always()
+        with:
+          report_paths: |
+            **/build/test-results/testDebugUnitTest/**/*.xml
