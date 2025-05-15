@@ -60,7 +60,9 @@
 
 ## 📢 Trouble Shooting
 
-- 
+- [**타이머 서비스 분석 및 알람 로직 개선**](https://oldogz7358.tistory.com/1)
+
+
 
 <br>
 
