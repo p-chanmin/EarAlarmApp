@@ -39,7 +39,7 @@ jobs:
       - name: Run Unit Tests for All Modules
         run: ./gradlew testDebugUnitTest
 
-      - name: Publish Unit Test Results
+      - name: Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:

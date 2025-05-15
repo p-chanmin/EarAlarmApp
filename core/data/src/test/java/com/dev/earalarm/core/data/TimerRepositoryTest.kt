@@ -194,7 +194,5 @@ internal class TimerRepositoryTest : StringSpec() {
                 }
             }
         }
-
-        "test failed case" { 1 shouldBe 2 }
     }
 }
