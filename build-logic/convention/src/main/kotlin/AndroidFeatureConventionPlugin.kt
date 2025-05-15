@@ -1,5 +1,5 @@
-import com.dev.philo.androidExtension
-import com.dev.philo.libs
+import com.dev.androidExtension
+import com.dev.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -10,17 +10,13 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("earalarm.android.library")
                 apply("earalarm.android.compose")
-                apply("earalarm.android.hilt")
             }
 
             androidExtension.apply {
                 packaging {
                     resources {
-                        excludes.add("META-INF/**")
+                        excludes += "/META-INF/**"
                     }
-                }
-                defaultConfig {
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
             }
 
@@ -36,11 +32,15 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx.compose.navigation").get())
                 add("androidTestImplementation", libs.findLibrary("androidx.compose.navigation.test").get())
 
+
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:data"))
                 add("implementation", project(":core:designsystem"))
                 add("implementation", project(":core:navigation"))
                 add("implementation", project(":core:admob"))
+                add("implementation", project(":core:firebase"))
+
+                add("testImplementation", project(":core:testing"))
             }
         }
     }

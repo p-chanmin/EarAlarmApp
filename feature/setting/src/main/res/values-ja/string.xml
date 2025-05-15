@@ -5,4 +5,5 @@
     <string name="feature_setting_alarm_media">アラーム音</string>
     <string name="feature_setting_default_sound">基本音</string>
     <string name="feature_setting_vibrate">バイブレーション</string>
+    <string name="feature_setting_privacy_policy">プライバシーポリシー</string>
 </resources>

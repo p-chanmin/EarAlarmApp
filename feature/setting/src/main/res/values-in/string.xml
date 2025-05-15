@@ -5,4 +5,5 @@
     <string name="feature_setting_alarm_media">Suara Alarm</string>
     <string name="feature_setting_default_sound">Suara Default</string>
     <string name="feature_setting_vibrate">Getar</string>
+    <string name="feature_setting_privacy_policy">Kebijakan Privasi</string>
 </resources>

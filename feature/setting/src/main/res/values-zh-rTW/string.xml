@@ -5,4 +5,5 @@
     <string name="feature_setting_alarm_media">鬧鐘鈴聲</string>
     <string name="feature_setting_default_sound">預設聲音</string>
     <string name="feature_setting_vibrate">震動</string>
+    <string name="feature_setting_privacy_policy">隱私權政策</string>
 </resources>

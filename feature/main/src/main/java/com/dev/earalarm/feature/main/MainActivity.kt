@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.dev.core.admob.AdMobManager
 import com.dev.core.admob.LocalAdMobManager
 import com.dev.earalarm.core.designsystem.theme.EarAlarmTheme
+import com.dev.firebase.FirebaseManager
+import com.dev.firebase.LocalFirebaseManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,6 +21,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var adMobManager: AdMobManager
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +38,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navigator: MainNavigator = rememberMainNavigator()
             EarAlarmTheme {
-                CompositionLocalProvider(LocalAdMobManager provides adMobManager) {
+                CompositionLocalProvider(
+                    LocalAdMobManager provides adMobManager,
+                    LocalFirebaseManager provides firebaseManager
+                ) {
                     MainScreen(
                         navigator = navigator,
                     )

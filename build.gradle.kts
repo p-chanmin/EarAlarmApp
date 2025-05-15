@@ -6,8 +6,11 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.android.test) apply false
 }
-
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
 apply {
     from("gradle/projectDependencyGraph.gradle")
 }

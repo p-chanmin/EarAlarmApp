@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.dev.earalarm.core.data.TimerRepository
+import com.dev.firebase.FirebaseManager
+import com.dev.firebase.model.FA
+import com.google.firebase.analytics.logEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +23,9 @@ class EarAlarmReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var alarmHelper: EarAlarmManager
+
+    @Inject
+    lateinit var firebaseManager: FirebaseManager
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
@@ -43,6 +49,9 @@ class EarAlarmReceiver : BroadcastReceiver() {
             }
 
             EarAlarmManager.INTENT_ACTION_TIMER_ALARM_DISMISS -> {
+                firebaseManager.firebaseAnalytics.logEvent(FA.Event.ALARM_DISMISS) {
+                    param(FA.Param.Key.DISMISS_TYPE, FA.Param.Value.DISMISS_NOTIFICATION)
+                }
                 context.stopService(Intent(context, EarAlarmPlayingService::class.java))
             }
         }

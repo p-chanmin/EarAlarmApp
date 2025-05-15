@@ -1,6 +1,6 @@
 // from: https://github.com/droidknights/DroidKnightsApp/blob/main/build-logic/src/main/kotlin/com/droidknights/app/Extension.kt
 
-package com.dev.philo
+package com.dev
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension

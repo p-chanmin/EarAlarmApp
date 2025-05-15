@@ -1,27 +1,27 @@
 import com.android.build.gradle.LibraryExtension
+import com.dev.androidExtension
+import com.dev.configureKotestAndroid
 import com.dev.configureKotest
-import com.dev.philo.configureCoroutineAndroid
-import com.dev.philo.configureKotlinAndroid
-import com.dev.philo.libs
+import com.dev.configureCoroutineAndroid
+import com.dev.configureHiltAndroid
+import com.dev.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.withType
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
                 apply("com.android.library")
-                apply("earalarm.android.hilt")
             }
 
             configureKotlinAndroid()
+            configureKotestAndroid()
+            configureHiltAndroid()
             configureCoroutineAndroid()
-            configureKotest()
 
             extensions.configure<LibraryExtension> {
                 // The resource prefix is derived from the module name,
