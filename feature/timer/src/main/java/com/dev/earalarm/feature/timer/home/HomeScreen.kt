@@ -55,6 +55,7 @@ import com.dev.earalarm.feature.timer.component.TimerControlButtons
 import com.dev.earalarm.feature.timer.component.WheelPicker
 import com.dev.earalarm.feature.timer.model.HomeUiState
 import com.dev.earalarm.feature.timer.model.PermissionState
+import com.dev.earalarm.feature.timer.playservice.InAppReview
 import com.dev.firebase.LocalFirebaseManager
 import com.dev.firebase.model.FA
 import com.google.firebase.analytics.logEvent
@@ -80,6 +81,12 @@ internal fun HomeScreen(
             onShowErrorSnackBar(throwable)
         }
     }
+
+
+    InAppReview(
+        lastReviewDate = homeUiState.lastReviewDate,
+        setLastReviewDate = homeViewModel::setLastReviewDate
+    )
 
     HomeContent(
         homeUiState = homeUiState,
