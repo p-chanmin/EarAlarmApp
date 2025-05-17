@@ -14,6 +14,7 @@ object FA {
         const val SETTING_VOLUME_CHANGE = "setting_volume_change"
         const val SETTING_VIBRATE_CHANGE = "setting_vibrate_change"
         const val ERROR_DISPLAYED = "error_displayed"
+        const val REVIEW_REQUEST = "review_request"
     }
 
     object Param {
@@ -46,6 +47,7 @@ object FA {
             const val DENIED = "denied"
             const val CUSTOM = "custom"
             const val DEFAULT = "default"
+            const val COMPLETE = "complete"
         }
     }
 }
