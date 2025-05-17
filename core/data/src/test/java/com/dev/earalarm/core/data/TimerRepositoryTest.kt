@@ -194,5 +194,35 @@ internal class TimerRepositoryTest : StringSpec() {
                 }
             }
         }
+
+        "lastReviewDate 초기 상태 테스트" {
+            runTest(testDispatcher) {
+                // Given
+
+                // When
+                timerRepository.lastReviewDate.test {
+
+                    // Then
+                    awaitItem() shouldBe null
+                    cancelAndConsumeRemainingEvents()
+                }
+            }
+        }
+
+        "lastReviewDate 저장 및 조회 테스트" {
+            runTest(testDispatcher) {
+                // Given
+                val result = "2025-05-02T11:09:35.545010Z"
+                timerRepository.setLastReviewDate(result)
+
+                // When
+                timerRepository.lastReviewDate.test {
+
+                    // Then
+                    awaitItem() shouldBe result
+                    cancelAndConsumeRemainingEvents()
+                }
+            }
+        }
     }
 }
