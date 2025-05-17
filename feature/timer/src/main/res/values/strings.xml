@@ -28,4 +28,7 @@
 
     <string name="feature_timer_permission_positive">Yes</string>
     <string name="feature_timer_permission_negative">No</string>
+
+    <string name="feature_timer_update_complete">Update download complete</string>
+    <string name="feature_timer_update_install">Install</string>
 </resources>
