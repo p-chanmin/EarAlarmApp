@@ -19,9 +19,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -56,6 +60,7 @@ import com.dev.earalarm.feature.timer.component.WheelPicker
 import com.dev.earalarm.feature.timer.model.HomeUiState
 import com.dev.earalarm.feature.timer.model.PermissionState
 import com.dev.earalarm.feature.timer.playservice.InAppReview
+import com.dev.earalarm.feature.timer.playservice.InAppUpdate
 import com.dev.firebase.LocalFirebaseManager
 import com.dev.firebase.model.FA
 import com.google.firebase.analytics.logEvent
@@ -74,6 +79,7 @@ internal fun HomeScreen(
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val firebaseManager = LocalFirebaseManager.current
     val configuration = LocalConfiguration.current
+    val flexibleSnackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         firebaseManager.screenLogEvent("HomeScreen", configuration.orientation)
@@ -82,6 +88,11 @@ internal fun HomeScreen(
         }
     }
 
+    InAppUpdate(
+        snackBarHostState = flexibleSnackBarHostState,
+        isRejectFlexibleUpdate = homeUiState.isRejectFlexibleUpdate,
+        rejectFlexibleUpdate = homeViewModel::rejectFlexibleUpdate
+    )
 
     InAppReview(
         lastReviewDate = homeUiState.lastReviewDate,
@@ -98,6 +109,34 @@ internal fun HomeScreen(
         startTimerAlarm = homeViewModel::startTimerAlarm,
         updateTimerAlarm = homeViewModel::updateTimerAlarm,
     )
+
+    SnackbarHost(
+        hostState = flexibleSnackBarHostState,
+        modifier = Modifier.systemBarsPadding(),
+    ) { data ->
+        Snackbar(
+            modifier = Modifier
+                .padding(Paddings.small)
+                .padding(top = Paddings.medium),
+            action = {
+                data.visuals.actionLabel?.let {
+                    Text(
+                        modifier = Modifier
+                            .padding(end = Paddings.small)
+                            .clickable { data.performAction() },
+                        text = it,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = EarAlarmMaterialTheme.colorScheme.active
+                    )
+                }
+            }
+        ) {
+            Text(
+                text = data.visuals.message,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
 }
 
 @Composable
