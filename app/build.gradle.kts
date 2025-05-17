@@ -14,8 +14,8 @@ android {
         applicationId = "kr.ac.tukorea.android.earalarm"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.4.1"
+        versionCode = 15
+        versionName = "1.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
