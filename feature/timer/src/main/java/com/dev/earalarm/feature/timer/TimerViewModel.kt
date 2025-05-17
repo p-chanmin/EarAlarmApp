@@ -3,6 +3,7 @@ package com.dev.earalarm.feature.timer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dev.earalarm.core.data.TimerRepository
+import com.dev.firebase.FirebaseManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TimerViewModel @Inject constructor(
-    private val timerRepository: TimerRepository
+    private val timerRepository: TimerRepository,
+    private val firebaseManager: FirebaseManager,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
@@ -23,6 +25,7 @@ class TimerViewModel @Inject constructor(
     val hasTimer = timerRepository.alarmInfo
         .map { it != null }
         .catch { throwable ->
+            firebaseManager.reportNonFatalError(throwable)
             _errorFlow.emit(throwable)
         }
         .stateIn(

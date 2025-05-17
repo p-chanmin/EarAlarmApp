@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dev.earalarm.core.alarm.EarAlarmManager
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.feature.timer.model.MeasureUiState
+import com.dev.firebase.FirebaseManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class MeasureViewModel @Inject constructor(
     private val timerRepository: TimerRepository,
     private val alarmManager: EarAlarmManager,
+    private val firebaseManager: FirebaseManager,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
@@ -46,6 +48,7 @@ class MeasureViewModel @Inject constructor(
         viewModelScope.launch {
             timerRepository.alarmInfo
                 .catch { throwable ->
+                    firebaseManager.reportNonFatalError(throwable)
                     _errorFlow.emit(throwable)
                 }.collectLatest { info ->
                     if (info != null) {

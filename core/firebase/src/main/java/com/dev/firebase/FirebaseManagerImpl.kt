@@ -3,6 +3,7 @@ package com.dev.firebase
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,6 +14,7 @@ class FirebaseManagerImpl @Inject constructor(
 ) : FirebaseManager {
 
     override val firebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
+    override val firebaseCrashlytics: FirebaseCrashlytics = FirebaseCrashlytics.getInstance()
 
     override fun screenLogEvent(screenName: String, orientation: Int) {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
@@ -26,5 +28,13 @@ class FirebaseManagerImpl @Inject constructor(
                 }
             )
         }
+    }
+
+    override fun reportNonFatalError(error: Throwable) {
+        firebaseCrashlytics.recordException(error)
+    }
+
+    override fun logCrashlyticsMessage(message: String) {
+        firebaseCrashlytics.log(message)
     }
 }

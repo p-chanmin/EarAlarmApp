@@ -7,5 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.play.review.ktx)
+    implementation(libs.play.app.update.ktx)
     implementation(project(":core:alarm"))
 }

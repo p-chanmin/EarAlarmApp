@@ -6,6 +6,8 @@ import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
 import com.dev.earalarm.feature.timer.measure.MeasureViewModel
 import com.dev.earalarm.feature.timer.model.MeasureUiState
+import com.dev.firebase.FakeFirebaseManager
+import com.dev.firebase.FirebaseManager
 import com.dev.testing.rule.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.every
@@ -30,6 +32,7 @@ internal class MeasureViewModelTest {
 
     private val timerRepository: TimerRepository = mockk(relaxed = true)
     private val alarmManager: EarAlarmManager = mockk(relaxed = true)
+    private val firebaseManager: FirebaseManager = FakeFirebaseManager()
     private lateinit var measureViewModel: MeasureViewModel
 
     @Before
@@ -47,7 +50,7 @@ internal class MeasureViewModelTest {
 
         // Given
         coEvery { timerRepository.alarmInfo } returns flowOf(fakeTimerAlarmInfo)
-        measureViewModel = MeasureViewModel(timerRepository, alarmManager)
+        measureViewModel = MeasureViewModel(timerRepository, alarmManager, firebaseManager)
 
         // When
         measureViewModel.measureUiState.test {
@@ -111,7 +114,7 @@ internal class MeasureViewModelTest {
             flow.update { null }
         }
 
-        measureViewModel = MeasureViewModel(timerRepository, alarmManager)
+        measureViewModel = MeasureViewModel(timerRepository, alarmManager, firebaseManager)
 
         measureViewModel.measureUiState.test {
             var uiState = awaitItem()

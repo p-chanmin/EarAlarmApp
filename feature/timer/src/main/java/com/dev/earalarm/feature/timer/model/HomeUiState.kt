@@ -2,6 +2,7 @@ package com.dev.earalarm.feature.timer.model
 
 import androidx.compose.runtime.Immutable
 import java.io.File
+import java.time.ZonedDateTime
 
 @Immutable
 data class HomeUiState(
@@ -12,5 +13,7 @@ data class HomeUiState(
     val alarmMedia: File? = null,
     val notificationPermissionState: PermissionState = PermissionState.GRANTED,
     val deniedExactAlarmDialog: Boolean = false,
-    val deniedNotificationDialog: Boolean = false
+    val deniedNotificationDialog: Boolean = false,
+    val lastReviewDate: ZonedDateTime? = ZonedDateTime.now(),
+    val isRejectFlexibleUpdate: Boolean = false,
 )

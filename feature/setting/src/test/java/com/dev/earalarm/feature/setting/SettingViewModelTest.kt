@@ -3,6 +3,8 @@ package com.dev.earalarm.feature.setting
 import app.cash.turbine.test
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.feature.setting.model.SettingUiState
+import com.dev.firebase.FakeFirebaseManager
+import com.dev.firebase.FirebaseManager
 import com.dev.testing.rule.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -21,6 +23,7 @@ internal class SettingViewModelTest {
     var mainCoroutineRule = MainDispatcherRule()
 
     private val timerRepository: TimerRepository = mockk(relaxed = true)
+    private val firebaseManager: FirebaseManager = FakeFirebaseManager()
     private lateinit var settingViewModel: SettingViewModel
 
     @Test
@@ -35,7 +38,7 @@ internal class SettingViewModelTest {
         coEvery { timerRepository.media } returns flowOf(File(media))
         coEvery { timerRepository.vibrate } returns flowOf(vibrate)
 
-        settingViewModel = SettingViewModel(timerRepository)
+        settingViewModel = SettingViewModel(timerRepository, firebaseManager)
 
         // When
         settingViewModel.settingUiState.test {
@@ -68,7 +71,7 @@ internal class SettingViewModelTest {
             flow.value = File(media)
         }
 
-        settingViewModel = SettingViewModel(timerRepository)
+        settingViewModel = SettingViewModel(timerRepository, firebaseManager)
 
         // When
         settingViewModel.setAlarmSound(media)
@@ -95,7 +98,7 @@ internal class SettingViewModelTest {
             flow.value = alarmVolume
         }
 
-        settingViewModel = SettingViewModel(timerRepository)
+        settingViewModel = SettingViewModel(timerRepository, firebaseManager)
 
         // When
         settingViewModel.setVolume(alarmVolume)
@@ -122,7 +125,7 @@ internal class SettingViewModelTest {
             flow.value = vibrate
         }
 
-        settingViewModel = SettingViewModel(timerRepository)
+        settingViewModel = SettingViewModel(timerRepository, firebaseManager)
 
         // When
         settingViewModel.setVibrate(vibrate)

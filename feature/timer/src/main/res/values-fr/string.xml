@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ear Alarm</string>
-
     <string name="feature_timer_start">Démarrer le minuteur</string>
     <string name="feature_timer_reset">Réinitialiser</string>
     <string name="feature_timer_1_hour_plus">+1 Heure</string>
@@ -30,4 +28,7 @@
 
     <string name="feature_timer_permission_positive">Oui</string>
     <string name="feature_timer_permission_negative">Non</string>
+
+    <string name="feature_timer_update_complete">Téléchargement de la mise à jour terminé</string>
+    <string name="feature_timer_update_install">Installer</string>
 </resources>

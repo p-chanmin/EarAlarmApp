@@ -4,6 +4,8 @@ import app.cash.turbine.test
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
 import com.dev.earalarm.feature.timer.TimerViewModel
+import com.dev.firebase.FakeFirebaseManager
+import com.dev.firebase.FirebaseManager
 import com.dev.testing.rule.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -20,6 +22,7 @@ internal class TimerViewModelTest {
     var mainCoroutineRule = MainDispatcherRule()
 
     private val timerRepository: TimerRepository = mockk(relaxed = true)
+    private val firebaseManager: FirebaseManager = FakeFirebaseManager()
     private lateinit var timerViewModel: TimerViewModel
 
     @Test
@@ -27,7 +30,7 @@ internal class TimerViewModelTest {
 
         // Given
         coEvery { timerRepository.alarmInfo } returns flowOf(fakeTimerAlarmInfo)
-        timerViewModel = TimerViewModel(timerRepository)
+        timerViewModel = TimerViewModel(timerRepository, firebaseManager)
 
         // When
         timerViewModel.hasTimer.test {
@@ -43,7 +46,7 @@ internal class TimerViewModelTest {
 
         // Given
         coEvery { timerRepository.alarmInfo } returns flowOf(null)
-        timerViewModel = TimerViewModel(timerRepository)
+        timerViewModel = TimerViewModel(timerRepository, firebaseManager)
 
 
         // When
