@@ -7,6 +7,7 @@ import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
 import com.dev.earalarm.feature.timer.model.HomeUiState
 import com.dev.earalarm.feature.timer.model.PermissionState
+import com.dev.firebase.FirebaseManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val timerRepository: TimerRepository,
     private val earAlarmManager: EarAlarmManager,
+    private val firebaseManager: FirebaseManager,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
@@ -45,14 +47,20 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadTimerSetting() {
-        combine(timerRepository.alarmVolume, timerRepository.media) { volume, media ->
+        combine(
+            timerRepository.alarmVolume,
+            timerRepository.media,
+            timerRepository.lastReviewDate
+        ) { volume, media, lastReviewDate ->
             _homeUiState.update {
                 it.copy(
                     volume = volume,
-                    alarmMedia = media
+                    alarmMedia = media,
+                    lastReviewDate = lastReviewDate?.let { ZonedDateTime.parse(it) }
                 )
             }
         }.catch { throwable ->
+            firebaseManager.reportNonFatalError(throwable)
             _errorFlow.emit(throwable)
         }.launchIn(viewModelScope)
     }
@@ -108,6 +116,21 @@ class HomeViewModel @Inject constructor(
             it.copy(
                 deniedNotificationDialog = false,
                 deniedExactAlarmDialog = false,
+            )
+        }
+    }
+
+    fun setLastReviewDate() {
+        viewModelScope.launch {
+            val currentDate = ZonedDateTime.now(ZoneOffset.UTC).toString()
+            timerRepository.setLastReviewDate(currentDate)
+        }
+    }
+
+    fun rejectFlexibleUpdate() {
+        _homeUiState.update {
+            it.copy(
+                isRejectFlexibleUpdate = true
             )
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.feature.setting.model.SettingUiState
+import com.dev.firebase.FirebaseManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val timerRepository: TimerRepository,
+    private val firebaseManager: FirebaseManager,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
@@ -50,6 +52,7 @@ class SettingViewModel @Inject constructor(
                 )
             }
         }.catch { throwable ->
+            firebaseManager.reportNonFatalError(throwable)
             _errorFlow.emit(throwable)
         }.launchIn(viewModelScope)
     }
@@ -59,6 +62,7 @@ class SettingViewModel @Inject constructor(
             try {
                 timerRepository.setMediaPath(path)
             } catch (e: Throwable) {
+                firebaseManager.reportNonFatalError(e)
                 _errorFlow.emit(e)
             }
         }
@@ -69,6 +73,7 @@ class SettingViewModel @Inject constructor(
             try {
                 timerRepository.setAlarmVolume(volume)
             } catch (e: Throwable) {
+                firebaseManager.reportNonFatalError(e)
                 _errorFlow.emit(e)
             }
         }
@@ -79,6 +84,7 @@ class SettingViewModel @Inject constructor(
             try {
                 timerRepository.setVibrate(vibrate)
             } catch (e: Throwable) {
+                firebaseManager.reportNonFatalError(e)
                 _errorFlow.emit(e)
             }
         }

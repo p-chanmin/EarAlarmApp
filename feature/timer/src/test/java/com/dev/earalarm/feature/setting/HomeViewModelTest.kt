@@ -5,6 +5,8 @@ import com.dev.earalarm.core.alarm.EarAlarmManager
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.feature.timer.home.HomeViewModel
 import com.dev.earalarm.feature.timer.model.PermissionState
+import com.dev.firebase.FakeFirebaseManager
+import com.dev.firebase.FirebaseManager
 import com.dev.testing.rule.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.every
@@ -28,19 +30,22 @@ internal class HomeViewModelTest {
 
     private val timerRepository: TimerRepository = mockk(relaxed = true)
     private val earAlarmManager: EarAlarmManager = mockk(relaxed = true)
+    private val firebaseManager: FirebaseManager = FakeFirebaseManager()
     private lateinit var homeViewModel: HomeViewModel
 
     @Test
-    fun `설정된 알람의 볼륨과 미디어 파일을 확인할 수 있다`() = runTest {
+    fun `설정값을 확인할 수 있다`() = runTest {
 
         // Given
         val alarmVolume = 100
         val media = "/files/test.m4a"
+        val lastReviewDate = "2025-05-01T00:00:00.000000Z"
 
         coEvery { timerRepository.alarmVolume } returns flowOf(alarmVolume)
         coEvery { timerRepository.media } returns flowOf(File(media))
+        coEvery { timerRepository.lastReviewDate } returns flowOf(lastReviewDate)
 
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager)
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
         // When
         homeViewModel.homeUiState.test {
@@ -49,6 +54,7 @@ internal class HomeViewModelTest {
             val uiState = awaitItem()
             assertEquals(alarmVolume, uiState.volume)
             assertEquals(File(media), uiState.alarmMedia)
+            assertEquals(ZonedDateTime.parse(lastReviewDate), uiState.lastReviewDate)
         }
     }
 
@@ -56,7 +62,7 @@ internal class HomeViewModelTest {
     fun `알림 권한 상태를 반영할 수 있다`() = runTest {
 
         // Given
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager)
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
         homeViewModel.homeUiState.test {
 
@@ -97,7 +103,7 @@ internal class HomeViewModelTest {
         every { ZoneId.systemDefault() } returns ZoneId.of("Asia/Seoul")
         every { ZonedDateTime.now(ZoneOffset.UTC) } returns fixedDateTime
         Locale.setDefault(Locale.US)
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager)
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
         // When
         val hour = 2
@@ -119,7 +125,7 @@ internal class HomeViewModelTest {
 
         // Given
         every { earAlarmManager.checkScheduleExactAlarms() } returns false
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager)
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
         // When
         homeViewModel.startTimerAlarm()
@@ -136,7 +142,7 @@ internal class HomeViewModelTest {
 
         // Given
         every { earAlarmManager.checkScheduleExactAlarms() } returns false
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager)
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
         homeViewModel.updateNotificationPermissionState(PermissionState.DENIED, true)
         homeViewModel.startTimerAlarm()
@@ -149,6 +155,26 @@ internal class HomeViewModelTest {
             val uiState = awaitItem()
             assertEquals(false, uiState.deniedNotificationDialog)
             assertEquals(false, uiState.deniedExactAlarmDialog)
+        }
+    }
+
+    @Test
+    fun `리뷰 요청을 거절할 수 있다`() = runTest {
+
+        // Given
+        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
+
+
+        homeViewModel.homeUiState.test {
+            var uiState = awaitItem()
+            assertEquals(false, uiState.isRejectFlexibleUpdate)
+
+            // When
+            homeViewModel.rejectFlexibleUpdate()
+
+            // Then
+            uiState = awaitItem()
+            assertEquals(true, uiState.isRejectFlexibleUpdate)
         }
     }
 }
