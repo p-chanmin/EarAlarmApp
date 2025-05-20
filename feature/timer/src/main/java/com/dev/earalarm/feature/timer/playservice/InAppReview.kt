@@ -28,11 +28,11 @@ internal fun InAppReview(
         if (lastReviewDate == null) {
             setLastReviewDate()
         } else {
-            if (lastReviewDate.plusMonths(1).isBefore(now)
-            ) {
+            if (lastReviewDate.plusMonths(1).isBefore(now)) {
                 val manager = ReviewManagerFactory.create(context)
 
                 val request = manager.requestReviewFlow()
+
                 request.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val reviewInfo = task.result
@@ -44,13 +44,13 @@ internal fun InAppReview(
                                 }
                             }
                         }
+                        setLastReviewDate()
                     } else {
                         @ReviewErrorCode val reviewErrorCode =
                             (task.exception as ReviewException).errorCode
                         val message = (task.exception as ReviewException).message
                         firebaseManager.logCrashlyticsMessage("ReviewException: errorCode=$reviewErrorCode, message=$message")
                     }
-                    setLastReviewDate()
                 }
             }
         }
