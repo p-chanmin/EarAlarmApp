@@ -50,7 +50,7 @@ internal fun InAppUpdate(
         ActivityResultContracts.StartIntentSenderForResult(),
     ) { result ->
         val activity = context as? Activity
-        if (result.resultCode == Activity.RESULT_CANCELED) {
+        if (result.resultCode != Activity.RESULT_OK) {
             activity?.finish()
         }
     }
@@ -58,7 +58,7 @@ internal fun InAppUpdate(
     val appUpdateFlexibleResultLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult(),
     ) { result ->
-        if (result.resultCode == Activity.RESULT_CANCELED) {
+        if (result.resultCode != Activity.RESULT_OK) {
             rejectFlexibleUpdate()
         }
     }
