@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "kr.ac.tukorea.android.earalarm"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "kr.ac.tukorea.android.earalarm"
