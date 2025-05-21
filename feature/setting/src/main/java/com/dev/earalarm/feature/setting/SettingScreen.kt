@@ -219,6 +219,7 @@ private fun VolumeSetting(
         )
 
         Slider(
+            modifier = Modifier.padding(top = Paddings.large),
             value = volume.toFloat() / 100,
             onValueChange = { newVolume ->
                 setVolume((newVolume * 100).toInt())
@@ -232,7 +233,7 @@ private fun VolumeSetting(
                 firebaseManager.firebaseAnalytics.logEvent(FA.Event.SETTING_VOLUME_CHANGE) {
                     param(FA.Param.Key.VOLUME, volume.toLong())
                 }
-            }
+            },
         )
     }
 }
