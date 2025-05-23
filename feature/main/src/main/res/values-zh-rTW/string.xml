@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_main_error_message_unknown">發生未知錯誤。</string>
+
+    <string name="feature_main_update_complete">更新下載完成</string>
+    <string name="feature_main_update_install">安裝</string>
 </resources>

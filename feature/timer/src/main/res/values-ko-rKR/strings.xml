@@ -28,7 +28,4 @@
 
     <string name="feature_timer_permission_positive">네</string>
     <string name="feature_timer_permission_negative">아니오</string>
-
-    <string name="feature_timer_update_complete">업데이트 설치 완료</string>
-    <string name="feature_timer_update_install">설치</string>
 </resources>

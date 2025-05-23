@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_main_error_message_unknown">不明なエラーが発生しました。</string>
+
+    <string name="feature_main_update_complete">アップデートのダウンロードが完了しました</string>
+    <string name="feature_main_update_install">インストール</string>
 </resources>

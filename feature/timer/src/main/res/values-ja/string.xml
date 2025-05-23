@@ -28,7 +28,4 @@
 
     <string name="feature_timer_permission_positive">はい</string>
     <string name="feature_timer_permission_negative">いいえ</string>
-
-    <string name="feature_timer_update_complete">アップデートのダウンロードが完了しました</string>
-    <string name="feature_timer_update_install">インストール</string>
 </resources>
