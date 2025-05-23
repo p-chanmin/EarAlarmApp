@@ -35,10 +35,6 @@ class TimerRepository @Inject constructor(
         gson.fromJson(it[TIMER_ALARM_INFO], TimerAlarmInfo::class.java)
     }.distinctUntilChanged()
 
-    val lastReviewDate: Flow<String?> = dataStore.data.map {
-        it[LAST_REVIEW_DATE]
-    }.distinctUntilChanged()
-
     suspend fun setAlarmVolume(volume: Int) {
         dataStore.edit {
             it[ALARM_VOLUME] = volume
@@ -75,18 +71,11 @@ class TimerRepository @Inject constructor(
         }
     }
 
-    suspend fun setLastReviewDate(reviewDate: String) {
-        dataStore.edit {
-            it[LAST_REVIEW_DATE] = reviewDate
-        }
-    }
-
     companion object {
         val ALARM_VOLUME = intPreferencesKey("volume")
         val MEDIA = stringPreferencesKey("media")
         val VIBRATE = booleanPreferencesKey("vibrate")
         val TIMER_ALARM_INFO = stringPreferencesKey("timerAlarmInfo")
-        val LAST_REVIEW_DATE = stringPreferencesKey("lastReviewDate")
 
         const val DEFAULT_VOLUME_SIZE = 80
     }
