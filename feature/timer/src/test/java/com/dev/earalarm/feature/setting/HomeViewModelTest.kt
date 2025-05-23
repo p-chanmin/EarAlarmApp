@@ -39,11 +39,9 @@ internal class HomeViewModelTest {
         // Given
         val alarmVolume = 100
         val media = "/files/test.m4a"
-        val lastReviewDate = "2025-05-01T00:00:00.000000Z"
 
         coEvery { timerRepository.alarmVolume } returns flowOf(alarmVolume)
         coEvery { timerRepository.media } returns flowOf(File(media))
-        coEvery { timerRepository.lastReviewDate } returns flowOf(lastReviewDate)
 
         homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
 
@@ -54,7 +52,6 @@ internal class HomeViewModelTest {
             val uiState = awaitItem()
             assertEquals(alarmVolume, uiState.volume)
             assertEquals(File(media), uiState.alarmMedia)
-            assertEquals(ZonedDateTime.parse(lastReviewDate), uiState.lastReviewDate)
         }
     }
 
@@ -155,26 +152,6 @@ internal class HomeViewModelTest {
             val uiState = awaitItem()
             assertEquals(false, uiState.deniedNotificationDialog)
             assertEquals(false, uiState.deniedExactAlarmDialog)
-        }
-    }
-
-    @Test
-    fun `리뷰 요청을 거절할 수 있다`() = runTest {
-
-        // Given
-        homeViewModel = HomeViewModel(timerRepository, earAlarmManager, firebaseManager)
-
-
-        homeViewModel.homeUiState.test {
-            var uiState = awaitItem()
-            assertEquals(false, uiState.isRejectFlexibleUpdate)
-
-            // When
-            homeViewModel.rejectFlexibleUpdate()
-
-            // Then
-            uiState = awaitItem()
-            assertEquals(true, uiState.isRejectFlexibleUpdate)
         }
     }
 }

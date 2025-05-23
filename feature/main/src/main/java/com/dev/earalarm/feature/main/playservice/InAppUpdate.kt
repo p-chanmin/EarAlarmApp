@@ -1,4 +1,4 @@
-package com.dev.earalarm.feature.timer.playservice
+package com.dev.earalarm.feature.main.playservice
 
 import android.app.Activity
 import android.content.Context
@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dev.earalarm.feature.timer.R
+import com.dev.earalarm.feature.main.R
 import com.dev.firebase.LocalFirebaseManager
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -29,14 +29,16 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 
 private const val MIN_VERSION_DIFF_FOR_IMMEDIATE_UPDATE = 5L
 
 @Composable
 internal fun InAppUpdate(
     snackBarHostState: SnackbarHostState,
-    isRejectFlexibleUpdate: Boolean,
-    rejectFlexibleUpdate: () -> Unit,
+    rejectFlexibleUpdateDate: ZonedDateTime?,
+    setRejectFlexibleUpdateDate: () -> Unit,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -59,7 +61,7 @@ internal fun InAppUpdate(
         ActivityResultContracts.StartIntentSenderForResult(),
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) {
-            rejectFlexibleUpdate()
+            setRejectFlexibleUpdateDate()
         }
     }
 
@@ -70,8 +72,8 @@ internal fun InAppUpdate(
                     showFlexibleUpdateSnackBar(
                         snackBarHostState,
                         appUpdateManager,
-                        context.getString(R.string.feature_timer_update_complete),
-                        context.getString(R.string.feature_timer_update_install)
+                        context.getString(R.string.feature_main_update_complete),
+                        context.getString(R.string.feature_main_update_install)
                     )
                 }
             }
@@ -85,8 +87,9 @@ internal fun InAppUpdate(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(rejectFlexibleUpdateDate) {
         try {
+            val now = ZonedDateTime.now(ZoneOffset.UTC)
             val versionCode = getAppVersionCode(context)
             val appUpdateInfoTask = appUpdateManager.appUpdateInfo
             appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
@@ -99,7 +102,7 @@ internal fun InAppUpdate(
                 val availableFlexible =
                     appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                             && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-                            && !isRejectFlexibleUpdate
+                            && rejectFlexibleUpdateDate?.plusDays(1)?.isBefore(now) ?: true
 
                 when {
                     availableImmediate -> {
@@ -145,8 +148,8 @@ internal fun InAppUpdate(
                             showFlexibleUpdateSnackBar(
                                 snackBarHostState,
                                 appUpdateManager,
-                                context.getString(R.string.feature_timer_update_complete),
-                                context.getString(R.string.feature_timer_update_install)
+                                context.getString(R.string.feature_main_update_complete),
+                                context.getString(R.string.feature_main_update_install)
                             )
                         }
                     }

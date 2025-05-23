@@ -1,4 +1,4 @@
-package com.dev.earalarm.feature.timer.playservice
+package com.dev.earalarm.feature.main.playservice
 
 import android.app.Activity
 import androidx.compose.runtime.Composable

@@ -50,13 +50,11 @@ class HomeViewModel @Inject constructor(
         combine(
             timerRepository.alarmVolume,
             timerRepository.media,
-            timerRepository.lastReviewDate
-        ) { volume, media, lastReviewDate ->
+        ) { volume, media ->
             _homeUiState.update {
                 it.copy(
                     volume = volume,
                     alarmMedia = media,
-                    lastReviewDate = lastReviewDate?.let { ZonedDateTime.parse(it) }
                 )
             }
         }.catch { throwable ->
@@ -116,21 +114,6 @@ class HomeViewModel @Inject constructor(
             it.copy(
                 deniedNotificationDialog = false,
                 deniedExactAlarmDialog = false,
-            )
-        }
-    }
-
-    fun setLastReviewDate() {
-        viewModelScope.launch {
-            val currentDate = ZonedDateTime.now(ZoneOffset.UTC).toString()
-            timerRepository.setLastReviewDate(currentDate)
-        }
-    }
-
-    fun rejectFlexibleUpdate() {
-        _homeUiState.update {
-            it.copy(
-                isRejectFlexibleUpdate = true
             )
         }
     }
