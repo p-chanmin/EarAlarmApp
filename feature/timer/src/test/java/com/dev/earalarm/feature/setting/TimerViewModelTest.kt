@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.dev.earalarm.core.data.TimerRepository
 import com.dev.earalarm.core.model.TimerAlarmInfo
 import com.dev.earalarm.feature.timer.TimerViewModel
+import com.dev.earalarm.feature.timer.model.TimerState
 import com.dev.firebase.FakeFirebaseManager
 import com.dev.firebase.FirebaseManager
 import com.dev.testing.rule.MainDispatcherRule
@@ -13,8 +14,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 internal class TimerViewModelTest {
 
@@ -26,23 +26,23 @@ internal class TimerViewModelTest {
     private lateinit var timerViewModel: TimerViewModel
 
     @Test
-    fun `저장된 타이머 데이터가 있으면 true를 반환한다`() = runTest {
+    fun `저장된 타이머 데이터가 있으면 Measure를 반환한다`() = runTest {
 
         // Given
         coEvery { timerRepository.alarmInfo } returns flowOf(fakeTimerAlarmInfo)
         timerViewModel = TimerViewModel(timerRepository, firebaseManager)
 
         // When
-        timerViewModel.hasTimer.test {
+        timerViewModel.timerState.test {
 
             // Then
             val actual = awaitItem()
-            assertTrue(actual)
+            assertEquals(TimerState.Measure, actual)
         }
     }
 
     @Test
-    fun `저장된 타이머 데이터가 없으면 false를 반환한다`() = runTest {
+    fun `저장된 타이머 데이터가 없으면 Home을 반환한다`() = runTest {
 
         // Given
         coEvery { timerRepository.alarmInfo } returns flowOf(null)
@@ -50,11 +50,11 @@ internal class TimerViewModelTest {
 
 
         // When
-        timerViewModel.hasTimer.test {
+        timerViewModel.timerState.test {
 
             // Then
             val actual = awaitItem()
-            assertFalse(actual)
+            assertEquals(TimerState.Home, actual)
         }
     }
 
