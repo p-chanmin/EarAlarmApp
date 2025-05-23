@@ -28,7 +28,4 @@
 
     <string name="feature_timer_permission_positive">是</string>
     <string name="feature_timer_permission_negative">否</string>
-
-    <string name="feature_timer_update_complete">更新下載完成</string>
-    <string name="feature_timer_update_install">安裝</string>
 </resources>

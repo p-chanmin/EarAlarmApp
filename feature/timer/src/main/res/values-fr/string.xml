@@ -28,7 +28,4 @@
 
     <string name="feature_timer_permission_positive">Oui</string>
     <string name="feature_timer_permission_negative">Non</string>
-
-    <string name="feature_timer_update_complete">Téléchargement de la mise à jour terminé</string>
-    <string name="feature_timer_update_install">Installer</string>
 </resources>

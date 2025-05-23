@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_main_error_message_unknown">Terjadi kesalahan yang tidak diketahui.</string>
+
+    <string name="feature_main_update_complete">Unduhan pembaruan selesai</string>
+    <string name="feature_main_update_install">Pasang</string>
 </resources>

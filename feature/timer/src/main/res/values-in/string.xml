@@ -28,7 +28,4 @@
 
     <string name="feature_timer_permission_positive">Ya</string>
     <string name="feature_timer_permission_negative">Tidak</string>
-
-    <string name="feature_timer_update_complete">Unduhan pembaruan selesai</string>
-    <string name="feature_timer_update_install">Pasang</string>
 </resources>
