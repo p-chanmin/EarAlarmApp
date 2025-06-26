@@ -134,7 +134,7 @@ class EarAlarmPlayingService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        CoroutineScope(Dispatchers.IO).launch {
+        serviceScope.launch {
             firebaseManager.firebaseAnalytics.logEvent(FA.Event.ALARM_RING_STOP) {}
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.stop()
@@ -152,8 +152,8 @@ class EarAlarmPlayingService : Service() {
             audioManager.abandonAudioFocusRequest(focusRequest)
             timerRepository.removeTimerAlarmInfo()
             stopForeground(STOP_FOREGROUND_REMOVE)
+            serviceScope.cancel()
         }
-        serviceScope.cancel()
     }
 
     companion object {

@@ -53,11 +53,11 @@ internal fun Project.configureKotlinAndroid() {
 
     dependencies {
         add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
-        add("implementation", libs.findLibrary("junit4").get())
-        add("implementation", libs.findLibrary("kotlin.test").get())
-        add("implementation", libs.findLibrary("androidx.junit").get())
-        add("implementation", libs.findLibrary("androidx.test.espresso.core").get())
-        add("implementation", libs.findLibrary("androidx.uiautomator").get())
+        add("testImplementation", libs.findLibrary("junit4").get())
+        add("testImplementation", libs.findLibrary("kotlin.test").get())
+        add("testImplementation", libs.findLibrary("androidx.junit").get())
+        add("testImplementation", libs.findLibrary("androidx.test.espresso.core").get())
+        add("testImplementation", libs.findLibrary("androidx.uiautomator").get())
     }
 }
 
