@@ -30,13 +30,18 @@ class EarAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             Intent.ACTION_BOOT_COMPLETED -> {
+                val result = goAsync()
                 CoroutineScope(Dispatchers.IO).launch {
-                    timerRepository.alarmInfo.first()?.let {
-                        if (ZonedDateTime.parse(it.endTime) > ZonedDateTime.now()) {
-                            alarmHelper.setTimerAlarm(it)
-                        } else {
-                            timerRepository.removeTimerAlarmInfo()
+                    try {
+                        timerRepository.alarmInfo.first()?.let {
+                            if (ZonedDateTime.parse(it.endTime) > ZonedDateTime.now()) {
+                                alarmHelper.setTimerAlarm(it)
+                            } else {
+                                timerRepository.removeTimerAlarmInfo()
+                            }
                         }
+                    } finally {
+                        result.finish()
                     }
                 }
             }
