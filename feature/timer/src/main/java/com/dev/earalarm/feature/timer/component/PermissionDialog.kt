@@ -3,7 +3,6 @@ package com.dev.earalarm.feature.timer.component
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -71,24 +71,29 @@ fun PermissionDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
+                    TextButton(
+                        modifier = Modifier.padding(end = Paddings.medium),
+                        onClick = onDismiss
+                    ) {
+                        Text(
+                            text = dismissButtonTextId?.let { stringResource(id = dismissButtonTextId) }
+                                ?: dismissButtonText,
+                            color = EarAlarmMaterialTheme.colorScheme.inactive,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
 
-                    Text(
-                        text = dismissButtonTextId?.let { stringResource(id = dismissButtonTextId) }
-                            ?: dismissButtonText,
-                        color = EarAlarmMaterialTheme.colorScheme.inactive,
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier
-                            .padding(end = Paddings.extra)
-                            .clickable { onDismiss() }
-                    )
-
-                    Text(
-                        text = confirmButtonTextId?.let { stringResource(id = confirmButtonTextId) }
-                            ?: confirmButtonText,
-                        color = EarAlarmMaterialTheme.colorScheme.active,
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.clickable { onConfirm() }
-                    )
+                    TextButton(
+                        modifier = Modifier,
+                        onClick = onConfirm
+                    ) {
+                        Text(
+                            text = confirmButtonTextId?.let { stringResource(id = confirmButtonTextId) }
+                                ?: confirmButtonText,
+                            color = EarAlarmMaterialTheme.colorScheme.active,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
                 }
             }
         }
