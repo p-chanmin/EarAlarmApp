@@ -38,7 +38,7 @@ kotlinxImmutable = "0.3.7"
 coroutine = "1.9.0-RC"
 
 ## PlayStoreAds
-googlePlayAds = "24.3.0"
+googlePlayAds = "24.4.0"
 
 ##
 googlePlayReview = "2.0.2"
