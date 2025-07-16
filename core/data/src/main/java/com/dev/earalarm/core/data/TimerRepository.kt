@@ -7,16 +7,16 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.dev.earalarm.core.model.TimerAlarmInfo
-import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.File
 import javax.inject.Inject
 
 class TimerRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>,
-    private val gson: Gson,
 ) {
 
     val alarmVolume: Flow<Int> = dataStore.data.map {
@@ -32,7 +32,9 @@ class TimerRepository @Inject constructor(
     }.distinctUntilChanged()
 
     val alarmInfo: Flow<TimerAlarmInfo?> = dataStore.data.map {
-        gson.fromJson(it[TIMER_ALARM_INFO], TimerAlarmInfo::class.java)
+        it[TIMER_ALARM_INFO]?.let {
+            Json.decodeFromString<TimerAlarmInfo>(it)
+        }
     }.distinctUntilChanged()
 
     suspend fun setAlarmVolume(volume: Int) {
@@ -61,7 +63,7 @@ class TimerRepository @Inject constructor(
 
     suspend fun setTimerAlarmInfo(timerAlarmInfo: TimerAlarmInfo) {
         dataStore.edit {
-            it[TIMER_ALARM_INFO] = gson.toJson(timerAlarmInfo, TimerAlarmInfo::class.java)
+            it[TIMER_ALARM_INFO] = Json.encodeToString(timerAlarmInfo)
         }
     }
 

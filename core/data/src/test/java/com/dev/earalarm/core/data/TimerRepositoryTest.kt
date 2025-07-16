@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
 import com.dev.earalarm.core.model.TimerAlarmInfo
-import com.google.gson.Gson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +20,6 @@ internal class TimerRepositoryTest : StringSpec() {
     private lateinit var tempFolder: TemporaryFolder
 
     private lateinit var dataStore: DataStore<Preferences>
-    private lateinit var gson: Gson
     private lateinit var timerRepository: TimerRepository
 
     init {
@@ -34,8 +32,7 @@ internal class TimerRepositoryTest : StringSpec() {
                 scope = CoroutineScope(testDispatcher),
                 produceFile = { tempFolder.newFile("test.preferences_pb") }
             )
-            gson = Gson()
-            timerRepository = TimerRepository(dataStore, gson)
+            timerRepository = TimerRepository(dataStore)
         }
 
         afterSpec {
