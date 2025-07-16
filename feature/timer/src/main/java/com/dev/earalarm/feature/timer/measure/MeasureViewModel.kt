@@ -15,7 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,34 +46,33 @@ class MeasureViewModel @Inject constructor(
     )
 
     init {
-        viewModelScope.launch {
-            timerRepository.alarmInfo
-                .catch { throwable ->
-                    firebaseManager.reportNonFatalError(throwable)
-                    _errorFlow.emit(throwable)
-                }.collectLatest { info ->
-                    if (info != null) {
-                        _measureUiState.update {
-                            val startTime = ZonedDateTime.parse(info.startTime)
-                            val endTime = ZonedDateTime.parse(info.endTime)
-                            it.copy(
-                                minute = info.minute,
-                                startTime = startTime,
-                                endTime = endTime,
-                                endTimeString = endTime.withZoneSameInstant(ZoneId.systemDefault())
-                                    .format(DateTimeFormatter.ofPattern("a hh:mm")),
-                                progress = getTimerProgressFromNow(startTime, endTime),
-                                leftTime = endTime.getRemainingTimeFromNow()
-                            )
-                        }
-                        measuringTimer()
-                    } else {
-                        measuringJob?.cancel()
-                        measuringJob = null
-                        _measureUiState.update { MeasureUiState() }
+        timerRepository.alarmInfo
+            .onEach { info ->
+                if (info != null) {
+                    _measureUiState.update {
+                        val startTime = ZonedDateTime.parse(info.startTime)
+                        val endTime = ZonedDateTime.parse(info.endTime)
+                        it.copy(
+                            minute = info.minute,
+                            startTime = startTime,
+                            endTime = endTime,
+                            endTimeString = endTime.withZoneSameInstant(ZoneId.systemDefault())
+                                .format(DateTimeFormatter.ofPattern("a hh:mm")),
+                            progress = getTimerProgressFromNow(startTime, endTime),
+                            leftTime = endTime.getRemainingTimeFromNow()
+                        )
                     }
+                    measuringTimer()
+                } else {
+                    measuringJob?.cancel()
+                    measuringJob = null
+                    _measureUiState.update { MeasureUiState() }
                 }
-        }
+            }.catch { throwable ->
+                firebaseManager.reportNonFatalError(throwable)
+                _errorFlow.emit(throwable)
+                timerRepository.removeTimerAlarmInfo()
+            }.launchIn(viewModelScope)
     }
 
     private fun measuringTimer() {
