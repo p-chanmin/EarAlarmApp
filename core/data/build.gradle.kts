@@ -1,5 +1,6 @@
 plugins {
     id("earalarm.android.library")
+    id("earalarm.android.kotlin.serialization")
 }
 
 android {
@@ -7,7 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.gson)
     implementation(libs.datastore.preferences)
 
     implementation(project(":core:model"))

@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.dev.earalarm.core.data.TimerRepository
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,12 +17,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DataModule {
 
-    @Singleton
-    @Provides
-    fun provideGson(): Gson {
-        return Gson()
-    }
-
     @Provides
     @Singleton
     fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
@@ -33,8 +26,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideTimerRepository(dataStore: DataStore<Preferences>, gson: Gson): TimerRepository =
-        TimerRepository(dataStore, gson)
+    fun provideTimerRepository(dataStore: DataStore<Preferences>): TimerRepository =
+        TimerRepository(dataStore)
 
     companion object {
         private const val PREFERENCES_STORE_NAME = "EarAlarmDataStore"
