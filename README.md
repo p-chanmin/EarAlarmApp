@@ -3,11 +3,12 @@
 <p align="center">
   <a href="https://github.com/p-chanmin"><img alt="Profile" src="https://img.shields.io/badge/GitHub-p--chanmin-informational?logo=github"/></a>
   <a href="https://android-arsenal.com/api?level=26"><img alt="API" src="https://img.shields.io/badge/API-26%2B-brightgreen.svg?style=flat"/></a><br> 
-    <a><img src="https://img.shields.io/badge/Android%20Studio-Koala | 2024.1.1-%233DDC84?logo=Android%20Studio"/></a>
+    <a><img src="https://img.shields.io/badge/Android%20Studio-Meerkat | 2024.3.2-%233DDC84?logo=Android%20Studio"/></a>
     <a><img src="https://img.shields.io/github/languages/top/p-chanmin/EarAlarmApp"/></a>
   <a><img src="https://img.shields.io/github/last-commit/p-chanmin/EarAlarmApp"/></a>
   <a><img alt="Profile" src="https://img.shields.io/github/v/tag/p-chanmin/EarAlarmApp"/></a> 
 </p>
+
 
 <br>
 
@@ -29,11 +30,11 @@
 
 |                          알람 설정                           |                          알람 해제                           |                          background                          |                             설정                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/df4ecbc6-e60d-44e7-b76f-3bc71537d2a3" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/701e4e5d-c8d6-424b-8ba0-3696bf0a2494" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/71b73765-6b2b-42ef-9590-3d9fc48ee9bf" width="200"> | <img src="https://github.com/p-chanmin/EarAlarmApp/assets/87304360/de4d0c3e-a2d2-417e-b9bc-0066261694b3" width="200"> |
+| <img src="https://github.com/user-attachments/assets/84d05b2a-726d-4e77-b6dc-b15d368a5a19" width="200"> | <img src="https://github.com/user-attachments/assets/6167b58f-addd-4826-bf46-a85e52dd2dee" width="200"> | <img src="https://github.com/user-attachments/assets/044b2451-501f-4d4a-aa76-3ce83b759237" width="200"> | <img src="https://github.com/user-attachments/assets/68d4b37e-dc8a-440c-b820-7c32d0484c56" width="200"> |
 
 <br>
 
-**EarAlarm**은 여러 언어를 지원합니다.
+**EarAlarm**은 다음 언어를 지원합니다.
 
 **사용 가능 언어**
 
@@ -58,9 +59,13 @@
 
 
 
-## 📢 Trouble Shooting
+## 📚 Document
 
 - [**타이머 서비스 분석 및 알람 로직 개선**](https://oldogz7358.tistory.com/1)
+- [**Google Play In-App Review API 연결하기**](https://oldogz7358.tistory.com/3)
+- [**Google Play In-App updates 연결하기**](https://oldogz7358.tistory.com/4)
+- [**Restoring the Navigation back stack failed**](https://oldogz7358.tistory.com/5)
+- [**Attempting to launch an unregistered ActivityResultLauncher with contract**](https://oldogz7358.tistory.com/6)
 
 
 
@@ -68,15 +73,16 @@
 
 ## 📄 기술 스택
 
-| 분류                    | Stack                                            |
-| ----------------------- | ------------------------------------------------ |
-| App Architechture       | Google Recommended app architecture              |
-| Design Pattern          | MVVM                                             |
-| DI                      | Hilt                                             |
-| UI                      | XML                                              |
-| Local Storage           | DataStore                                        |
-| serializer/deserializer | Gson                                             |
-| Asynchronous            | Coroutines, Flow                                 |
-| Background              | Service, AlarmManager, AudioManager, MediaPlayer |
-| Notification            | NotificationManager                              |
+| 분류                     | Stack                              |
+| ------------------------ | ---------------------------------- |
+| **Architecture**         | App Architecture, MVVM             |
+| **UI**                   | Jetpack Compose, Material Design 3 |
+| **Navigation**           | Navigation Compose                 |
+| **Dependency Injection** | Hilt                               |
+| **Async**                | Coroutines, Flow                   |
+| **Local Storage**        | DataStore                          |
+| **Serialization**        | Kotlinx Serialization              |
+| **Testing**              | JUnit4, Kotest, MockK, Turbine     |
+| **Firebase**             | Analytics, Crashlytics             |
+| **Play Services**        | In-App Review, In-App Update, Ads  |
 
