@@ -86,3 +86,10 @@
 | **Firebase**             | Analytics, Crashlytics             |
 | **Play Services**        | In-App Review, In-App Update, Ads  |
 
+
+
+<br>
+
+## ⚙ Module
+
+<img src="https://raw.githubusercontent.com/p-chanmin/EarAlarmApp/refs/heads/dev/project.dot.png"/>
