@@ -17,19 +17,24 @@ private fun Uri.getFileName(context: Context): String? {
 }
 
 fun Uri.toPath(context: Context, deleteFile: File? = null): String? {
-    val file = this.getFileName(context)?.let { File(context.filesDir, it) }
-    val inputStream = context.contentResolver.openInputStream(this)
-    val outputStream = FileOutputStream(file)
+    return try {
+        val file = this.getFileName(context)?.let { File(context.filesDir, it) }
+        val inputStream = context.contentResolver.openInputStream(this)
+        val outputStream = FileOutputStream(file)
 
-    inputStream.use { input ->
-        outputStream.use { output ->
-            input?.copyTo(output)
+        inputStream.use { input ->
+            outputStream.use { output ->
+                input?.copyTo(output)
+            }
         }
-    }
 
-    file?.let {
-        deleteFile?.delete()
-    }
+        file?.let {
+            deleteFile?.delete()
+        }
 
-    return file?.absolutePath
+        file?.absolutePath
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }
