@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "kr.ac.tukorea.android.earalarm"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "kr.ac.tukorea.android.earalarm"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 31
         versionName = "1.5.10"
 
