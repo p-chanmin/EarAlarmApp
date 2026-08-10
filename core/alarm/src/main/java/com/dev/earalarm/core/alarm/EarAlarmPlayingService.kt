@@ -83,14 +83,14 @@ class EarAlarmPlayingService : Service() {
     private suspend fun playAlarm() {
         notificationHelper.registerNotificationChannels()
 
-        val volume = timerRepository.alarmVolume.first()
-        val vibrate = timerRepository.vibrate.first()
-        val mediaFile = timerRepository.media.first()
-
         startForeground(
             FOREGROUND_ID,
             notificationHelper.createForegroundNotificationBuilder()
         )
+
+        val volume = timerRepository.alarmVolume.first()
+        val vibrate = timerRepository.vibrate.first()
+        val mediaFile = timerRepository.media.first()
 
         mediaVolumeBeforeAlarm = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
 
